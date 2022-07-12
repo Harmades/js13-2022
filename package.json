@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html && node zip.js"
+    "build": "parcel build src/index.html --public-url ./ && node zip.js"
   },
   "devDependencies": {
     "@parcel/compressor-gzip": "^2.6.2",
