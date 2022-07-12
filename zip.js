@@ -26,10 +26,10 @@ archive
     .then(() => {
         const MAX_BYTES = 13312;
         const filename = "./dist/game.zip";
-        
+
         fileSize = fs.statSync(filename).size;
         const chalkText = MAX_BYTES - fileSize >= 0 ? chalk.blue : chalk.red;
-        
+
         console.log();
         console.log(chalkText(`Build size: ${fileSize} bytes`));
         console.log(chalk.yellow(`Target size: ${MAX_BYTES} bytes`));
