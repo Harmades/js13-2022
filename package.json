@@ -1,6 +1,7 @@
 {
   "name": "js13-2022",
   "version": "1.0.0",
+  "packageManager": "yarn@3.2.1",
   "repository": "https://github.com/Harmades/js13-2022.git",
   "author": "Adrian Lissot <adrianlissot@microsoft.com>",
   "license": "MIT",

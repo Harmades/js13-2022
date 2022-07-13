@@ -16,13 +16,15 @@ const archive = archiver("zip", { zlib: { level: 9 } });
 
 archive.pipe(output);
 
-for (file of files) {
-    archive.file(file, { name: path.basename(file) });
+for (let file of files) {
+    const filePath = `${distDir}/${file}`;
+    console.log(filePath);
+    archive.file(filePath, { name: path.basename(filePath) });
 }
 
 archive
     .finalize()
-    // .then(() => execFile(advzip, ["--recompress", "--shrink-insane", zipPath]))
+    .then(() => execFile(advzip, ["--recompress", "--shrink-insane", "--iter 10", zipPath]))
     .then(() => {
         const MAX_BYTES = 13312;
         const filename = "./dist/game.zip";
