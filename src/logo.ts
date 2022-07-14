@@ -1,24 +1,24 @@
 import logo from "../assets/logo.png";
+import * as Renderer from "./renderer";
 import { PI } from "./alias";
-import { Renderer } from "./renderer";
 
-export class Logo implements Entity {
-    private image: HTMLImageElement | null = null;
-    private rotation: number = 0;
+let image: HTMLImageElement | null = null;
+let rotation: number = 0;
+let width = 151;
+let height = 151;
 
-    constructor() {
-        this.image = Renderer.loadImage(logo, () => { });
-    }
+export function create(): void {
+    image = Renderer.loadImage(logo);
+}
 
-    update(delta: number) {
-        this.rotation -= PI / 1080;
-    }
+export function update(delta: number) {
+    rotation -= PI / 1080;
+}
 
-    render(): void {
-        if (!this.image?.complete) return;
-        Renderer.save();
-        Renderer.rotate(this.rotation);
-        Renderer.drawImage(this.image, -151 / 2, -151 / 2);
-        Renderer.restore();
-    }
+export function render(): void {
+    if (!this.image?.complete) return;
+    Renderer.save();
+    Renderer.rotate(this.rotation);
+    Renderer.drawImage(this.image, - width / 2, - height / 2);
+    Renderer.restore();
 }

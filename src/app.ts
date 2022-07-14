@@ -1,12 +1,14 @@
 import { Settings } from "./settings";
 import { floor } from "./alias";
-import { Logo } from "./logo";
-import { Renderer } from "./renderer";
+import * as Renderer from "./renderer";
+import * as Logo from "./logo";
 
 let tickLength = Settings.engineTimeResolution;
 let lastTick = performance.now();
 let lastRender = lastTick;
-const logo = new Logo();
+
+Logo.create();
+Renderer.create();
 
 function loop(tFrame: number) {
     window.requestAnimationFrame(t => loop(t));
@@ -28,12 +30,11 @@ function loop(tFrame: number) {
 }
 
 function update(delta: number) {
-    logo.update(delta);
+    Logo.update(delta);
 }
 
 function render() {
     Renderer.clear();
-    logo.render();
 }
 
 loop(0)
