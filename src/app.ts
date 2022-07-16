@@ -35,6 +35,7 @@ function update(delta: number) {
 
 function render() {
     Renderer.clear();
+    Logo.render();
 }
 
 loop(0)
