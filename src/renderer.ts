@@ -1,4 +1,4 @@
-import { createElement, getElementById } from "./alias";
+import { createElement, getElementById, round } from "./alias";
 import { Settings } from "./settings";
 
 let canvas: CanvasRenderingContext2D | null = null;
@@ -24,6 +24,15 @@ export function createCanvas(w: number, h: number, id: string | null = null): Ca
 
 export function drawImage(image: HTMLImageElement, x: number, y: number): void {
     canvas?.drawImage(image, x, y);
+}
+
+export function drawRect(x: number, y: number, w: number, h: number, color = "#FF0000") {
+    if (canvas) canvas.fillStyle = color;
+    canvas?.fillRect(round(x), round(y), w, h);
+}
+
+export function translate(x: number, y: number) {
+    canvas?.translate(x, y);
 }
 
 export function rotate(angle: number): void {

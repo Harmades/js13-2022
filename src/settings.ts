@@ -7,4 +7,5 @@ export const Settings = {
     engineTimeResolution: 1,
 
     epsilon: 0.1,
-}
+    delta: 1 / 1000,
+};

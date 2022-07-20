@@ -1,14 +1,16 @@
 import { Settings } from "./settings";
 import { floor } from "./alias";
 import * as Renderer from "./renderer";
-import * as Logo from "./logo";
+import * as Player from "./player";
+import * as Tile from "./tile";
 
 let tickLength = Settings.engineTimeResolution;
 let lastTick = performance.now();
 let lastRender = lastTick;
 
-Logo.create();
+Player.create();
 Renderer.create();
+Tile.create();
 
 function loop(tFrame: number) {
     window.requestAnimationFrame(t => loop(t));
@@ -22,20 +24,22 @@ function loop(tFrame: number) {
 
     for (var i = 0; i < numTicks; i++) {
         lastTick += tickLength;
-        update(tickLength / 1000);
+        update();
     }
 
     render();
     lastRender = tFrame;
 }
 
-function update(delta: number) {
-    Logo.update(delta);
+function update() {
+    Player.update();
+    Tile.update();
 }
 
 function render() {
     Renderer.clear();
-    Logo.render();
+    Player.render();
+    Tile.render();
 }
 
-loop(0)
+loop(0);
