@@ -5,11 +5,11 @@ export const input = {
     right: false,
     space: false,
     shift: false,
-}
+};
 
 export type Input = typeof input;
 
-onkeydown = onkeyup = event => setKey(event.keyCode, event.type[5] != undefined);
+onkeydown = onkeyup = (event) => setKey(event.keyCode, event.type[5] != undefined);
 
 function setKey(keyCode: number, value: boolean) {
     // Up (up / W / Z)
@@ -26,7 +26,7 @@ function setKey(keyCode: number, value: boolean) {
     if (keyCode == 32) input.space = value;
 }
 
-export function update(delta: number) { }
+export function update(delta: number) {}
 
 export function createReleasedKeyPress(key: keyof Input) {
     let released = true;

@@ -14,7 +14,11 @@ export function loadImage(path: string, onload?: () => void): HTMLImageElement {
     return image;
 }
 
-export function createCanvas(w: number, h: number, id: string | null = null): CanvasRenderingContext2D {
+export function createCanvas(
+    w: number,
+    h: number,
+    id: string | null = null
+): CanvasRenderingContext2D {
     const canvas = (id == null ? createElement("canvas") : getElementById(id)) as HTMLCanvasElement;
     canvas.width = w;
     canvas.height = h;

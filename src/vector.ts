@@ -1,13 +1,13 @@
 export type Vector = {
     x: number;
     y: number;
-}
+};
 
 export function zero(): Vector {
     return {
         x: 0,
-        y: 0
-    }
+        y: 0,
+    };
 }
 
 export function add(vector1: Vector, vector2: Vector): void {

@@ -1,7 +1,7 @@
-import { Settings } from "./settings";
 import { floor } from "./alias";
-import * as Renderer from "./renderer";
 import * as Player from "./player";
+import * as Renderer from "./renderer";
+import { Settings } from "./settings";
 import * as Tile from "./tile";
 
 let tickLength = Settings.engineTimeResolution;
@@ -13,7 +13,7 @@ Renderer.create();
 Tile.create();
 
 function loop(tFrame: number) {
-    window.requestAnimationFrame(t => loop(t));
+    window.requestAnimationFrame((t) => loop(t));
     var nextTick = lastTick + tickLength;
     var numTicks = 0;
 

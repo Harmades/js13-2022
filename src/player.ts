@@ -1,11 +1,9 @@
-import { input } from "./input";
-import { Rectangle } from "./rectangle";
 import logo from "../assets/logo.png";
+import { createReleasedKeyPress, input } from "./input";
+import { Rectangle } from "./rectangle";
 import * as Renderer from "./renderer";
-import { PI } from "./alias";
-import { createReleasedKeyPress } from "./input";
-import { load, play_cowboy, stop_song } from "./sound";
 import { Settings } from "./settings";
+import { load, play_cowboy, stop_song } from "./sound";
 
 let image: HTMLImageElement | null = null;
 let speed = 100;

@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+        // Formatter for TypeScript and CSS.
+        "esbenp.prettier-vscode"
+    ]
+}

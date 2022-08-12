@@ -1,48 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>js13k-2022</title>
+        <script type="module" src="app.ts"></script>
+        <style>
+            #gameCanvas {
+                position: absolute;
+                width: 960px;
+                height: 640px;
+                image-rendering: pixelated;
+                image-rendering: -moz-crisp-edges;
+                image-rendering: crisp-edges;
+            }
 
-<head>
-  <meta charset="utf-8" />
-  <title>js13k-2022</title>
-  <script type="module" src="app.ts"></script>
-  <style>
-    #gameCanvas {
-      position: absolute;
-      width: 960px;
-      height: 640px;
-      image-rendering: pixelated;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: crisp-edges;
-    }
+            #game {
+                width: 960px;
+                height: 640px;
+                border: 2px solid black;
+            }
 
-    #game {
-      width: 960px;
-      height: 640px;
-      border: 2px solid black;
-    }
+            .game-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+            }
 
-    .game-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-    }
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+                background-color: ghostwhite;
+            }
+        </style>
+    </head>
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-      background-color: ghostwhite;
-    }
-  </style>
-</head>
-
-<body class="game-container">
-  <div id="game">
-    <canvas id="gameCanvas"></canvas>
-  </div>
-</body>
-
+    <body class="game-container">
+        <div id="game">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+    </body>
 </html>

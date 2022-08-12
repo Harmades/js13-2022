@@ -4,7 +4,7 @@ import { Vector } from "./vector";
 
 export type Collision = Rectangle;
 
-type Overlap = Vector
+type Overlap = Vector;
 
 export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Collision | null {
     const xOverlap = getOverlap(xProject(rectangle1), xProject(rectangle2));
@@ -15,16 +15,23 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
         x: xOverlap.x,
         y: yOverlap.x,
         w: xOverlap.y - xOverlap.x,
-        h: yOverlap.y - yOverlap.x
+        h: yOverlap.y - yOverlap.x,
     };
 }
 
-function getTranslationVector(player: Rectangle, rectangle: Rectangle, collision: Collision): Vector {
+function getTranslationVector(
+    player: Rectangle,
+    rectangle: Rectangle,
+    collision: Collision
+): Vector {
     const playerCenter = getCenter(player);
     const platformCenter = getCenter(rectangle);
     const xSign = sign(playerCenter.x - platformCenter.x);
     const ySign = sign(playerCenter.y - platformCenter.y);
-    const translation = collision.w > collision.h ? { x: 0, y: ySign * collision.h } : { x: xSign * collision.w, y: 0 };
+    const translation =
+        collision.w > collision.h
+            ? { x: 0, y: ySign * collision.h }
+            : { x: xSign * collision.w, y: 0 };
     return translation;
 }
 
@@ -40,6 +47,6 @@ function getOverlap(s1: Vector, s2: Vector): Overlap | null {
     if (s1.y <= s2.x || s2.y <= s1.x) return null;
     return {
         x: Math.max(s1.x, s2.x),
-        y: Math.min(s1.y, s2.y)
+        y: Math.min(s1.y, s2.y),
     };
 }
