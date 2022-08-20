@@ -1,7 +1,16 @@
+import { cos, sin } from "./alias";
+
 export type Vector = {
     x: number;
     y: number;
 };
+
+export function create(x: number, y: number): Vector {
+    return {
+        x: x,
+        y: y,
+    };
+}
 
 export function zero(): Vector {
     return {
@@ -23,4 +32,11 @@ export function multiply(vector: Vector, value: number) {
 export function subtract(vector1: Vector, vector2: Vector): void {
     vector1.x -= vector2.x;
     vector1.y -= vector2.y;
+}
+
+export function rotate(vector: Vector, angle: number): void {
+    const x2 = cos(angle) * vector.x - sin(angle) * vector.y;
+    const y2 = sin(angle) * vector.x + cos(angle) * vector.y;
+    vector.x = x2;
+    vector.y = y2;
 }

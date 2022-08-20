@@ -23,6 +23,22 @@ export function max(value1: number, value2: number) {
     return Math.max(value1, value2);
 }
 
+export function cos(value: number): number {
+    return Math.cos(value);
+}
+
+export function sin(value: number): number {
+    return Math.sin(value);
+}
+
+export function sqrt(value: number) {
+    return Math.sqrt(value);
+}
+
+export function pow(value: number, power: number) {
+    return Math.pow(value, power);
+}
+
 export function getElementById(id: string) {
     return document.getElementById(id);
 }

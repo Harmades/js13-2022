@@ -30,18 +30,18 @@ let cowboy = [[[.5, 0, 196, .05, .5, .6, 1], [.8, u, 24.5, .2, .3, .7, u, .5, u,
 let cowboy_song: any;
 let audio_node: any;
 
-export function load() {
+export function load(): void {
     zzfxX = new window.AudioContext;
     // @ts-ignore
     cowboy_song = zzfxM(...cowboy);
 }
 
-export function play_cowboy() {
+export function play_cowboy(): void {
     zzfxX?.resume();
     audio_node = zzfxP(...cowboy_song);
     audio_node.loop = true;
 }
 
-export function stop_song() {
+export function stop_song(): void {
     audio_node.stop();
 }

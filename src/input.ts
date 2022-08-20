@@ -26,7 +26,7 @@ function setKey(keyCode: number, value: boolean) {
     if (keyCode == 32) input.space = value;
 }
 
-export function update(delta: number) {}
+export function update(): void {}
 
 export function createReleasedKeyPress(key: keyof Input) {
     let released = true;
