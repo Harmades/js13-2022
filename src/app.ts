@@ -10,17 +10,7 @@ let lastTick = performance.now();
 let lastRender = lastTick;
 
 const player = Player.create();
-const enemy = Enemy.create({
-    x: Settings.width / 2,
-    y: Settings.height / 2,
-    dx: 0,
-    dy: -100,
-    w: 50,
-    h: 50,
-    pattern: Enemy.Pattern.Circular,
-    y1: 0.1 * Settings.height,
-    y2: 0.9 * Settings.height,
-});
+const enemies = Enemy.load();
 const renderer = Renderer.create();
 const tile = Tile.create();
 
@@ -46,14 +36,18 @@ function loop(tFrame: number): void {
 function update(): void {
     Player.update(player);
     Tile.update(tile, player);
-    Enemy.update(enemy);
+    for (let enemy of enemies) {
+        Enemy.update(enemy);
+    }
 }
 
 function render(): void {
     Renderer.clear(renderer);
     Player.render(renderer, player);
     Tile.render(tile, renderer);
-    Enemy.render(renderer, enemy);
+    for (let enemy of enemies) {
+        Enemy.render(renderer, enemy);
+    }
 }
 
 loop(0);

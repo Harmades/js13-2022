@@ -28,7 +28,7 @@ function setKey(keyCode: number, value: boolean) {
 
 export function update(): void {}
 
-export function createReleasedKeyPress(key: keyof Input) {
+export function createReleasedKeyPress(key: keyof Input): () => boolean {
     let released = true;
     return () => {
         if (input[key] && released) {

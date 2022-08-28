@@ -31,6 +31,10 @@ export function sin(value: number): number {
     return Math.sin(value);
 }
 
+export function asin(value: number): number {
+    return Math.asin(value);
+}
+
 export function sqrt(value: number) {
     return Math.sqrt(value);
 }
