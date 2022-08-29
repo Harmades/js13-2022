@@ -2,41 +2,54 @@ import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Pattern, Spawn, Spawns } from "./spawn";
-import { cosine, createTween, linear, triangle } from "./tween";
-import { create as createVector, Vector, zero } from "./vector";
+import { createTween, linear, rectangular, sine, triangle } from "./tween";
+import { create as createVector } from "./vector";
 
-export type Enemy = Rectangle & { tween: () => Vector };
+export type Enemy = Rectangle & {
+    tweenX: () => number;
+    tweenY: () => number;
+    color: string;
+};
 
-export function create({ pattern, sy, amplitude, frequency }: Spawn): Enemy {
-    let tween = (): Vector => zero();
+export function create({ pattern, sy, dy, frequency, color }: Spawn): Enemy {
+    const time = 4;
     const from = createVector(Settings.width, sy);
-    const to = createVector(0, sy);
+    const to = createVector(0, dy);
+    let tweenX = createTween(from.x, to.x, linear, time);
+    let tweenY = (): number => 0;
     if (pattern == Pattern.Circular) {
-        tween = createTween(
-            from,
-            to,
-            (x: number): number => 1 + cosine(x, amplitude as number, frequency as number),
-            4
+        tweenY = createTween(
+            from.y,
+            to.y,
+            (x: number): number => 0.5 * (1 + sine(x, 1, frequency as number)),
+            time
         );
     }
     if (pattern == Pattern.Straight) {
-        tween = createTween(from, to, linear, 4);
+        tweenY = createTween(from.y, to.y, linear, time);
     }
     if (pattern == Pattern.Triangle) {
-        tween = createTween(
-            from,
-            to,
-            (x: number): number => 1 + triangle(x, amplitude as number, frequency as number),
-            4
+        tweenY = createTween(
+            from.y,
+            to.y,
+            (x: number): number => 0.5 * (1 + triangle(x, 1, frequency as number)),
+            time
         );
     }
-    return { x: from.x, y: from.y, w: 50, h: 50, tween };
+    if (pattern == Pattern.Rectangle) {
+        tweenY = createTween(
+            from.y,
+            to.y,
+            (x: number): number => 0.5 * (1 + rectangular(x, 1, frequency as number)),
+            time
+        );
+    }
+    return { x: from.x, y: from.y, w: 50, h: 50, color, tweenX, tweenY };
 }
 
 export function update(enemy: Enemy): void {
-    const position = enemy.tween();
-    enemy.x = position.x;
-    enemy.y = position.y;
+    enemy.x = enemy.tweenX();
+    enemy.y = enemy.tweenY();
 }
 
 export function load(): Enemy[] {
@@ -44,5 +57,5 @@ export function load(): Enemy[] {
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {
-    drawRect(renderer, enemy, "#FFF000");
+    drawRect(renderer, enemy, enemy.color);
 }

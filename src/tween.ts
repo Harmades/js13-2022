@@ -1,6 +1,5 @@
-import { asin, cos, PI, pow, sin, sqrt } from "./alias";
+import { asin, PI, pow, sign, sin, sqrt } from "./alias";
 import { Settings } from "./settings";
-import { Vector } from "./vector";
 
 export type TweenProps = {
     sx: number;
@@ -10,20 +9,19 @@ export type TweenProps = {
 };
 
 export function createTween(
-    from: Vector,
-    to: Vector,
+    from: number,
+    to: number,
     easing: (x: number) => number,
     time: number
-): () => Vector {
+): () => number {
     let t = 0;
-    return (): Vector => {
+    return (): number => {
         t += Settings.delta / time;
-        if (t > 1) t = 1;
+        if (t > 1) {
+            t = 1;
+        }
         const progress = easing(t);
-        return {
-            x: from.x * (1 - t) + to.x * t,
-            y: to.y * progress,
-        };
+        return from + progress * (to - from);
     };
 }
 
@@ -32,13 +30,17 @@ export function easeInOutCirc(x: number): number {
 }
 
 export function linear(x: number): number {
-    return 1;
+    return x;
 }
 
-export function cosine(x: number, amplitude: number, frequency: number): number {
-    return amplitude * cos(2 * PI * frequency * x);
+export function sine(x: number, amplitude: number, frequency: number): number {
+    return amplitude * sin(2 * PI * frequency * x);
 }
 
 export function triangle(x: number, amplitude: number, frequency: number): number {
     return ((2 * amplitude) / PI) * asin(sin(2 * PI * frequency * x));
+}
+
+export function rectangular(x: number, amplitude: number, frequency: number): number {
+    return amplitude * sign(sin(2 * PI * frequency * x));
 }
