@@ -1,58 +1,58 @@
 import logo from "../assets/logo.png";
-import {
-    Bullet,
-    create as createBullet,
-    fire as fireBullet,
-    render as renderBullet,
-    update as updateBullet,
-} from "./bullet";
+
+import * as Bullet from "./bullet";
 import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, loadImage, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, play_cowboy, stop_song } from "./sound";
 import { Speed } from "./speed";
+import * as Vector from "./vector";
 
 let image: HTMLImageElement | null = null;
 let speed = 100;
-let spaceInput = createReleasedKeyPress("space");
-let shiftInput = createReleasedKeyPress("shift");
+const width = 50;
+const height = 50;
+const spaceInput = createReleasedKeyPress("space");
+const shiftInput = createReleasedKeyPress("shift");
+let shootPosition = Vector.create(width, height / 2);
 let isPlaying = false;
 let isAudioInitialized = false;
 
 export type Player = Rectangle &
     Speed & {
-        bullets: Bullet[];
+        bullets: Bullet.Bullet[];
     };
 
 export function create(): Player {
     image = loadImage(logo);
-    return {
+    const player = {
         x: 50,
         dx: 0,
         y: 50,
         dy: 0,
-        w: 50,
-        h: 50,
+        w: width,
+        h: height,
         bullets: [
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
-            createBullet(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
+            Bullet.create(),
         ],
     };
+    return player;
 }
 
 export function shoot(player: Player): void {
-    let bullet: Bullet | undefined = player.bullets.find((b) => !b.isActive);
+    let bullet: Bullet.Bullet | undefined = player.bullets.find((b) => !b.isActive);
     if (bullet == undefined) return;
-    fireBullet(bullet, player);
+    Bullet.fire(bullet, Vector.add(player, shootPosition));
 }
 
 export function update(player: Player) {
@@ -84,9 +84,9 @@ export function update(player: Player) {
     updateBullets(player.bullets);
 }
 
-function updateBullets(bullets: Bullet[]): void {
+function updateBullets(bullets: Bullet.Bullet[]): void {
     for (let bullet of bullets) {
-        updateBullet(bullet);
+        Bullet.update(bullet);
     }
 }
 
@@ -95,7 +95,7 @@ export function render(renderer: Renderer, player: Player) {
     drawRect(renderer, player);
     for (let bullet of player.bullets) {
         if (bullet.isActive) {
-            renderBullet(bullet, renderer);
+            Bullet.render(bullet, renderer);
         }
     }
 }
