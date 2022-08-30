@@ -90,6 +90,13 @@ function updateBullets(bullets: Bullet.Bullet[]): void {
     }
 }
 
+export function reset(player: Player): void {
+    player.x = 0;
+    player.y = 0;
+    player.dx = 0;
+    player.dy = 0;
+}
+
 export function render(renderer: Renderer, player: Player) {
     if (!image?.complete) return;
     drawRect(renderer, player);

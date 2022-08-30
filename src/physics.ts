@@ -1,4 +1,7 @@
 import { sign } from "./alias";
+import { free } from "./bullet";
+import { die as enemyDie, Enemy } from "./enemy";
+import { Player, reset as resetPlayer } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
 import { Vector } from "./vector";
 
@@ -17,6 +20,22 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
         w: xOverlap.y - xOverlap.x,
         h: yOverlap.y - yOverlap.x,
     };
+}
+
+export function update(player: Player, enemies: Enemy[]): void {
+    for (let enemy of enemies) {
+        for (let bullet of player.bullets) {
+            const bulletEnemyCollision = getCollision(enemy, bullet);
+            if (bulletEnemyCollision != null) {
+                free(bullet);
+                enemyDie(enemy);
+            }
+        }
+        const playerEnemyCollision = getCollision(player, enemy);
+        if (playerEnemyCollision != null) {
+            resetPlayer(player);
+        }
+    }
 }
 
 function getTranslationVector(

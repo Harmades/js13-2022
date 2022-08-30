@@ -1,5 +1,6 @@
 import { floor } from "./alias";
 import * as Enemy from "./enemy";
+import * as Physics from "./physics";
 import * as Player from "./player";
 import * as Renderer from "./renderer";
 import { Settings } from "./settings";
@@ -39,6 +40,7 @@ function update(): void {
     for (let enemy of enemies) {
         Enemy.update(enemy);
     }
+    Physics.update(player, enemies);
 }
 
 function render(): void {

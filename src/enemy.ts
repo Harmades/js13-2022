@@ -9,6 +9,7 @@ export type Enemy = Rectangle & {
     tweenX: () => number;
     tweenY: () => number;
     color: string;
+    dead: boolean;
 };
 
 export function create({ pattern, sy, dy, frequency, color }: Spawn): Enemy {
@@ -44,10 +45,15 @@ export function create({ pattern, sy, dy, frequency, color }: Spawn): Enemy {
             time
         );
     }
-    return { x: from.x, y: from.y, w: 50, h: 50, color, tweenX, tweenY };
+    return { x: from.x, y: from.y, w: 50, h: 50, color, tweenX, tweenY, dead: false };
+}
+
+export function die(enemy: Enemy) {
+    enemy.dead = true;
 }
 
 export function update(enemy: Enemy): void {
+    if (enemy.dead) return;
     enemy.x = enemy.tweenX();
     enemy.y = enemy.tweenY();
 }
@@ -57,5 +63,6 @@ export function load(): Enemy[] {
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {
+    if (enemy.dead) return;
     drawRect(renderer, enemy, enemy.color);
 }
