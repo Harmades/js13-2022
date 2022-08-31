@@ -1,51 +1,52 @@
+import { cos, PI, sin } from "./alias";
+import { rand, randRange } from "./rand";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { Pattern, Spawn, Spawns } from "./spawn";
-import { createTween, linear, rectangular, sine, triangle } from "./tween";
-import { create as createVector } from "./vector";
+import { Speed } from "./speed";
+import { Pattern, Spawn, Spawns } from "./wave";
 
-export type Enemy = Rectangle & {
-    tweenX: () => number;
-    tweenY: () => number;
-    color: string;
-    dead: boolean;
-};
+export enum Direction {
+    Up,
+    Left,
+    Right,
+    Down,
+}
 
-export function create({ pattern, sy, dy, frequency, color }: Spawn): Enemy {
-    const time = 4;
-    const from = createVector(Settings.width, sy);
-    const to = createVector(0, dy);
-    let tweenX = createTween(from.x, to.x, linear, time);
-    let tweenY = (): number => 0;
-    if (pattern == Pattern.Circular) {
-        tweenY = createTween(
-            from.y,
-            to.y,
-            (x: number): number => 0.5 * (1 + sine(x, 1, frequency as number)),
-            time
-        );
-    }
-    if (pattern == Pattern.Straight) {
-        tweenY = createTween(from.y, to.y, linear, time);
-    }
-    if (pattern == Pattern.Triangle) {
-        tweenY = createTween(
-            from.y,
-            to.y,
-            (x: number): number => 0.5 * (1 + triangle(x, 1, frequency as number)),
-            time
-        );
-    }
-    if (pattern == Pattern.Rectangle) {
-        tweenY = createTween(
-            from.y,
-            to.y,
-            (x: number): number => 0.5 * (1 + rectangular(x, 1, frequency as number)),
-            time
-        );
-    }
-    return { x: from.x, y: from.y, w: 50, h: 50, color, tweenX, tweenY, dead: false };
+export type Enemy = Rectangle &
+    Speed & {
+        sy: number;
+        color: string;
+        dead: boolean;
+        pattern: Pattern;
+        amplitude?: number;
+        frequency?: number;
+        rx?: number;
+        ry?: number;
+        direction?: Direction;
+        target?: number;
+    };
+
+let t = 0;
+let d = 0;
+
+export function create({ pattern, sy: y, color, amplitude, frequency, rx, ry }: Spawn): Enemy {
+    return {
+        x: Settings.width,
+        y: y,
+        sy: y,
+        dx: 0,
+        dy: 0,
+        w: 50,
+        h: 50,
+        pattern,
+        color,
+        dead: false,
+        amplitude,
+        frequency,
+        rx,
+        ry,
+    };
 }
 
 export function die(enemy: Enemy) {
@@ -53,9 +54,71 @@ export function die(enemy: Enemy) {
 }
 
 export function update(enemy: Enemy): void {
+    const frequency = enemy.frequency as number;
+    const amplitude = enemy.amplitude as number;
+    t += Settings.delta;
     if (enemy.dead) return;
-    enemy.x = enemy.tweenX();
-    enemy.y = enemy.tweenY();
+    if (enemy.pattern == Pattern.Circular) {
+        enemy.dx =
+            2 * PI * frequency * amplitude * cos(2 * PI * frequency * t) - Settings.width / 4;
+        enemy.dy = 2 * PI * frequency * amplitude * sin(2 * PI * frequency * t);
+    }
+    if (enemy.pattern == Pattern.Rectangular) {
+        const target = enemy.target as number;
+        if (enemy.direction == null) {
+            enemy.direction = Direction.Left;
+            enemy.target = randRange(50, 150);
+        }
+        if (enemy.direction == Direction.Left) {
+            if (d >= target) {
+                enemy.direction = rand(Direction.Up, Direction.Down);
+                d = 0;
+                enemy.target = randRange(50, 150);
+            }
+            enemy.dx = -Settings.width / 4;
+            enemy.dy = 0;
+            d += -enemy.dx * Settings.delta;
+        }
+        if (enemy.direction == Direction.Right) {
+        }
+        if (enemy.direction == Direction.Up) {
+            if (d >= target) {
+                enemy.direction = Direction.Left;
+                enemy.target = randRange(50, 150);
+                d = 0;
+            }
+            enemy.dy = -Settings.width / 8;
+            enemy.dx = 0;
+            d += -enemy.dy * Settings.delta;
+        }
+        if (enemy.direction == Direction.Down) {
+            if (d >= target) {
+                enemy.direction = Direction.Left;
+                enemy.target = randRange(50, 150);
+                d = 0;
+            }
+            enemy.dy = Settings.width / 8;
+            enemy.dx = 0;
+            d += enemy.dy * Settings.delta;
+        }
+    }
+    if (enemy.pattern == Pattern.Triangular) {
+        if (enemy.y >= enemy.sy + amplitude) {
+            enemy.dy = -4 * amplitude * frequency;
+        }
+        if (enemy.dy == 0 || enemy.y <= enemy.sy - amplitude) {
+            enemy.dy = 4 * amplitude * frequency;
+        }
+        enemy.dx = -Settings.width / 4;
+    }
+    if (enemy.pattern == Pattern.Straight) {
+        enemy.dx = -Settings.width / 4;
+    }
+
+    console.log(d);
+
+    enemy.x += enemy.dx * Settings.delta;
+    enemy.y += enemy.dy * Settings.delta;
 }
 
 export function load(): Enemy[] {

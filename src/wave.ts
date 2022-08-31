@@ -1,44 +1,45 @@
 export enum Pattern {
     Straight,
-    Triangle,
+    Triangular,
     Circular,
-    Rectangle,
+    Rectangular,
 }
 
 export type Spawn = {
     pattern: Pattern;
     sy: number;
-    dy: number;
-    frequency?: number;
     color: string;
+    // Circular
+    amplitude?: number;
+    frequency?: number;
+    // Rectangular
+    rx?: number;
+    ry?: number;
 };
 
 export const Spawns: Spawn[] = [
     {
         pattern: Pattern.Straight,
         sy: 100,
-        dy: 100,
         color: "#FFF000",
     },
     {
-        pattern: Pattern.Triangle,
+        pattern: Pattern.Triangular,
         sy: 150,
-        dy: 250,
-        frequency: 4,
+        amplitude: 50,
+        frequency: 0.5,
         color: "#AAAAAA",
     },
     {
         pattern: Pattern.Circular,
         sy: 300,
-        dy: 400,
-        frequency: 4,
+        frequency: 0.25,
+        amplitude: 200,
         color: "#000000",
     },
     {
-        pattern: Pattern.Rectangle,
+        pattern: Pattern.Rectangular,
         sy: 450,
-        dy: 550,
-        frequency: 4,
         color: "#AF5BE6",
     },
 ];

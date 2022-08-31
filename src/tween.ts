@@ -1,4 +1,4 @@
-import { asin, PI, pow, sign, sin, sqrt } from "./alias";
+import { asin, cos, PI, pow, sign, sin, sqrt } from "./alias";
 import { Settings } from "./settings";
 
 export type TweenProps = {
@@ -35,6 +35,10 @@ export function linear(x: number): number {
 
 export function sine(x: number, amplitude: number, frequency: number): number {
     return amplitude * sin(2 * PI * frequency * x);
+}
+
+export function cosine(x: number, amplitude: number, frequency: number): number {
+    return amplitude * cos(2 * PI * frequency * x);
 }
 
 export function triangle(x: number, amplitude: number, frequency: number): number {
