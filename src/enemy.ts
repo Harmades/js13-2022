@@ -1,10 +1,9 @@
 import { cos, PI, sin } from "./alias";
-import { rand, randRange } from "./rand";
+import { rand, randRange } from "./random";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
-import { Pattern, Spawn, Spawns } from "./wave";
 
 export enum Direction {
     Up,
@@ -13,25 +12,50 @@ export enum Direction {
     Down,
 }
 
+export enum Pattern {
+    Straight,
+    Triangular,
+    Circular,
+    Rectangular,
+}
+
 export type Enemy = Rectangle &
-    Speed &
-    Spawn & {
+    Speed & {
         dead: boolean;
         elapsedTime: number;
         direction?: Direction;
         target?: number;
         distance: number;
+        pattern: Pattern;
+        sy: number;
+        time: number;
+        color: string;
+        // Circular
+        amplitude?: number;
+        frequency?: number;
+        // Rectangular
+        rx?: number;
+        ry?: number;
     };
 
-export function create({ pattern, sy, color, time, amplitude, frequency, rx, ry }: Spawn): Enemy {
+export function create(
+    sy: number,
+    pattern: Pattern,
+    color: string,
+    time: number,
+    amplitude: number,
+    frequency: number,
+    rx: number,
+    ry: number
+): Enemy {
     return {
         x: Settings.width,
         y: sy,
         sy,
         dx: 0,
         dy: 0,
-        w: 50,
-        h: 50,
+        w: Settings.enemyWidth,
+        h: Settings.enemyHeight,
         pattern,
         time,
         color,
@@ -110,10 +134,6 @@ export function update(enemy: Enemy): void {
 
     enemy.x += enemy.dx * Settings.delta;
     enemy.y += enemy.dy * Settings.delta;
-}
-
-export function load(): Enemy[] {
-    return Spawns.map((s: Spawn) => create(s));
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {

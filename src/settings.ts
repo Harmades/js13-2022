@@ -10,6 +10,9 @@ export const Settings = {
     playerBulletSpeedX: 800,
     playerBulletSpeedY: 800,
 
+    enemyWidth: 50,
+    enemyHeight: 50,
+
     engineTimeResolution: 1,
 
     epsilon: 0.1,
