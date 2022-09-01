@@ -26,7 +26,7 @@ export function render(bullet: Bullet, renderer: Renderer): void {
 export function fire(bullet: Bullet, dest: Vector) {
     bullet.x = dest.x;
     bullet.y = dest.y;
-    bullet.dx = 200;
+    bullet.dx = Settings.playerBulletSpeedX;
     bullet.dy = 0;
     bullet.isActive = true;
 }

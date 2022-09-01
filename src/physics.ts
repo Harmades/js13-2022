@@ -1,6 +1,6 @@
 import { sign } from "./alias";
 import { free } from "./bullet";
-import { die as enemyDie, Enemy } from "./enemy";
+import { die as enemyDie, Enemies, getActiveEnemies, reset as resetEnemies } from "./enemies";
 import { Player, reset as resetPlayer } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
 import { Vector } from "./vector";
@@ -22,18 +22,19 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
     };
 }
 
-export function update(player: Player, enemies: Enemy[]): void {
-    for (let enemy of enemies) {
+export function update(player: Player, enemies: Enemies): void {
+    for (let enemy of getActiveEnemies(enemies)) {
         for (let bullet of player.bullets) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
             if (bulletEnemyCollision != null) {
                 free(bullet);
-                enemyDie(enemy);
+                enemyDie(enemy, enemies);
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
             resetPlayer(player);
+            resetEnemies(enemies);
         }
     }
 }

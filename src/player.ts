@@ -10,7 +10,6 @@ import { Speed } from "./speed";
 import * as Vector from "./vector";
 
 let image: HTMLImageElement | null = null;
-let speed = 100;
 const width = 50;
 const height = 50;
 const spaceInput = createReleasedKeyPress("space");
@@ -27,9 +26,9 @@ export type Player = Rectangle &
 export function create(): Player {
     image = loadImage(logo);
     const player = {
-        x: 50,
+        x: width,
         dx: 0,
-        y: 50,
+        y: Settings.height / 2,
         dy: 0,
         w: width,
         h: height,
@@ -58,10 +57,10 @@ export function shoot(player: Player): void {
 export function update(player: Player) {
     let dx = 0,
         dy = 0;
-    if (input.left) dx += -speed;
-    if (input.right) dx += speed;
-    if (input.up) dy += -speed;
-    if (input.down) dy += speed;
+    if (input.left) dx += -Settings.playerSpeedX;
+    if (input.right) dx += Settings.playerSpeedX;
+    if (input.up) dy += -Settings.playerSpeedY;
+    if (input.down) dy += Settings.playerSpeedY;
     if (spaceInput()) shoot(player);
     player.dx = dx;
     player.dy = dy;
