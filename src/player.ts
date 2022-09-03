@@ -1,15 +1,12 @@
-import logo from "../assets/logo.png";
-
 import * as Bullet from "./bullet";
 import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
-import { drawRect, loadImage, Renderer } from "./renderer";
+import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, play_cowboy, stop_song } from "./sound";
 import { Speed } from "./speed";
 import * as Vector from "./vector";
 
-let image: HTMLImageElement | null = null;
 const width = 50;
 const height = 50;
 const spaceInput = createReleasedKeyPress("space");
@@ -24,7 +21,6 @@ export type Player = Rectangle &
     };
 
 export function create(): Player {
-    image = loadImage(logo);
     const player = {
         x: width,
         dx: 0,
@@ -97,7 +93,6 @@ export function reset(player: Player): void {
 }
 
 export function render(renderer: Renderer, player: Player) {
-    if (!image?.complete) return;
     drawRect(renderer, player);
     for (let bullet of player.bullets) {
         if (bullet.isActive) {

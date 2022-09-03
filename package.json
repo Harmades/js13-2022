@@ -1,20 +1,20 @@
 {
-  "name": "js13-2022",
-  "version": "1.0.0",
-  "repository": "https://github.com/Harmades/js13k-2022.git",
-  "author": "Adrian Lissot",
-  "license": "MIT",
-  "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url ./ && node zip.js"
-  },
-  "devDependencies": {
-    "@parcel/compressor-gzip": "^2.6.2",
-    "@parcel/reporter-bundle-analyzer": "^2.6.2",
-    "advzip-bin": "^2.0.0",
-    "archiver": "^5.3.1",
-    "chalk": "^4.0.1",
-    "parcel": "^2.6.2",
-    "prettier": "^2.7.1"
-  }
+    "name": "js13-2022",
+    "version": "1.0.0",
+    "repository": "https://github.com/Harmades/js13k-2022.git",
+    "author": "Adrian Lissot",
+    "license": "MIT",
+    "scripts": {
+        "start": "parcel src/index.html",
+        "build": "parcel build src/index.html --no-source-maps --public-url ./ && node zip.js"
+    },
+    "devDependencies": {
+        "@parcel/compressor-gzip": "^2.6.2",
+        "@parcel/reporter-bundle-analyzer": "^2.6.2",
+        "advzip-bin": "^2.0.0",
+        "archiver": "^5.3.1",
+        "chalk": "^4.0.1",
+        "parcel": "^2.6.2",
+        "prettier": "^2.7.1"
+    }
 }

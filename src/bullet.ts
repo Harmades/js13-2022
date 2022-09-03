@@ -20,6 +20,7 @@ export function update(bullet: Bullet): void {
 }
 
 export function render(renderer: Renderer, bullet: Bullet): void {
+    if (!bullet.isActive) return;
     drawRect(renderer, bullet);
 }
 
@@ -33,4 +34,8 @@ export function fire(bullet: Bullet, dest: Vector, speed: number) {
 
 export function free(bullet: Bullet): void {
     bullet.isActive = false;
+    bullet.dx = 0;
+    bullet.dy = 0;
+    bullet.x = 0;
+    bullet.y = 0;
 }

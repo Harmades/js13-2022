@@ -41,6 +41,7 @@ export function getActiveEnemies(enemies: Enemies): Enemy[] {
 export function nextWave(enemies: Enemies): void {
     enemies.entities = createWave(WaveDifficulty.Easy).enemies;
     enemies.deadCount = 0;
+    elapsedTime = 0;
 }
 
 export function reset(enemies: Enemies): void {

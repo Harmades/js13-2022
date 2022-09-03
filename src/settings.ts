@@ -8,7 +8,7 @@ export const Settings = {
     playerSpeedY: 300,
 
     playerBulletSpeedX: 800,
-    enemyBulletSpeedX: 2,
+    enemyBulletSpeedX: 200,
     enemyShootFrequency: 1,
     enemyBulletPoolSize: 1000,
 
@@ -16,7 +16,7 @@ export const Settings = {
     enemyHeight: 50,
 
     waveEasyTimeMin: 4,
-    waveEasyTimeMax: 8,
+    waveEasyTimeMax: 6,
     waveEasyAmplitudeMin: 10,
     waveEasyAmplitudeMax: 50,
     waveEasyFrequencyMin: 0.1,
@@ -29,7 +29,7 @@ export const Settings = {
     waveEasySyMax: 640 - 50,
 
     waveMediumTimeMin: 4,
-    waveMediumTimeMax: 8,
+    waveMediumTimeMax: 6,
     waveMediumAmplitudeMin: 10,
     waveMediumAmplitudeMax: 50,
     waveMediumFrequencyMin: 0.1,
@@ -42,7 +42,7 @@ export const Settings = {
     waveMediumSyMax: 640 - 50,
 
     waveHardTimeMin: 4,
-    waveHardTimeMax: 8,
+    waveHardTimeMax: 6,
     waveHardAmplitudeMin: 10,
     waveHardAmplitudeMax: 50,
     waveHardFrequencyMin: 0.1,
