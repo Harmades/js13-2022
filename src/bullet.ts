@@ -19,14 +19,14 @@ export function update(bullet: Bullet): void {
     bullet.y += bullet.dy * Settings.delta;
 }
 
-export function render(bullet: Bullet, renderer: Renderer): void {
+export function render(renderer: Renderer, bullet: Bullet): void {
     drawRect(renderer, bullet);
 }
 
-export function fire(bullet: Bullet, dest: Vector) {
+export function fire(bullet: Bullet, dest: Vector, speed: number) {
     bullet.x = dest.x;
     bullet.y = dest.y;
-    bullet.dx = Settings.playerBulletSpeedX;
+    bullet.dx = speed;
     bullet.dy = 0;
     bullet.isActive = true;
 }

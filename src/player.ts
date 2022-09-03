@@ -51,7 +51,7 @@ export function create(): Player {
 export function shoot(player: Player): void {
     let bullet: Bullet.Bullet | undefined = player.bullets.find((b) => !b.isActive);
     if (bullet == undefined) return;
-    Bullet.fire(bullet, Vector.add(player, shootPosition));
+    Bullet.fire(bullet, Vector.add(player, shootPosition), Settings.playerBulletSpeedX);
 }
 
 export function update(player: Player) {
@@ -101,7 +101,7 @@ export function render(renderer: Renderer, player: Player) {
     drawRect(renderer, player);
     for (let bullet of player.bullets) {
         if (bullet.isActive) {
-            Bullet.render(bullet, renderer);
+            Bullet.render(renderer, bullet);
         }
     }
 }

@@ -42,32 +42,38 @@ export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
     const color = `#${randColor()}`;
     if (difficulty == WaveDifficulty.Easy) {
         const pattern = rand(Pattern.Straight, Pattern.Triangular);
-        const amplitude = randRange(10, 51);
-        const frequency = randRange(0.1, 0.25);
-        const rx = randRange(100, 201);
-        const ry = rx;
-        const sy = randRange(0, Settings.height - Settings.enemyHeight);
-        const time = randRange(4, 8);
+        const amplitude = randRange(Settings.waveEasyAmplitudeMin, Settings.waveEasyAmplitudeMax);
+        const frequency = randRange(Settings.waveEasyFrequencyMin, Settings.waveEasyFrequencyMax);
+        const rx = randRange(Settings.waveEasyRxMin, Settings.waveEasyRxMax);
+        const ry = randRange(Settings.waveEasyRyMin, Settings.waveEasyRyMax);
+        const sy = randRange(Settings.waveEasySyMin, Settings.waveEasySyMax);
+        const time = randRange(Settings.waveEasyTimeMin, Settings.waveEasyTimeMax);
         return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
     }
     if (difficulty == WaveDifficulty.Medium) {
         const pattern = rand(Pattern.Straight, Pattern.Triangular, Pattern.Rectangular);
-        const amplitude = randRange(10, 51);
-        const frequency = randRange(0.1, 0.25);
-        const rx = randRange(100, 201);
-        const ry = rx;
-        const sy = randRange(0, Settings.height - Settings.enemyHeight);
-        const time = randRange(4, 8);
+        const amplitude = randRange(
+            Settings.waveMediumAmplitudeMin,
+            Settings.waveMediumAmplitudeMax
+        );
+        const frequency = randRange(
+            Settings.waveMediumFrequencyMin,
+            Settings.waveMediumFrequencyMax
+        );
+        const rx = randRange(Settings.waveMediumRxMin, Settings.waveMediumRxMax);
+        const ry = randRange(Settings.waveMediumRyMin, Settings.waveMediumRyMax);
+        const sy = randRange(Settings.waveMediumSyMin, Settings.waveMediumSyMax);
+        const time = randRange(Settings.waveMediumTimeMin, Settings.waveMediumTimeMax);
         return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
     }
     if (difficulty == WaveDifficulty.Hard) {
         const pattern = rand(Pattern.Triangular, Pattern.Rectangular, Pattern.Circular);
-        const amplitude = randRange(10, 51);
-        const frequency = randRange(0.1, 0.25);
-        const rx = randRange(100, 201);
-        const ry = rx;
-        const sy = randRange(0, Settings.height - Settings.enemyHeight);
-        const time = randRange(4, 8);
+        const amplitude = randRange(Settings.waveHardAmplitudeMin, Settings.waveHardAmplitudeMax);
+        const frequency = randRange(Settings.waveHardFrequencyMin, Settings.waveHardFrequencyMax);
+        const rx = randRange(Settings.waveHardRxMin, Settings.waveHardRxMax);
+        const ry = randRange(Settings.waveHardRyMin, Settings.waveHardRyMax);
+        const sy = randRange(Settings.waveHardSyMin, Settings.waveHardSyMax);
+        const time = randRange(Settings.waveHardTimeMin, Settings.waveHardTimeMax);
         return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
     }
 

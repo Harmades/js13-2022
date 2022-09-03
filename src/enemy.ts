@@ -1,9 +1,17 @@
 import { cos, PI, sin } from "./alias";
+import {
+    Bullet,
+    create as createBullet,
+    fire as fireBullet,
+    render as renderBullet,
+    update as updateBullet,
+} from "./bullet";
 import { rand, randRange } from "./random";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
+import { add as addVector, create as createVector } from "./vector";
 
 export enum Direction {
     Up,
@@ -19,10 +27,16 @@ export enum Pattern {
     Rectangular,
 }
 
+const bullets: Bullet[] = [];
+for (let i = 0; i < Settings.enemyBulletPoolSize; i++) {
+    bullets.push(createBullet());
+}
+
 export type Enemy = Rectangle &
     Speed & {
         dead: boolean;
         elapsedTime: number;
+        shootElapsedTime: number;
         direction?: Direction;
         target?: number;
         distance: number;
@@ -65,6 +79,7 @@ export function create(
         rx,
         ry,
         elapsedTime: 0,
+        shootElapsedTime: 0,
         distance: 0,
     };
 }
@@ -75,6 +90,7 @@ export function update(enemy: Enemy): void {
     const amplitude = enemy.amplitude as number;
     const speedX = Settings.width / enemy.time;
     enemy.elapsedTime += Settings.delta;
+    enemy.shootElapsedTime += Settings.delta;
     if (enemy.pattern == Pattern.Circular) {
         enemy.dx =
             2 * PI * frequency * amplitude * cos(2 * PI * frequency * enemy.elapsedTime) - speedX;
@@ -134,9 +150,27 @@ export function update(enemy: Enemy): void {
 
     enemy.x += enemy.dx * Settings.delta;
     enemy.y += enemy.dy * Settings.delta;
+
+    if (enemy.shootElapsedTime >= 1 / Settings.enemyShootFrequency) {
+        enemy.shootElapsedTime = 0;
+        const bullet = bullets.find((b) => !b.isActive);
+        if (bullet == undefined) return;
+        fireBullet(
+            bullet,
+            addVector(enemy, createVector(0, Settings.enemyHeight / 2)),
+            enemy.dx - Settings.enemyBulletSpeedX
+        );
+    }
+
+    for (let bullet of bullets) {
+        updateBullet(bullet);
+    }
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {
     if (enemy.dead) return;
     drawRect(renderer, enemy, enemy.color);
+    for (let bullet of bullets) {
+        renderBullet(renderer, bullet);
+    }
 }
