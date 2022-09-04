@@ -10,13 +10,24 @@ export type Bullet = Rectangle &
     };
 
 export function create(): Bullet {
-    return { x: 0, y: 0, w: 5, h: 5, dx: 0, dy: 0, isActive: false };
+    return {
+        x: 0,
+        y: 0,
+        w: Settings.bulletWidth,
+        h: Settings.bulletHeight,
+        dx: 0,
+        dy: 0,
+        isActive: false,
+    };
 }
 
 export function update(bullet: Bullet): void {
     if (!bullet.isActive) return;
     bullet.x += bullet.dx * Settings.delta;
     bullet.y += bullet.dy * Settings.delta;
+    // if (bullet.x <= -Settings.bulletWidth || bullet.x >= Settings.width) {
+    //     free(bullet);
+    // }
 }
 
 export function render(renderer: Renderer, bullet: Bullet): void {

@@ -6,11 +6,16 @@ export const Settings = {
 
     playerSpeedX: 300,
     playerSpeedY: 300,
+    playerWidth: 50,
+    playerHeight: 50,
 
     playerBulletSpeedX: 800,
     enemyBulletSpeedX: 200,
     enemyShootFrequency: 1,
     enemyBulletPoolSize: 1000,
+
+    bulletWidth: 5,
+    bulletHeight: 5,
 
     enemyWidth: 50,
     enemyHeight: 50,

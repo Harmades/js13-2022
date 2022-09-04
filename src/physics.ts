@@ -31,6 +31,13 @@ export function update(player: Player, enemies: Enemies): void {
                 enemyDie(enemy, enemies);
             }
         }
+        for (let bullet of enemy.bullets) {
+            const bulletPlayerCollision = getCollision(player, bullet);
+            if (bulletPlayerCollision != null) {
+                resetEnemies(enemies);
+                resetPlayer(player);
+            }
+        }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
             resetPlayer(player);

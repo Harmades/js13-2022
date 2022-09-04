@@ -1,3 +1,4 @@
+import { repeat } from "./array";
 import * as Bullet from "./bullet";
 import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
@@ -7,11 +8,9 @@ import { load, play_cowboy, stop_song } from "./sound";
 import { Speed } from "./speed";
 import * as Vector from "./vector";
 
-const width = 50;
-const height = 50;
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
-let shootPosition = Vector.create(width, height / 2);
+let shootPosition = Vector.create(Settings.playerWidth, Settings.playerHeight / 2);
 let isPlaying = false;
 let isAudioInitialized = false;
 
@@ -22,24 +21,13 @@ export type Player = Rectangle &
 
 export function create(): Player {
     const player = {
-        x: width,
+        x: Settings.playerWidth,
         dx: 0,
         y: Settings.height / 2,
         dy: 0,
-        w: width,
-        h: height,
-        bullets: [
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-            Bullet.create(),
-        ],
+        w: Settings.playerWidth,
+        h: Settings.playerHeight,
+        bullets: repeat(() => Bullet.create(), 50),
     };
     return player;
 }
@@ -76,6 +64,12 @@ export function update(player: Player) {
 
     player.x += player.dx * Settings.delta;
     player.y += player.dy * Settings.delta;
+    if (player.x <= 0) player.x = 0;
+    if (player.x >= Settings.width - Settings.playerWidth)
+        player.x = Settings.width - Settings.playerWidth;
+    if (player.y <= 0) player.y = 0;
+    if (player.y >= Settings.height - Settings.playerHeight)
+        player.y = Settings.height - Settings.playerHeight;
     updateBullets(player.bullets);
 }
 
@@ -86,8 +80,8 @@ function updateBullets(bullets: Bullet.Bullet[]): void {
 }
 
 export function reset(player: Player): void {
-    player.x = 0;
-    player.y = 0;
+    player.x = Settings.playerWidth;
+    player.y = Settings.height / 2;
     player.dx = 0;
     player.dy = 0;
 }

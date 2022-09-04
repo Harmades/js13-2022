@@ -83,6 +83,9 @@ export function create(
 }
 
 export function update(enemy: Enemy): void {
+    for (let bullet of enemy.bullets) {
+        updateBullet(bullet);
+    }
     if (enemy.dead) return;
     const frequency = enemy.frequency as number;
     const amplitude = enemy.amplitude as number;
@@ -159,16 +162,13 @@ export function update(enemy: Enemy): void {
             -speedX - Settings.enemyBulletSpeedX
         );
     }
-
-    for (let bullet of enemy.bullets) {
-        updateBullet(bullet);
-    }
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {
-    if (enemy.dead) return;
-    drawRect(renderer, enemy, enemy.color);
     for (let bullet of enemy.bullets) {
         renderBullet(renderer, bullet);
     }
+
+    if (enemy.dead) return;
+    drawRect(renderer, enemy, enemy.color);
 }
