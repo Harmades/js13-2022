@@ -20,6 +20,7 @@ export const Settings = {
     enemyWidth: 50,
     enemyHeight: 50,
 
+    waveEasyCount: 3,
     waveEasyTimeMin: 4,
     waveEasyTimeMax: 6,
     waveEasyAmplitudeMin: 10,
@@ -33,6 +34,7 @@ export const Settings = {
     waveEasySyMin: 0,
     waveEasySyMax: 640 - 50,
 
+    waveMediumCount: 3,
     waveMediumTimeMin: 4,
     waveMediumTimeMax: 6,
     waveMediumAmplitudeMin: 10,
@@ -46,6 +48,7 @@ export const Settings = {
     waveMediumSyMin: 0,
     waveMediumSyMax: 640 - 50,
 
+    waveHardCount: 3,
     waveHardTimeMin: 4,
     waveHardTimeMax: 6,
     waveHardAmplitudeMin: 10,

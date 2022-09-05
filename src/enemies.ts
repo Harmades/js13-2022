@@ -9,6 +9,7 @@ export type Enemies = {
 };
 
 let elapsedTime = 0;
+let currentWave = 1;
 
 export function create(): Enemies {
     return {
@@ -39,12 +40,21 @@ export function getActiveEnemies(enemies: Enemies): Enemy[] {
 }
 
 export function nextWave(enemies: Enemies): void {
-    enemies.entities = createWave(WaveDifficulty.Easy).enemies;
+    currentWave++;
+    let difficulty: WaveDifficulty = WaveDifficulty.Easy;
+    if (currentWave > 3 && currentWave <= 6) {
+        difficulty = WaveDifficulty.Medium;
+    }
+    if (currentWave > 6) {
+        difficulty = WaveDifficulty.Hard;
+    }
+    enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
     elapsedTime = 0;
 }
 
 export function reset(enemies: Enemies): void {
+    currentWave = 1;
     nextWave(enemies);
 }
 
