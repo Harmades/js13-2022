@@ -35,7 +35,7 @@ export function create(): Player {
 export function shoot(player: Player): void {
     let bullet: Bullet.Bullet | undefined = player.bullets.find((b) => !b.isActive);
     if (bullet == undefined) return;
-    Bullet.fire(bullet, Vector.add(player, shootPosition), Settings.playerBulletSpeedX);
+    Bullet.fire(bullet, Vector.add(player, shootPosition), Vector.create(Settings.playerBulletSpeedX, 0));
 }
 
 export function update(player: Player) {
