@@ -151,13 +151,14 @@ export function update(enemy: Enemy): void {
 
     if (enemy.shootElapsedTime >= 1 / Settings.enemyShootFrequency) {
         enemy.shootElapsedTime = 0;
+		const bulletSpeedX = -speedX - Settings.enemyBulletSpeedX as number;
         let bullet = enemy.bullets.find((b) => !b.isActive);
 		if (bullet == undefined) return;
 		if(enemy.bulletPattern == BulletPattern.Single || enemy.bulletPattern == BulletPattern.Triple) {
 			fireBullet(
 				bullet,
 				addVector(enemy, createVector(0, Settings.enemyHeight / 2)),
-				createVector(-speedX - Settings.enemyBulletSpeedX, 0));
+				createVector(bulletSpeedX, 0));
 			bullet = enemy.bullets.find((b) => !b.isActive);
 		}
 		if(enemy.bulletPattern == BulletPattern.Double || enemy.bulletPattern == BulletPattern.Triple) {
@@ -165,13 +166,13 @@ export function update(enemy: Enemy): void {
 			fireBullet(
 				bullet,
 				addVector(enemy, createVector(0, Settings.enemyHeight / 4)),
-				createVector(-speedX - Settings.enemyBulletSpeedX, - Settings.enemyBulletSpeedY));
+				createVector(bulletSpeedX, - Settings.enemyBulletSpeedY));
 			bullet = enemy.bullets.find((b) => !b.isActive);
 			if (bullet == undefined) return;
 			fireBullet(
 				bullet,
 				addVector(enemy, createVector(0, Settings.enemyHeight*3/4)),
-				createVector(-speedX - Settings.enemyBulletSpeedX, + Settings.enemyBulletSpeedY));
+				createVector(bulletSpeedX, + Settings.enemyBulletSpeedY));
 		}
     }
 }

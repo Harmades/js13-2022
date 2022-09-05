@@ -1,4 +1,4 @@
-import { create as createEnemy, Enemy, Pattern } from "./enemy";
+import { create as createEnemy, Enemy, Pattern, BulletPattern } from "./enemy";
 import { rand, randColor, randRange, randRangeInt } from "./random";
 import { Renderer } from "./renderer";
 import { Settings } from "./settings";
@@ -48,7 +48,8 @@ export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
         const ry = randRange(Settings.waveEasyRyMin, Settings.waveEasyRyMax);
         const sy = randRange(Settings.waveEasySyMin, Settings.waveEasySyMax);
         const time = randRange(Settings.waveEasyTimeMin, Settings.waveEasyTimeMax);
-        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
+		const bulletPattern = randRangeInt(BulletPattern.Single, BulletPattern.Double + 1);
+        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry, bulletPattern);
     }
     if (difficulty == WaveDifficulty.Medium) {
         const pattern = rand(Pattern.Straight, Pattern.Triangular, Pattern.Rectangular);
@@ -64,7 +65,8 @@ export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
         const ry = randRange(Settings.waveMediumRyMin, Settings.waveMediumRyMax);
         const sy = randRange(Settings.waveMediumSyMin, Settings.waveMediumSyMax);
         const time = randRange(Settings.waveMediumTimeMin, Settings.waveMediumTimeMax);
-        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
+		const bulletPattern = randRangeInt(BulletPattern.Single, BulletPattern.Triple + 1);
+        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry, bulletPattern);
     }
     if (difficulty == WaveDifficulty.Hard) {
         const pattern = rand(Pattern.Triangular, Pattern.Rectangular, Pattern.Circular);
@@ -74,7 +76,8 @@ export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
         const ry = randRange(Settings.waveHardRyMin, Settings.waveHardRyMax);
         const sy = randRange(Settings.waveHardSyMin, Settings.waveHardSyMax);
         const time = randRange(Settings.waveHardTimeMin, Settings.waveHardTimeMax);
-        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry);
+		const bulletPattern = randRangeInt(BulletPattern.Double, BulletPattern.Triple + 1);
+        return createEnemy(sy, pattern, color, time, amplitude, frequency, rx, ry, bulletPattern);
     }
 
     throw new Error();
