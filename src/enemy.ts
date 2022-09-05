@@ -7,19 +7,13 @@ import {
     render as renderBullet,
     update as updateBullet,
 } from "./bullet";
-import { rand, randRange } from "./random";
+import { Direction } from "./direction";
+import { rand } from "./random";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { add as addVector, create as createVector } from "./vector";
-
-export enum Direction {
-    Up,
-    Left,
-    Right,
-    Down,
-}
 
 export enum Pattern {
     Straight,
@@ -33,19 +27,18 @@ export type Enemy = Rectangle &
         dead: boolean;
         elapsedTime: number;
         shootElapsedTime: number;
-        direction?: Direction;
-        target?: number;
+        direction: Direction;
         distance: number;
         pattern: Pattern;
         sy: number;
         time: number;
         color: string;
         // Circular
-        amplitude?: number;
-        frequency?: number;
+        amplitude: number;
+        frequency: number;
         // Rectangular
-        rx?: number;
-        ry?: number;
+        rx: number;
+        ry: number;
         bullets: Bullet[];
     };
 
@@ -79,6 +72,7 @@ export function create(
         shootElapsedTime: 0,
         distance: 0,
         bullets: repeat(() => createBullet(), 50),
+        direction: Direction.Left,
     };
 }
 
@@ -98,16 +92,13 @@ export function update(enemy: Enemy): void {
         enemy.dy = 2 * PI * frequency * amplitude * sin(2 * PI * frequency * enemy.elapsedTime);
     }
     if (enemy.pattern == Pattern.Rectangular) {
-        const target = enemy.target as number;
         if (enemy.direction == null) {
             enemy.direction = Direction.Left;
-            enemy.target = randRange(50, 150);
         }
         if (enemy.direction == Direction.Left) {
-            if (enemy.distance >= target) {
+            if (enemy.distance >= enemy.rx) {
                 enemy.direction = rand(Direction.Up, Direction.Down);
                 enemy.distance = 0;
-                enemy.target = randRange(50, 150);
             }
             enemy.dx = -speedX;
             enemy.dy = 0;
@@ -116,9 +107,8 @@ export function update(enemy: Enemy): void {
         if (enemy.direction == Direction.Right) {
         }
         if (enemy.direction == Direction.Up) {
-            if (enemy.distance >= target) {
+            if (enemy.distance >= enemy.ry) {
                 enemy.direction = Direction.Left;
-                enemy.target = randRange(50, 150);
                 enemy.distance = 0;
             }
             enemy.dy = -speedX / 2;
@@ -126,9 +116,8 @@ export function update(enemy: Enemy): void {
             enemy.distance += -enemy.dy * Settings.delta;
         }
         if (enemy.direction == Direction.Down) {
-            if (enemy.distance >= target) {
+            if (enemy.distance >= enemy.ry) {
                 enemy.direction = Direction.Left;
-                enemy.target = randRange(50, 150);
                 enemy.distance = 0;
             }
             enemy.dy = speedX / 2;
