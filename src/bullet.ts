@@ -35,11 +35,11 @@ export function render(renderer: Renderer, bullet: Bullet): void {
     drawRect(renderer, bullet);
 }
 
-export function fire(bullet: Bullet, dest: Vector, speed: number) {
+export function fire(bullet: Bullet, dest: Vector, speed: Vector) {
     bullet.x = dest.x;
     bullet.y = dest.y;
-    bullet.dx = speed;
-    bullet.dy = 0;
+    bullet.dx = speed.x;
+    bullet.dy = speed.y;
     bullet.isActive = true;
 }
 
