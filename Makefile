@@ -7,7 +7,7 @@ HTML = $(wildcard $(ROOT_DIR)/src/*.html)
 run: $(SRC) $(HTML) $(ROOT_DIR)/.install_done
 	npm run start
 
-build: $(SRC) $(HTML) $(ROOT_DIR)/.install_done
+build: $(SRC) $(HTML) $(ROOT_DIR)/.install_done clean
 	npm run build
 
 $(ROOT_DIR)/.install_done:
