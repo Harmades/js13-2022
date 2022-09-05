@@ -22,6 +22,12 @@ export enum Pattern {
     Rectangular,
 }
 
+export enum BulletPattern {
+  Single, /* Straight line */
+  Double, /* 45 deg angle */
+  Triple, /* single + double */
+}
+
 export type Enemy = Rectangle &
     Speed & {
         dead: boolean;
@@ -40,6 +46,7 @@ export type Enemy = Rectangle &
         rx: number;
         ry: number;
         bullets: Bullet[];
+	    bulletPattern: BulletPattern;
     };
 
 export function create(
@@ -50,8 +57,8 @@ export function create(
     amplitude: number,
     frequency: number,
     rx: number,
-    ry: number
-): Enemy {
+    ry: number,
+    bulletPattern: BulletPattern = BulletPatternSingle): Enemy {
     return {
         x: Settings.width,
         y: sy,
@@ -73,6 +80,7 @@ export function create(
         distance: 0,
         bullets: repeat(() => createBullet(), 50),
         direction: Direction.Left,
+	    bulletPattern: bulletPattern
     };
 }
 
@@ -143,13 +151,28 @@ export function update(enemy: Enemy): void {
 
     if (enemy.shootElapsedTime >= 1 / Settings.enemyShootFrequency) {
         enemy.shootElapsedTime = 0;
-        const bullet = enemy.bullets.find((b) => !b.isActive);
-        if (bullet == undefined) return;
-        fireBullet(
-            bullet,
-            addVector(enemy, createVector(0, Settings.enemyHeight / 2)),
-            -speedX - Settings.enemyBulletSpeedX
-        );
+        let bullet = enemy.bullets.find((b) => !b.isActive);
+		if (bullet == undefined) return;
+		if(enemy.bulletPattern == BulletPattern.Single || enemy.bulletPattern == BulletPattern.Triple) {
+			fireBullet(
+				bullet,
+				addVector(enemy, createVector(0, Settings.enemyHeight / 2)),
+				createVector(-speedX - Settings.enemyBulletSpeedX, 0));
+			bullet = enemy.bullets.find((b) => !b.isActive);
+		}
+		if(enemy.bulletPattern == BulletPattern.Double || enemy.bulletPattern == BulletPattern.Triple) {
+			if (bullet == undefined) return;
+			fireBullet(
+				bullet,
+				addVector(enemy, createVector(0, Settings.enemyHeight / 4)),
+				createVector(-speedX - Settings.enemyBulletSpeedX, - Settings.enemyBulletSpeedY));
+			bullet = enemy.bullets.find((b) => !b.isActive);
+			if (bullet == undefined) return;
+			fireBullet(
+				bullet,
+				addVector(enemy, createVector(0, Settings.enemyHeight*3/4)),
+				createVector(-speedX - Settings.enemyBulletSpeedX, + Settings.enemyBulletSpeedY));
+		}
     }
 }
 
