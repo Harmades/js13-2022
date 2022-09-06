@@ -8,8 +8,8 @@ export function randRange(min: number, max: number): number {
 
 export function randRangeInt(min: number, max: number): number {
     min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    max = Math.floor(max) + 1;
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 export function randColor(): string {
