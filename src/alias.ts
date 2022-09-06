@@ -23,6 +23,10 @@ export function max(value1: number, value2: number) {
     return Math.max(value1, value2);
 }
 
+export function min(value1: number, value2: number) {
+    return Math.min(value1, value2);
+}
+
 export function cos(value: number): number {
     return Math.cos(value);
 }
