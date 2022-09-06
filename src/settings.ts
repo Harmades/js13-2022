@@ -25,6 +25,9 @@ export const Settings = {
     bossRyMin: 100,
     bossRyMax: 200,
     bossSpeed: 50,
+	bossBigBulletWidth: 25,
+	bossBigBulletHeight: 25,
+	bossBigBulletExplosionTick: 200,
 
     bulletWidth: 5,
     bulletHeight: 5,
