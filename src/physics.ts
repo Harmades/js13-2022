@@ -24,14 +24,14 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
 
 export function update(player: Player, enemies: Enemies): void {
     for (let enemy of getActiveEnemies(enemies)) {
-        for (let bullet of player.bullets) {
+        for (let bullet of player.bullets.bullets) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
             if (bulletEnemyCollision != null) {
                 free(bullet);
                 enemyDie(enemy, enemies);
             }
         }
-        for (let bullet of enemy.bullets) {
+        for (let bullet of enemy.bullets.bullets) {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
                 resetEnemies(enemies);

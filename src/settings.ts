@@ -9,6 +9,8 @@ export const Settings = {
     playerWidth: 50,
     playerHeight: 50,
     playerBulletSpeedX: 800,
+	playerBulletSpeedY: 100,
+	playerBulletsPoolSize: 200,
 
     enemyWidth: 50,
     enemyHeight: 50,

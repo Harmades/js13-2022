@@ -1,22 +1,31 @@
 import { repeat } from "./array";
 import * as Bullet from "./bullet";
+import {
+    Bullets,
+	Pattern as BulletsPattern,
+    create as createBullets,
+    fire as fireBullets,
+    render as renderBullets,
+    update as updateBullets,
+} from "./bullets";
 import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, play_cowboy, stop_song } from "./sound";
 import { Speed } from "./speed";
-import * as Vector from "./vector";
+import { create as createVector,
+		 add as addVector} from "./vector";
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
-let shootPosition = Vector.create(Settings.playerWidth, Settings.playerHeight / 2);
+let shootPosition = createVector(Settings.playerWidth, Settings.playerHeight / 2);
 let isPlaying = false;
 let isAudioInitialized = false;
 
 export type Player = Rectangle &
     Speed & {
-        bullets: Bullet.Bullet[];
+        bullets: Bullets
     };
 
 export function create(): Player {
@@ -27,15 +36,21 @@ export function create(): Player {
         dy: 0,
         w: Settings.playerWidth,
         h: Settings.playerHeight,
-        bullets: repeat(() => Bullet.create(), 50),
+        bullets: createBullets(Settings.playerBulletsPoolSize,
+							   Settings.playerBulletSpeedX,
+							   Settings.playerBulletSpeedY),
+		bulletsPattern: BulletsPattern.Single,
     };
     return player;
 }
 
 export function shoot(player: Player): void {
-    let bullet: Bullet.Bullet | undefined = player.bullets.find((b) => !b.isActive);
+    let bullet = player.bullets.bullets.find((b) => !b.isActive);;
     if (bullet == undefined) return;
-    Bullet.fire(bullet, Vector.add(player, shootPosition), Vector.create(Settings.playerBulletSpeedX, 0));
+    fireBullets(player.bullets,
+				player.dx + Settings.playerBulletSpeedX,
+				addVector(player, createVector(Settings.playerWidth, Settings.playerHeight/2)),
+				player.bulletsPattern);
 }
 
 export function update(player: Player) {
@@ -74,7 +89,7 @@ export function update(player: Player) {
 }
 
 function updateBullets(bullets: Bullet.Bullet[]): void {
-    for (let bullet of bullets) {
+    for (let bullet of bullets.bullets) {
         Bullet.update(bullet);
     }
 }
@@ -88,7 +103,7 @@ export function reset(player: Player): void {
 
 export function render(renderer: Renderer, player: Player) {
     drawRect(renderer, player);
-    for (let bullet of player.bullets) {
+    for (let bullet of player.bullets.bullets) {
         if (bullet.isActive) {
             Bullet.render(renderer, bullet);
         }
