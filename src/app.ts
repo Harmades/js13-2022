@@ -5,6 +5,7 @@ import * as Physics from "./physics";
 import * as Player from "./player";
 import * as Renderer from "./renderer";
 import { Settings } from "./settings";
+import * as UI from "./ui";
 
 let tickLength = Settings.engineTimeResolution;
 let lastTick = performance.now();
@@ -14,6 +15,7 @@ const player = Player.create();
 const boss = Boss.create();
 const enemies = Enemies.create();
 const renderer = Renderer.create();
+UI.create();
 
 function loop(tFrame: number): void {
     window.requestAnimationFrame((t) => loop(t));
