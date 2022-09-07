@@ -1,5 +1,6 @@
 const u = undefined;
 
+// @ts-ignore
 // zzfx() - the universal entry point -- returns a AudioBufferSourceNode
 let zzfx = (...t) => zzfxP(zzfxG(...t))
 
