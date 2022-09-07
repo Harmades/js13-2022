@@ -27,6 +27,7 @@ export type BossPattern = {
     shootCount: number[];
     shootFrequency: number[];
     shootSpeed: number[];
+    shootRandom: number[];
     repeat: number;
     resetPosOnRepeat: boolean;
 };
@@ -48,13 +49,14 @@ export type Boss = Rectangle &
 const spray: BossPattern = {
     duration: 10,
     tx: Settings.width * 0.9 - Settings.bossWidth,
-    ty: Settings.height - Settings.bossHeight,
+    ty: Settings.height * 0.8 - Settings.bossHeight,
     dx: -50,
     dy: -20,
     shootPattern: [BulletsPattern.Sixtuple, BulletsPattern.Quintuple, BulletsPattern.Triple],
     shootCount: [2, 2, 2],
     shootFrequency: [4, 3, 2],
     shootSpeed: [35, 40, 55],
+    shootRandom: [150, 0, 50],
     repeat: 3,
     resetPosOnRepeat: false,
 }
@@ -65,12 +67,14 @@ const straight: BossPattern = {
     tx: Settings.width * 0.8 - Settings.bossWidth,
     ty: Settings.bossHeight,
     dx: 0,
-    dy: 20,
-    shootPattern: [BulletsPattern.Straight, BulletsPattern.Straight, BulletsPattern.Straight],
-    shootCount: [1, 1, 1],
-    shootFrequency: [0.5, 1, 0.5],
-    shootSpeed: [40, 20, 50],
+    dy: 0,
+    shootPattern: [BulletsPattern.StraightHole, BulletsPattern.StraightHole,
+    BulletsPattern.StraightHole],
+    shootCount: [3, 3, 3],
+    shootFrequency: [1, 1, 1],
+    shootSpeed: [40, 40, 40],
     repeat: 3,
+    shootRandom: [25, 100, 150],
     resetPosOnRepeat: true,
 }
 
@@ -83,9 +87,10 @@ const explosion: BossPattern = {
     dy: 0,
     shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
     shootCount: [4, 1],
-    shootFrequency: [2, 1],
+    shootFrequency: [0.5, 1],
     shootSpeed: [500, 50],
-    repeat: 5,
+    repeat: 2,
+    shootRandom: [400, 0],
     resetPosOnRepeat: true,
 }
 
@@ -103,7 +108,7 @@ export function create(): Boss {
             Settings.bossBulletSpeedX,
             Settings.bossBulletSpeedY),
         elapsedTime: 0,
-        currentPattern: explosion,
+        currentPattern: straight,
         shootElapsedTime: 0,
         shootCount: 0,
         targetReached: false,
@@ -150,8 +155,8 @@ export function update(boss: Boss): void {
                     fireBullets(boss.bullets,
                         boss.dx - boss.currentPattern.shootSpeed[boss.patternIndex],
                         addVector(boss, createVector(0, Settings.bossHeight / 2)),
-                        boss.currentPattern.shootPattern[boss.patternIndex]
-                    );
+                        boss.currentPattern.shootPattern[boss.patternIndex],
+                        boss.currentPattern.shootRandom[boss.patternIndex]);
                 }
             }
         } else {

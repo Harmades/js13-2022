@@ -9,14 +9,14 @@ export const Settings = {
     playerWidth: 50,
     playerHeight: 50,
     playerBulletSpeedX: 800,
-	playerBulletSpeedY: 100,
-	playerBulletsPoolSize: 200,
+    playerBulletSpeedY: 100,
+    playerBulletsPoolSize: 200,
 
     enemyWidth: 50,
     enemyHeight: 50,
     enemyBulletSpeedX: 150,
-	enemyBulletSpeedY: 50,
-	enemyBulletsPoolSize: 50,
+    enemyBulletSpeedY: 50,
+    enemyBulletsPoolSize: 50,
     enemyShootFrequency: 1,
     enemyBulletPoolSize: 1000,
 
@@ -26,7 +26,7 @@ export const Settings = {
     bossRxMax: 200,
     bossRyMin: 100,
     bossRyMax: 200,
-    bossSpeed: 100,
+    bossSpeed: 300,
     bossBulletSpeedX: 200,
     bossBulletSpeedY: 25,
     bossBulletsPoolSize: 200,
@@ -37,6 +37,9 @@ export const Settings = {
 
     bulletWidth: 5,
     bulletHeight: 5,
+
+    bulletsVariance: 10,
+    bulletsMaxdY: 50,
 
     waveEasyCount: 3,
     waveEasyTimeMin: 4,
