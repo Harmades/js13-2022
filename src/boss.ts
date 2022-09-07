@@ -75,6 +75,20 @@ const straight: BossPattern = {
 }
 
 
+const explosion: BossPattern = {
+    duration: 10,
+    tx: Settings.width - Settings.bossWidth,
+    ty: Settings.height * 0.5 - Settings.bossHeight,
+    dx: -50,
+    dy: 0,
+    shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
+    shootCount: [4, 1],
+    shootFrequency: [2, 1],
+    shootSpeed: [500, 50],
+    repeat: 5,
+    resetPosOnRepeat: true,
+}
+
 export function create(): Boss {
     const color = `#${randColor()}`;
     return {
@@ -89,7 +103,7 @@ export function create(): Boss {
             Settings.bossBulletSpeedX,
             Settings.bossBulletSpeedY),
         elapsedTime: 0,
-        currentPattern: spray,
+        currentPattern: explosion,
         shootElapsedTime: 0,
         shootCount: 0,
         targetReached: false,
@@ -149,10 +163,12 @@ export function update(boss: Boss): void {
                     boss.targetReached = false;
 
                     /* TODO : Make it random */
-                    if (boss.currentPattern == straight) {
-                        boss.currentPattern = spray;
-                    } else if (boss.currentPattern == spray) {
+                    if (boss.currentPattern == spray) {
                         boss.currentPattern = straight;
+                    } else if (boss.currentPattern == straight) {
+                        boss.currentPattern = explosion;
+                    } else if (boss.currentPattern == explosion) {
+                        boss.currentPattern = spray;
                     }
                 } else {
                     boss.repeatCount += 1;
