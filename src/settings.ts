@@ -38,8 +38,8 @@ export const Settings = {
     bulletWidth: 5,
     bulletHeight: 5,
 
-    bulletsVariance: 10,
-    bulletsMaxdY: 50,
+    bulletsVariance: 20,
+    bulletsMaxdY: 200,
 
     waveEasyCount: 3,
     waveEasyTimeMin: 4,

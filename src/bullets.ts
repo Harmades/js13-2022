@@ -49,7 +49,7 @@ export function create(
 
 export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pattern: Pattern, rand: number = 0) {
     let randY = randRange(-rand, rand);
-    let speedY = bullets.lastRandY + sign(randY) * min(abs(bullets.lastRandY - randY), Settings.bulletsVariance);
+    let speedY = bullets.lastRandY + randY;
     speedY = max(min(Settings.bulletsMaxdY, speedY), -Settings.bulletsMaxdY)
     bullets.lastRandY = speedY;
 
@@ -75,20 +75,20 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
     if (pattern == Pattern.StraightHole) {
         let bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
-        bullet.dh = 0.2;
+        bullet.dh = 0.4;
         bullet.dhDirection = 0;
         fireBullet(
             bullet,
-            addVector(shootPosition, createVector(bullet.h, 0)),
-            createVector(speedX, speedY + bullet.dh * 150));
+            shootPosition,
+            createVector(speedX, speedY + bullet.dh * 150 + 10));
         bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
-        bullet.dh = 0.2;
+        bullet.dh = 0.4;
         bullet.dhDirection = 1;
         fireBullet(
             bullet,
-            addVector(shootPosition, createVector(-bullet.h, 0)),
-            createVector(speedX, speedY - bullet.dh * 150));
+            shootPosition,
+            createVector(speedX, speedY - (bullet.dh * 150 + 10)));
     }
 
     if (pattern == Pattern.Explosion) {

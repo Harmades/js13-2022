@@ -18,7 +18,7 @@ import { Vector, create as createVector, add as addVector } from "./vector"
 
 
 export type BossPattern = {
-    duration: number;
+    waitTime: number;
     tx: number;
     ty: number;
     dx: number;
@@ -43,54 +43,54 @@ export type Boss = Rectangle &
         targetReached: boolean;
         patternIndex: number;
         repeatCount: number;
+        newPatternTime: number;
     };
 
 
 const spray: BossPattern = {
-    duration: 10,
-    tx: Settings.width * 0.9 - Settings.bossWidth,
+    waitTime: 0,
+    tx: Settings.width - Settings.bossWidth,
     ty: Settings.height * 0.8 - Settings.bossHeight,
-    dx: -50,
+    dx: 0,
     dy: -20,
     shootPattern: [BulletsPattern.Sixtuple, BulletsPattern.Quintuple, BulletsPattern.Triple],
     shootCount: [2, 2, 2],
     shootFrequency: [4, 3, 2],
-    shootSpeed: [35, 40, 55],
-    shootRandom: [150, 0, 50],
+    shootSpeed: [40, 40, 55],
+    shootRandom: [20, 30, 100],
     repeat: 3,
     resetPosOnRepeat: false,
 }
 
 
 const straight: BossPattern = {
-    duration: 10,
-    tx: Settings.width * 0.8 - Settings.bossWidth,
+    waitTime: 1,
+    tx: Settings.width * 0.5 - Settings.bossWidth,
     ty: Settings.bossHeight,
-    dx: 0,
-    dy: 0,
-    shootPattern: [BulletsPattern.StraightHole, BulletsPattern.StraightHole,
-    BulletsPattern.StraightHole],
-    shootCount: [3, 3, 3],
-    shootFrequency: [1, 1, 1],
-    shootSpeed: [40, 40, 40],
-    repeat: 3,
-    shootRandom: [25, 100, 150],
+    dx: 30,
+    dy: 15,
+    shootPattern: [BulletsPattern.StraightHole],
+    shootCount: [40],
+    shootFrequency: [3],
+    shootSpeed: [100],
+    repeat: 1,
+    shootRandom: [30],
     resetPosOnRepeat: true,
 }
 
 
 const explosion: BossPattern = {
-    duration: 10,
+    waitTime: 0,
     tx: Settings.width - Settings.bossWidth,
     ty: Settings.height * 0.5 - Settings.bossHeight,
     dx: -50,
     dy: 0,
     shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
-    shootCount: [4, 1],
-    shootFrequency: [0.5, 1],
-    shootSpeed: [500, 50],
+    shootCount: [10, 5],
+    shootFrequency: [3, 5],
+    shootSpeed: [500, 600],
     repeat: 2,
-    shootRandom: [400, 0],
+    shootRandom: [600, 100],
     resetPosOnRepeat: true,
 }
 
@@ -108,8 +108,9 @@ export function create(): Boss {
             Settings.bossBulletSpeedX,
             Settings.bossBulletSpeedY),
         elapsedTime: 0,
-        currentPattern: straight,
+        currentPattern: explosion,
         shootElapsedTime: 0,
+        newPatternTime: 0,
         shootCount: 0,
         targetReached: false,
         patternIndex: 0,
@@ -123,6 +124,22 @@ export function update(boss: Boss): void {
     boss.elapsedTime += Settings.delta;
     boss.shootElapsedTime += Settings.delta;
     const speed = Settings.bossSpeed;
+
+    if (boss.newPatternTime != 0) {
+        if (boss.elapsedTime >= boss.newPatternTime) {
+            boss.newPatternTime = 0;
+            /* TODO : Make it random */
+            if (boss.currentPattern == spray) {
+                boss.currentPattern = straight;
+            } else if (boss.currentPattern == straight) {
+                boss.currentPattern = explosion;
+            } else if (boss.currentPattern == explosion) {
+                boss.currentPattern = spray;
+            }
+        } else {
+            return;
+        }
+    }
 
     if (!boss.targetReached) {
 
@@ -166,15 +183,8 @@ export function update(boss: Boss): void {
                 if (boss.repeatCount + 1 == boss.currentPattern.repeat) {
                     boss.repeatCount = 0;
                     boss.targetReached = false;
-
-                    /* TODO : Make it random */
-                    if (boss.currentPattern == spray) {
-                        boss.currentPattern = straight;
-                    } else if (boss.currentPattern == straight) {
-                        boss.currentPattern = explosion;
-                    } else if (boss.currentPattern == explosion) {
-                        boss.currentPattern = spray;
-                    }
+                    boss.newPatternTime = boss.elapsedTime + boss.currentPattern.waitTime;
+                    return;
                 } else {
                     boss.repeatCount += 1;
                     if (boss.currentPattern.resetPosOnRepeat) {

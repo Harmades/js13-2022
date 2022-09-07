@@ -3,7 +3,7 @@ import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Vector, create as createVector } from "./vector";
-import { min, pow, floor } from "./alias";
+import { min, pow, floor, sin, PI } from "./alias";
 import { Bullets } from "./bullets";
 
 export type Bullet = Rectangle &
@@ -33,12 +33,12 @@ export function create(): Bullet {
 export function update(bullet: Bullet): void {
     if (!bullet.isActive) return;
     bullet.x += bullet.dx * Settings.delta;
-    const old_h = bullet.h
+    const old_h = bullet.h;
     bullet.h = min(bullet.h + bullet.dh, bullet.maxH)
-    if (bullet.h == old_h && bullet.h != bullet.baseH) bullet.dy = 0;
-    bullet.y += bullet.dy * Settings.delta - (bullet.h - old_h) * (bullet.dhDirection - 0.5);
+    if (bullet.h == bullet.maxH) bullet.dy = -30 * sin(bullet.x / Settings.width * 6 * PI);
+    bullet.y += bullet.dy * Settings.delta - (bullet.h - old_h) * (bullet.dhDirection);
     if (bullet.explodeTick != 0) {
-        bullet.explodeTick -= 1
+        bullet.explodeTick -= 1;
         if (bullet.explodeTick == 0) {
             if (bullet.bullets == undefined) return;
             const speed = bullet.dx / 2;
