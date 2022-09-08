@@ -13,7 +13,7 @@ import {
     Vector
 } from "./vector";
 import { repeat } from "./array";
-import { floor, min, max, abs, sign } from "./alias";
+import { floor, min, max, abs, sign, cos, PI } from "./alias";
 import { randRange } from "./random";
 import { Renderer } from "./renderer"
 
@@ -22,6 +22,7 @@ export type Bullets = {
     baseSpeedX: number;
     baseSpeedY: number;
     lastRandY: number;
+    sprayOpen: number;
 }
 
 export enum Pattern {
@@ -40,21 +41,27 @@ export enum Pattern {
 export function create(
     poolSize: number,
     baseSpeedX: number,
-    baseSpeedY: number): Bullets {
+    baseSpeedY: number,
+    sprayOpen: number): Bullets {
     return {
         bullets: repeat(() => createBullet(), poolSize),
         baseSpeedX,
         baseSpeedY,
         lastRandY: 0,
+        sprayOpen: sprayOpen,
     };
 }
 
-export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pattern: Pattern, rand: number = 0) {
+function computeRandY(bullets: Bullets, rand: number,): number {
     let randY = randRange(-rand, rand);
     let speedY = bullets.lastRandY + randY;
     speedY = max(min(Settings.bulletsMaxdY, speedY), -Settings.bulletsMaxdY)
     bullets.lastRandY = speedY;
+    return speedY;
+}
 
+export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pattern: Pattern, rand: number = 0) {
+    let speedY = computeRandY(bullets, rand);
     if (pattern < Pattern.ConicEnd) {
         for (let i: number = 0; i <= pattern; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
@@ -62,7 +69,8 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
             fireBullet(
                 bullet,
                 shootPosition,
-                createVector(speedX, bullets.baseSpeedY * (2 * i - pattern) + speedY));
+                createVector(speedX, bullets.baseSpeedY * cos(PI * ((i + 1) / (pattern + 2))) * bullets.sprayOpen + speedY));
+            speedY = computeRandY(bullets, rand);
         }
     }
     if (pattern == Pattern.Straight) {

@@ -76,7 +76,8 @@ export function create(
         direction: Direction.Left,
         bullets: createBullets(Settings.enemyBulletsPoolSize,
             Settings.enemyBulletSpeedX,
-            Settings.enemyBulletSpeedY),
+            Settings.enemyBulletSpeedY,
+            Settings.enemySprayOpen),
         bulletsPattern: bulletsPattern
     };
 }

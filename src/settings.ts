@@ -11,6 +11,7 @@ export const Settings = {
     playerBulletSpeedX: 800,
     playerBulletSpeedY: 100,
     playerBulletsPoolSize: 200,
+    playerSprayOpen: 3,
 
     enemyWidth: 50,
     enemyHeight: 50,
@@ -19,6 +20,7 @@ export const Settings = {
     enemyBulletsPoolSize: 50,
     enemyShootFrequency: 1,
     enemyBulletPoolSize: 1000,
+    enemySprayOpen: 1,
 
     bossWidth: 150,
     bossHeight: 150,
@@ -34,6 +36,7 @@ export const Settings = {
     bossBigBulletHeight: 25,
     bossBigBulletExplosionTick: 200,
     bossPatternFrequency: 5,
+    bossSprayOpen: 2,
 
     bulletWidth: 5,
     bulletHeight: 5,

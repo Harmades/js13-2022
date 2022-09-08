@@ -41,7 +41,8 @@ export function create(): Player {
         h: Settings.playerHeight,
         bullets: createBullets(Settings.playerBulletsPoolSize,
             Settings.playerBulletSpeedX,
-            Settings.playerBulletSpeedY),
+            Settings.playerBulletSpeedY,
+            Settings.playerSprayOpen),
         bulletsPattern: BulletsPattern.Single,
     };
     return player;
