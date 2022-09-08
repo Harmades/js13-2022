@@ -36,6 +36,7 @@ export enum Pattern {
     Straight,
     StraightHole,
     Explosion,
+    UpAndDown,
 }
 
 export function create(
@@ -113,7 +114,33 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
             addVector(shootPosition, createVector(Settings.bossBigBulletWidth, - (Settings.bossBigBulletHeight / 2))),
             createVector(speedX, speedY));
     }
+    /* Assuming this comes from the boss */
+    if (pattern == Pattern.UpAndDown) {
+        for (let i: number = 0; i <= 10; i++) {
+            let bullet = bullets.bullets.find((b) => !b.isActive);
+            if (bullet == undefined) return;
+            fireBullet(
+                bullet,
+                addVector(shootPosition, createVector(Settings.bossWidth / 2, Settings.bossHeight / 2)),
+                createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, bullets.baseSpeedY));
+            speedY = computeRandY(bullets, rand);
+        }
+        for (let i: number = 0; i <= 10; i++) {
+            let bullet = bullets.bullets.find((b) => !b.isActive);
+            if (bullet == undefined) return;
+            fireBullet(
+                bullet,
+                addVector(shootPosition, createVector(Settings.bossWidth / 2, -Settings.bossHeight / 2)),
+                createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, -bullets.baseSpeedY));
+            speedY = computeRandY(bullets, rand);
+        }
 
+    }
+
+}
+
+export function resetRand(bullets: Bullets) {
+    bullets.lastRandY = 0;
 }
 
 export function update(bullets: Bullets) {
