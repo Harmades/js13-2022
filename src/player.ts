@@ -12,7 +12,7 @@ import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { load, play_cowboy, stop_song } from "./sound";
+import { load, playGameMusic, playShopMusic, stopSong } from "./sound";
 import { Speed } from "./speed";
 import {
     create as createVector,
@@ -21,7 +21,6 @@ import {
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
-let shootPosition = createVector(Settings.playerWidth, Settings.playerHeight / 2);
 let isPlaying = false;
 let isAudioInitialized = false;
 
@@ -76,9 +75,9 @@ export function update(player: Player) {
     }
     if (isAudioInitialized && shiftInput()) {
         if (isPlaying) {
-            stop_song();
+            stopSong();
         } else {
-            play_cowboy();
+            playGameMusic();
         }
         isPlaying = !isPlaying;
     }
