@@ -13,14 +13,15 @@ export type Bullet = Rectangle &
         dh: number;
         dhDirection: number;
         explodeTick: number;
+        shielded: boolean;
     };
 
-export function create(): Bullet {
+export function create(h: number = Settings.bulletHeight, w: number = Settings.bulletWidth, shielded: boolean = false): Bullet {
     return {
         x: 0,
         y: 0,
-        w: Settings.bulletWidth,
-        h: Settings.bulletHeight,
+        w: w,
+        h: h,
         dx: 0,
         dy: 0,
         isActive: false,
@@ -28,6 +29,7 @@ export function create(): Bullet {
         dhDirection: 0,
         explodeTick: 0,
         bullets: undefined,
+        shielded: shielded,
     };
 }
 
@@ -85,7 +87,8 @@ export function free(bullet: Bullet): void {
     bullet.dy = 0;
     bullet.x = 0;
     bullet.y = 0;
-    bullet.h = Settings.bulletHeight;
-    bullet.w = Settings.bulletWidth;
+    bullet.h = bullet.bullets.bh;
+    bullet.w = bullet.bullets.bw;
     bullet.dh = 0;
+    bullet.shielded = bullet.bullets.shielded;
 }

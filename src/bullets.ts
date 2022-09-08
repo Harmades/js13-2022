@@ -23,6 +23,9 @@ export type Bullets = {
     baseSpeedY: number;
     lastRandY: number;
     sprayOpen: number;
+    shielded: boolean;
+    bh: number;
+    bw: number;
 }
 
 export enum Pattern {
@@ -43,13 +46,19 @@ export function create(
     poolSize: number,
     baseSpeedX: number,
     baseSpeedY: number,
-    sprayOpen: number): Bullets {
+    sprayOpen: number,
+    bulletHeight: number,
+    bulletWidth: number,
+    shielded: boolean = false): Bullets {
     return {
-        bullets: repeat(() => createBullet(), poolSize),
+        bullets: repeat(() => createBullet(bulletHeight, bulletWidth, shielded), poolSize),
         baseSpeedX,
         baseSpeedY,
         lastRandY: 0,
         sprayOpen: sprayOpen,
+        shielded: shielded,
+        bh: bulletHeight,
+        bw: bulletWidth,
     };
 }
 
@@ -153,5 +162,9 @@ export function render(renderer: Renderer, bullets: Bullets) {
     for (let bullet of bullets.bullets) {
         renderBullet(renderer, bullet);
     }
+}
+
+export function getActiveBullets(bullets: Bullets): Bullet[] {
+    return bullets.bullets.filter((e) => !e.isActive);
 }
 

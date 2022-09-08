@@ -12,7 +12,11 @@ import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, playBossMusic, playShopMusic, playEnemiesMusic, stopSong } from "./sound";
 import { Speed } from "./speed";
-import { add as addVector, create as createVector } from "./vector";
+import {
+    create as createVector,
+    add as addVector
+} from "./vector";
+import { PowerUp, getPowerUpStatus } from "./ui"
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -21,8 +25,10 @@ let isAudioInitialized = false;
 
 export type Player = Rectangle &
     Speed & {
-        bullets: Bullets;
-        bulletsPattern: BulletsPattern;
+        bullets: Bullets
+        bulletsPattern: BulletsPattern,
+        shootSpeed: number,
+        shieldCount: number,
     };
 
 export function create(): Player {
@@ -37,9 +43,12 @@ export function create(): Player {
             Settings.playerBulletsPoolSize,
             Settings.playerBulletSpeedX,
             Settings.playerBulletSpeedY,
-            Settings.playerSprayOpen
-        ),
+            Settings.playerSprayOpen,
+            Settings.playerBulletWidth,
+            Settings.playerBulletHeight),
         bulletsPattern: BulletsPattern.Single,
+        shootSpeed: 1,
+        shieldCount: 0,
     };
     return player;
 }
@@ -47,14 +56,12 @@ export function create(): Player {
 export function shoot(player: Player): void {
     let bullet = player.bullets.bullets.find((b) => !b.isActive);
     if (bullet == undefined) return;
-    fireBullets(
-        player.bullets,
-        player.dx + Settings.playerBulletSpeedX,
+    fireBullets(player.bullets,
+        player.shootSpeed * Settings.playerBulletSpeedX,
         addVector(player, createVector(Settings.playerWidth, Settings.playerHeight / 2)),
-        player.bulletsPattern
-    );
-    player.bulletsPattern += 1;
-    player.bulletsPattern %= BulletsPattern.ConicEnd;
+        player.bulletsPattern);
+    /*player.bulletsPattern += 1;
+    player.bulletsPattern %= BulletsPattern.ConicEnd;*/
 }
 
 export function update(player: Player) {
@@ -97,6 +104,18 @@ export function reset(player: Player): void {
     player.y = Settings.height / 2;
     player.dx = 0;
     player.dy = 0;
+    let powerUps = getPowerUpStatus();
+    player.shootSpeed = powerUps[PowerUp.Speed] + 1; /* TODO Handle Laser shot */
+    player.shieldCount = powerUps[PowerUp.Shield] + 1;
+    player.shieldCount = 5;
+    if (player.shieldCount == Settings.powerUpMaxCount) {
+        player.bullets.shielded = true;
+    }
+    if (powerUps[PowerUp.Multishot] == Settings.powerUpMaxCount) {
+        player.bulletsPattern = BulletsPattern.Straight;
+    } else {
+        player.bulletsPattern = powerUps[PowerUp.Multishot];
+    }
 }
 
 export function render(renderer: Renderer, player: Player) {
