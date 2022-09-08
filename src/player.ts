@@ -10,7 +10,7 @@ import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { load, playGameMusic, stopSong } from "./sound";
+import { load, playBossMusic, playShopMusic, playEnemiesMusic, stopSong } from "./sound";
 import { Speed } from "./speed";
 import { add as addVector, create as createVector } from "./vector";
 
