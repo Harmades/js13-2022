@@ -7,6 +7,7 @@ import {
     fire as fireBullets,
     render as renderBullets,
     update as updateBullets,
+    resetRand as resetRandBullets,
 } from "./bullets";
 import { Direction } from "./direction";
 import { rand, randColor, randRange, randRangeInt } from "./random";
@@ -48,33 +49,33 @@ export type Boss = Rectangle &
 
 
 const spray: BossPattern = {
-    waitTime: 0,
-    tx: Settings.width - Settings.bossWidth,
-    ty: Settings.height * 0.8 - Settings.bossHeight,
-    dx: 0,
-    dy: -20,
-    shootPattern: [BulletsPattern.Sixtuple, BulletsPattern.Quintuple, BulletsPattern.Triple],
-    shootCount: [2, 2, 2],
-    shootFrequency: [4, 3, 2],
-    shootSpeed: [40, 40, 55],
-    shootRandom: [20, 30, 100],
+    waitTime: 2,
+    tx: Settings.width * 0.8 - Settings.bossWidth,
+    ty: Settings.height * 0.5 - Settings.bossHeight / 2,
+    dx: 5,
+    dy: 15,
+    shootPattern: [BulletsPattern.Sixtuple, BulletsPattern.Quintuple, BulletsPattern.Triple, BulletsPattern.UpAndDown],
+    shootCount: [4, 3, 5, 5],
+    shootFrequency: [4, 3, 2, 5],
+    shootSpeed: [200, 120, 250, 50],
+    shootRandom: [150, 300, 300, 150],
     repeat: 3,
-    resetPosOnRepeat: false,
+    resetPosOnRepeat: true,
 }
 
 
 const straight: BossPattern = {
-    waitTime: 1,
-    tx: Settings.width * 0.5 - Settings.bossWidth,
-    ty: Settings.bossHeight,
-    dx: 30,
-    dy: 15,
-    shootPattern: [BulletsPattern.StraightHole],
-    shootCount: [40],
-    shootFrequency: [3],
-    shootSpeed: [100],
+    waitTime: 3,
+    tx: Settings.width - Settings.bossWidth,
+    ty: Settings.height * 0.2,
+    dx: 0,
+    dy: 60,
+    shootPattern: [BulletsPattern.UpAndDown, BulletsPattern.StraightHole],
+    shootCount: [5, 40],
+    shootFrequency: [5, 3],
+    shootSpeed: [200, 100],
     repeat: 1,
-    shootRandom: [30],
+    shootRandom: [0, 20],
     resetPosOnRepeat: true,
 }
 
@@ -109,7 +110,7 @@ export function create(): Boss {
             Settings.bossBulletSpeedY,
             Settings.bossSprayOpen),
         elapsedTime: 0,
-        currentPattern: explosion,
+        currentPattern: straight,
         shootElapsedTime: 0,
         newPatternTime: 0,
         shootCount: 0,
@@ -157,8 +158,10 @@ export function update(boss: Boss): void {
         }
 
     } else {
-        boss.dx = boss.currentPattern.dx;
-        boss.dy = boss.currentPattern.dy;
+        if (boss.y > Settings.height * 0.9 - Settings.bossHeight ||
+            boss.y < Settings.height * 0.1) {
+            boss.dy *= -1;
+        }
     }
 
     boss.x += boss.dx * Settings.delta;
@@ -179,6 +182,7 @@ export function update(boss: Boss): void {
             }
         } else {
             boss.shootCount = 0;
+            resetRandBullets(boss.bullets);
             if (boss.patternIndex + 1 == boss.currentPattern.shootFrequency.length) {
                 boss.patternIndex = 0;
                 if (boss.repeatCount + 1 == boss.currentPattern.repeat) {
@@ -196,13 +200,14 @@ export function update(boss: Boss): void {
                 boss.patternIndex += 1;
             }
         }
+        return;
     }
 
     if ((floor(boss.x) == boss.currentPattern.tx || ceil(boss.x) == boss.currentPattern.tx) &&
         (floor(boss.y) == boss.currentPattern.ty || ceil(boss.y) == boss.currentPattern.ty)) {
         boss.targetReached = true;
-        boss.dx = 0;
-        boss.dy = 0;
+        boss.dx = boss.currentPattern.dx;
+        boss.dy = boss.currentPattern.dy;
         return;
     }
 
