@@ -5,6 +5,7 @@ export const input = {
     right: false,
     space: false,
     shift: false,
+    m: false,
 };
 
 export type Input = typeof input;
@@ -24,6 +25,8 @@ function setKey(keyCode: number, value: boolean) {
     if (keyCode == 16) input.shift = value;
     // Space
     if (keyCode == 32) input.space = value;
+    // m
+    if (keyCode == 77) input.m = value;
 }
 
 export function update(): void {}

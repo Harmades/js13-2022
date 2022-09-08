@@ -1,13 +1,16 @@
 import { sign } from "./alias";
 import { free } from "./bullet";
-import { die as enemyDie, Enemies, getActiveEnemies, reset as resetEnemies } from "./enemies";
-import { Player, reset as resetPlayer } from "./player";
+import { die as enemyDie, Enemies, getActiveEnemies } from "./enemies";
+import { createReleasedKeyPress } from "./input";
+import { Player } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
+import { changeScene, Scene } from "./scenes";
 import { Vector } from "./vector";
 
 export type Collision = Rectangle;
 
 type Overlap = Vector;
+const mInput = createReleasedKeyPress("m");
 
 export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Collision | null {
     const xOverlap = getOverlap(xProject(rectangle1), xProject(rectangle2));
@@ -34,15 +37,17 @@ export function update(player: Player, enemies: Enemies): void {
         for (let bullet of enemy.bullets.bullets) {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
-                resetEnemies(enemies);
-                resetPlayer(player);
+                changeScene(Scene.Shop, player, enemies);
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
-            resetPlayer(player);
-            resetEnemies(enemies);
+            changeScene(Scene.Shop, player, enemies);
         }
+    }
+
+    if (mInput()) {
+        changeScene(Scene.Shop, player, enemies);
     }
 }
 

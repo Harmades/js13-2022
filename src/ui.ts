@@ -1,4 +1,7 @@
 import { getElementById } from "./alias";
+import { Enemies } from "./enemies";
+import { Player } from "./player";
+import { changeScene, Scene } from "./scenes";
 
 export enum PowerUp {
     Speed,
@@ -9,8 +12,18 @@ export enum PowerUp {
 let speed = 0;
 let shield = 0;
 let multishot = 0;
+let player: Player | null = null;
+let enemies: Enemies | null = null;
 
-export function create(): void {}
+export function create(playerRef: Player, enemiesRef: Enemies): void {
+    player = playerRef;
+    enemies = enemiesRef;
+}
+
+export function toggleShop(): void {
+    const element = getElementById("ui") as HTMLElement;
+    element.style.display = element.style.display != "flex" ? "flex" : "none";
+}
 
 export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
     if (powerUp == PowerUp.Speed) {
@@ -26,6 +39,10 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
     if (shield < 0) shield = 0;
     if (multishot < 0) multishot = 0;
     syncUi();
+}
+
+export function play(): void {
+    changeScene(Scene.Game, player!, enemies!);
 }
 
 function syncUi(): void {
@@ -45,3 +62,4 @@ function syncUi(): void {
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;
+(window as any).play = play;

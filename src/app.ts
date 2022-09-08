@@ -15,7 +15,7 @@ const player = Player.create();
 const boss = Boss.create();
 const enemies = Enemies.create();
 const renderer = Renderer.create();
-UI.create();
+UI.create(player, enemies);
 
 function loop(tFrame: number): void {
     window.requestAnimationFrame((t) => loop(t));
