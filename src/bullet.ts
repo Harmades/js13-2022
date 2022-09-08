@@ -41,11 +41,17 @@ export function update(bullet: Bullet): void {
     if (bullet.explodeTick != 0) {
         bullet.explodeTick -= 1;
         if (bullet.explodeTick == 0) {
-            if (bullet.bullets == undefined) return;
+            if (bullet.bullets == undefined) {
+                free(bullet);
+                return;
+            }
             const speed = bullet.dx / 2;
             for (let i: number = 0; i < 4; i++) {
-                let new_bullet = bullet.bullets.bullets.find((b) => !b.isActive);
-                if (new_bullet == undefined) return;
+                let new_bullet = bullet.bullets.bullets.find((b: Bullet) => !b.isActive);
+                if (new_bullet == undefined) {
+                    free(bullet);
+                    return;
+                }
                 fire(
                     new_bullet,
                     bullet,
@@ -53,6 +59,10 @@ export function update(bullet: Bullet): void {
             }
             free(bullet);
         }
+    }
+    if (bullet.x < 0 || bullet.x > Settings.width) free(bullet);
+    if (bullet.h == Settings.bulletHeight) {
+        if (bullet.y < 0 || bullet.y > Settings.height) free(bullet);
     }
 }
 
