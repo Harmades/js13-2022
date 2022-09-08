@@ -1,7 +1,7 @@
 import { cos, PI, sin } from "./alias";
 import {
     Bullets,
-	Pattern as BulletsPattern,
+    Pattern as BulletsPattern,
     create as createBullets,
     fire as fireBullets,
     render as renderBullets,
@@ -41,7 +41,7 @@ export type Enemy = Rectangle &
         rx: number;
         ry: number;
         bullets: Bullets;
-		bulletsPattern: BulletsPattern;
+        bulletsPattern: BulletsPattern;
     };
 
 export function create(
@@ -74,15 +74,15 @@ export function create(
         shootElapsedTime: 0,
         distance: 0,
         direction: Direction.Left,
-		bullets: createBullets(Settings.enemyBulletsPoolSize,
-							   Settings.enemyBulletSpeedX,
-							   Settings.enemyBulletSpeedY),
-		bulletsPattern: bulletsPattern
+        bullets: createBullets(Settings.enemyBulletsPoolSize,
+            Settings.enemyBulletSpeedX,
+            Settings.enemyBulletSpeedY),
+        bulletsPattern: bulletsPattern
     };
 }
 
 export function update(enemy: Enemy): void {
-	updateBullets(enemy.bullets)
+    updateBullets(enemy.bullets)
     if (enemy.dead) return;
     const frequency = enemy.frequency as number;
     const amplitude = enemy.amplitude as number;
@@ -146,16 +146,16 @@ export function update(enemy: Enemy): void {
 
     if (enemy.shootElapsedTime >= 1 / Settings.enemyShootFrequency) {
         enemy.shootElapsedTime = 0;
-		fireBullets(enemy.bullets,
-					-speedX - enemyBulletSpeedX,
-					addVector(enemy, createVector(0, Settings.enemyHeight/2)),
-					enemy.bulletsPattern)
+        fireBullets(enemy.bullets,
+            -speedX - Settings.enemyBulletSpeedX,
+            addVector(enemy, createVector(0, Settings.enemyHeight / 2)),
+            enemy.bulletsPattern)
     }
 }
 
 export function render(renderer: Renderer, enemy: Enemy) {
 
-	renderBullets(renderer, enemy.bullets)
+    renderBullets(renderer, enemy.bullets)
 
     if (enemy.dead) return;
     drawRect(renderer, enemy, enemy.color);

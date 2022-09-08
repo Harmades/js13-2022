@@ -9,11 +9,13 @@ import { Settings } from "./settings";
 import { Speed } from "./speed";
 import {
     create as createVector,
-    add as addVector
+    add as addVector,
+    Vector
 } from "./vector";
 import { repeat } from "./array";
 import { floor, min, max, abs, sign } from "./alias";
 import { randRange } from "./random";
+import { Renderer } from "./renderer"
 
 export type Bullets = {
     bullets: Bullet[];
@@ -54,7 +56,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
     bullets.lastRandY = speedY;
 
     if (pattern < Pattern.ConicEnd) {
-        for (i = 0; i <= pattern; i++) {
+        for (let i: number = 0; i <= pattern; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
             fireBullet(

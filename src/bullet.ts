@@ -10,6 +10,11 @@ export type Bullet = Rectangle &
     Speed & {
         isActive: boolean;
         bullets: Bullets;
+        baseH: number;
+        maxH: number;
+        dh: number;
+        dhDirection: number;
+        explodeTick: number;
     };
 
 export function create(): Bullet {
@@ -42,7 +47,7 @@ export function update(bullet: Bullet): void {
         if (bullet.explodeTick == 0) {
             if (bullet.bullets == undefined) return;
             const speed = bullet.dx / 2;
-            for (i = 0; i < 4; i++) {
+            for (let i: number = 0; i < 4; i++) {
                 let new_bullet = bullet.bullets.bullets.find((b) => !b.isActive);
                 if (new_bullet == undefined) return;
                 fire(
@@ -74,8 +79,6 @@ export function free(bullet: Bullet): void {
     bullet.dy = 0;
     bullet.x = 0;
     bullet.y = 0;
-    bullet.w = bullet.baseW;
     bullet.h = bullet.baseH;
-    bullet.dw = 0;
     bullet.dh = 0;
 }

@@ -2,7 +2,7 @@ import { repeat } from "./array";
 import * as Bullet from "./bullet";
 import {
     Bullets,
-	Pattern as BulletsPattern,
+    Pattern as BulletsPattern,
     create as createBullets,
     fire as fireBullets,
     render as renderBullets,
@@ -14,8 +14,10 @@ import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, play_cowboy, stop_song } from "./sound";
 import { Speed } from "./speed";
-import { create as createVector,
-		 add as addVector} from "./vector";
+import {
+    create as createVector,
+    add as addVector
+} from "./vector";
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -26,6 +28,7 @@ let isAudioInitialized = false;
 export type Player = Rectangle &
     Speed & {
         bullets: Bullets
+        bulletsPattern: BulletsPattern,
     };
 
 export function create(): Player {
@@ -37,9 +40,9 @@ export function create(): Player {
         w: Settings.playerWidth,
         h: Settings.playerHeight,
         bullets: createBullets(Settings.playerBulletsPoolSize,
-							   Settings.playerBulletSpeedX,
-							   Settings.playerBulletSpeedY),
-		bulletsPattern: BulletsPattern.Single,
+            Settings.playerBulletSpeedX,
+            Settings.playerBulletSpeedY),
+        bulletsPattern: BulletsPattern.Single,
     };
     return player;
 }
@@ -48,14 +51,14 @@ export function shoot(player: Player): void {
     let bullet = player.bullets.bullets.find((b) => !b.isActive);;
     if (bullet == undefined) return;
     fireBullets(player.bullets,
-				player.dx + Settings.playerBulletSpeedX,
-				addVector(player, createVector(Settings.playerWidth, Settings.playerHeight/2)),
-				player.bulletsPattern);
+        player.dx + Settings.playerBulletSpeedX,
+        addVector(player, createVector(Settings.playerWidth, Settings.playerHeight / 2)),
+        player.bulletsPattern);
 }
 
 export function update(player: Player) {
-    let dx = 0,
-        dy = 0;
+    let dx = 0, dy = 0;
+    updateBullets(player.bullets);
     if (input.left) dx += -Settings.playerSpeedX;
     if (input.right) dx += Settings.playerSpeedX;
     if (input.up) dy += -Settings.playerSpeedY;
@@ -85,13 +88,7 @@ export function update(player: Player) {
     if (player.y <= 0) player.y = 0;
     if (player.y >= Settings.height - Settings.playerHeight)
         player.y = Settings.height - Settings.playerHeight;
-    updateBullets(player.bullets);
-}
 
-function updateBullets(bullets: Bullet.Bullet[]): void {
-    for (let bullet of bullets.bullets) {
-        Bullet.update(bullet);
-    }
 }
 
 export function reset(player: Player): void {
