@@ -55,6 +55,8 @@ export function shoot(player: Player): void {
         player.dx + Settings.playerBulletSpeedX,
         addVector(player, createVector(Settings.playerWidth, Settings.playerHeight / 2)),
         player.bulletsPattern);
+    player.bulletsPattern += 1;
+    player.bulletsPattern %= BulletsPattern.ConicEnd;
 }
 
 export function update(player: Player) {
