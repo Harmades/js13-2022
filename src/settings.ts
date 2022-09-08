@@ -40,6 +40,7 @@ export const Settings = {
 
     bulletWidth: 5,
     bulletHeight: 5,
+    bulletMaxHeight: 500,
 
     bulletsVariance: 20,
     bulletsMaxdY: 200,
