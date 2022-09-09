@@ -45,6 +45,12 @@ export function play(): void {
     changeScene(Scene.Game, player!, enemies!);
 }
 
+/* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales
+ * On pourra changer ça*/
+export function getPowerUpStatus(): number[] {
+    return [speed, shield, multishot];
+}
+
 function syncUi(): void {
     const currentSpeedElement = getElementById("current-speed");
     const currentShieldElement = getElementById("current-shield");
