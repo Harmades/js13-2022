@@ -8,10 +8,13 @@ export const Settings = {
     playerSpeedY: 300,
     playerWidth: 50,
     playerHeight: 50,
-    playerBulletSpeedX: 800,
+    playerBulletSpeedX: 200,
     playerBulletSpeedY: 100,
     playerBulletsPoolSize: 200,
     playerSprayOpen: 3,
+    playerBulletWidth: 5,
+    playerBulletHeight: 5,
+
 
     enemyWidth: 50,
     enemyHeight: 50,
@@ -86,6 +89,8 @@ export const Settings = {
     waveHardRyMax: 200,
     waveHardSyMin: 0,
     waveHardSyMax: 640 - 50,
+
+    powerUpMaxCount: 5,
 
     engineTimeResolution: 1,
 
