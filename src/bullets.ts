@@ -4,6 +4,7 @@ import {
     fire as fireBullet,
     render as renderBullet,
     update as updateBullet,
+    free as freeBullet,
 } from "./bullet";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
@@ -153,18 +154,24 @@ export function resetRand(bullets: Bullets) {
 }
 
 export function update(bullets: Bullets) {
-    for (let bullet of bullets.bullets) {
+    for (let bullet of getActiveBullets(bullets)) {
         updateBullet(bullet);
     }
 }
 
 export function render(renderer: Renderer, bullets: Bullets) {
-    for (let bullet of bullets.bullets) {
+    for (let bullet of getActiveBullets(bullets)) {
         renderBullet(renderer, bullet);
     }
 }
 
 export function getActiveBullets(bullets: Bullets): Bullet[] {
-    return bullets.bullets.filter((e) => !e.isActive);
+    return bullets.bullets.filter((e) => e.isActive);
+}
+
+export function reset(bullets: Bullets): void {
+    for (let bullet of bullets.bullets) {
+        freeBullet(bullet);
+    }
 }
 
