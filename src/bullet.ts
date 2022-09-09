@@ -54,7 +54,7 @@ export function update(bullet: Bullet): void {
                     free(bullet);
                     return;
                 }
-                fire(
+                fire(bullet.bullets,
                     new_bullet,
                     bullet,
                     createVector(pow(-1, i) * speed, pow(-1, floor(i / 2)) * speed + bullet.dy));
@@ -73,12 +73,13 @@ export function render(renderer: Renderer, bullet: Bullet): void {
     drawRect(renderer, bullet);
 }
 
-export function fire(bullet: Bullet, dest: Vector, speed: Vector) {
+export function fire(bullets: Bullets, bullet: Bullet, dest: Vector, speed: Vector) {
     bullet.x = dest.x;
     bullet.y = dest.y;
     bullet.dx = speed.x;
     bullet.dy = speed.y;
     bullet.isActive = true;
+    bullet.bullets = bullets;
 }
 
 export function free(bullet: Bullet): void {

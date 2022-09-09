@@ -76,7 +76,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         for (let i: number = 0; i <= pattern; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(
+            fireBullet(bullets,
                 bullet,
                 shootPosition,
                 createVector(speedX, bullets.baseSpeedY * cos(PI * ((i + 1) / (pattern + 2))) * bullets.sprayOpen + speedY));
@@ -87,7 +87,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         let bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
         bullet.dh = 0.1;
-        fireBullet(
+        fireBullet(bullets,
             bullet,
             shootPosition,
             createVector(speedX, speedY));
@@ -97,7 +97,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         if (bullet == undefined) return;
         bullet.dh = 0.4;
         bullet.dhDirection = 0;
-        fireBullet(
+        fireBullet(bullets,
             bullet,
             shootPosition,
             createVector(speedX, speedY + bullet.dh * 150 + 10));
@@ -105,7 +105,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         if (bullet == undefined) return;
         bullet.dh = 0.4;
         bullet.dhDirection = 1;
-        fireBullet(
+        fireBullet(bullets,
             bullet,
             shootPosition,
             createVector(speedX, speedY - (bullet.dh * 150 + 10)));
@@ -118,7 +118,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         bullet.h = Settings.bossBigBulletHeight;
         bullet.bullets = bullets
         bullet.explodeTick = Settings.bossBigBulletExplosionTick;
-        fireBullet(
+        fireBullet(bullets,
             bullet,
             addVector(shootPosition, createVector(Settings.bossBigBulletWidth, - (Settings.bossBigBulletHeight / 2))),
             createVector(speedX, speedY));
@@ -128,7 +128,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         for (let i: number = 0; i <= 10; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(
+            fireBullet(bullets,
                 bullet,
                 addVector(shootPosition, createVector(Settings.bossWidth / 2, Settings.bossHeight / 2)),
                 createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, bullets.baseSpeedY));
@@ -137,7 +137,7 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         for (let i: number = 0; i <= 10; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(
+            fireBullet(bullets,
                 bullet,
                 addVector(shootPosition, createVector(Settings.bossWidth / 2, -Settings.bossHeight / 2)),
                 createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, -bullets.baseSpeedY));
