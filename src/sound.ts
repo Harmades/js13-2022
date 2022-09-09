@@ -73,3 +73,11 @@ export function playShopMusic(): void {
 export function stopSong(): void {
     audioNode.stop();
 }
+
+export function playPlayerHit(): void {
+	//zzfx(...[0.5,,810,.04,.25,.2,3,.3,.5,.3,,,.2,.3,2.7,.3,,.6,.07,.4]);
+}
+
+export function playPlayerDie(): void {
+	//zzfx(...[0.3,0,146.8324,.3,,.9,,,-12,.3,,,.4,4.1,1,.5,,.4,.99,.1]);
+}
