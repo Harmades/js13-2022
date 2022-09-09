@@ -8,6 +8,7 @@ import {
     render as renderBullets,
     update as updateBullets,
     resetRand as resetRandBullets,
+    reset as resetBullets,
 } from "./bullets";
 import { Direction } from "./direction";
 import { rand, randColor, randRange, randRangeInt } from "./random";
@@ -218,4 +219,20 @@ export function update(boss: Boss): void {
 export function render(renderer: Renderer, boss: Boss) {
     renderBullets(renderer, boss.bullets);
     drawRect(renderer, boss, boss.color);
+}
+
+export function reset(boss: Boss) {
+    boss.x = Settings.width * 0.5 - Settings.bossWidth / 2;
+    boss.y = Settings.height * 0.5 - Settings.bossHeight / 2;
+    boss.dx = 0;
+    boss.dy = 0;
+    resetBullets(boss.bullets);
+    boss.elapsedTime = 0;
+    boss.currentPattern = straight;
+    boss.shootElapsedTime = 0;
+    boss.newPatternTime = 0;
+    boss.shootCount = 0;
+    boss.targetReached = false;
+    boss.patternIndex = 0;
+    boss.repeatCount = 0;
 }
