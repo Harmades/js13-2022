@@ -40,7 +40,7 @@ function update(): void {
     Player.update(player);
     // Enemies.update(enemies);
     Boss.update(boss);
-    Physics.update(player, enemies);
+    Physics.update(player, enemies, boss);
 }
 
 function render(): void {

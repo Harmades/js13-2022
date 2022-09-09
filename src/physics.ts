@@ -2,10 +2,12 @@ import { sign } from "./alias";
 import { free } from "./bullet";
 import { die as enemyDie, Enemies, getActiveEnemies } from "./enemies";
 import { createReleasedKeyPress } from "./input";
-import { Player } from "./player";
+import { Player, bulletHit } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
 import { changeScene, Scene } from "./scenes";
 import { Vector } from "./vector";
+import { Boss } from "./boss"
+import { getActiveBullets } from "./bullets"
 
 export type Collision = Rectangle;
 
@@ -25,29 +27,39 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
     };
 }
 
-export function update(player: Player, enemies: Enemies): void {
+export function update(player: Player, enemies: Enemies, boss: Boss): void {
     for (let enemy of getActiveEnemies(enemies)) {
-        for (let bullet of player.bullets.bullets) {
+        for (let bullet of getActiveBullets(player.bullets)) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
             if (bulletEnemyCollision != null) {
                 free(bullet);
                 enemyDie(enemy, enemies);
             }
         }
-        for (let bullet of enemy.bullets.bullets) {
+        for (let bullet of getActiveBullets(enemy.bullets)) {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
-                changeScene(Scene.Shop, player, enemies);
+                if (bulletHit(player) == 0) {
+                    changeScene(Scene.Shop, player, enemies, boss);
+                }
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
-            changeScene(Scene.Shop, player, enemies);
+            changeScene(Scene.Shop, player, enemies, boss);
+        }
+    }
+    for (let bullet of getActiveBullets(boss.bullets)) {
+        const bulletPlayerCollision = getCollision(player, bullet);
+        if (bulletPlayerCollision != null) {
+            if (bulletHit(player) == 0) {
+                changeScene(Scene.Shop, player, enemies, boss);
+            }
         }
     }
 
     if (mInput()) {
-        changeScene(Scene.Shop, player, enemies);
+        changeScene(Scene.Shop, player, enemies, boss);
     }
 }
 

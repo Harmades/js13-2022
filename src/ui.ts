@@ -1,6 +1,7 @@
 import { getElementById } from "./alias";
 import { Enemies } from "./enemies";
 import { Player } from "./player";
+import { Boss } from "./boss"
 import { changeScene, Scene } from "./scenes";
 
 export enum PowerUp {
@@ -14,6 +15,7 @@ let shield = 0;
 let multishot = 0;
 let player: Player | null = null;
 let enemies: Enemies | null = null;
+let boss: Boss | null = null;
 
 export function create(playerRef: Player, enemiesRef: Enemies): void {
     player = playerRef;
@@ -42,7 +44,7 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
 }
 
 export function play(): void {
-    changeScene(Scene.Game, player!, enemies!);
+    changeScene(Scene.Game, player!, enemies!, boss!);
 }
 
 /* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales
