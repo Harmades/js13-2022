@@ -2,6 +2,8 @@ import { Enemy, render as renderEnemy, update as updateEnemy } from "./enemy";
 import { Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { create as createWave, WaveDifficulty } from "./wave";
+import { Bullet } from "./bullet"
+import { getActiveBullets } from "./bullets"
 
 export type Enemies = {
     entities: Enemy[];
@@ -61,4 +63,12 @@ export function reset(enemies: Enemies): void {
 export function die(enemy: Enemy, enemies: Enemies) {
     enemy.dead = true;
     enemies.deadCount++;
+}
+
+export function getAllEnemiesBullet(enemies: Enemies): Bullet[] {
+    let bulletList: Bullet[] = [];
+    for (let enemy of getActiveEnemies(enemies)) {
+        bulletList.push.apply(bulletList, getActiveBullets(enemy.bullets));
+    }
+    return bulletList;
 }
