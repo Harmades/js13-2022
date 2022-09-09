@@ -1,5 +1,4 @@
 import { floor } from "./alias";
-import * as Boss from "./boss";
 import * as Enemies from "./enemies";
 import * as Physics from "./physics";
 import * as Player from "./player";
@@ -12,7 +11,6 @@ let lastTick = performance.now();
 let lastRender = lastTick;
 
 const player = Player.create();
-const boss = Boss.create();
 const enemies = Enemies.create();
 const renderer = Renderer.create();
 UI.create(player, enemies);
@@ -38,16 +36,14 @@ function loop(tFrame: number): void {
 
 function update(): void {
     Player.update(player);
-    // Enemies.update(enemies);
-    Boss.update(boss);
-    Physics.update(player, enemies, boss);
+    Enemies.update(enemies);
+    Physics.update(player, enemies);
 }
 
 function render(): void {
     Renderer.clear(renderer);
     Player.render(renderer, player);
-    // Enemies.render(renderer, enemies);
-    Boss.render(renderer, boss);
+    Enemies.render(renderer, enemies);
 }
 
 loop(0);

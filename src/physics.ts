@@ -1,18 +1,15 @@
 import { sign } from "./alias";
 import { free } from "./bullet";
+import { getActiveBullets } from "./bullets";
 import { die as enemyDie, Enemies, getActiveEnemies } from "./enemies";
-import { createReleasedKeyPress } from "./input";
-import { Player, bulletHit } from "./player";
+import { bulletHit, Player } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
 import { changeScene, Scene } from "./scenes";
 import { Vector } from "./vector";
-import { Boss } from "./boss"
-import { getActiveBullets } from "./bullets"
 
 export type Collision = Rectangle;
 
 type Overlap = Vector;
-const mInput = createReleasedKeyPress("m");
 
 export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Collision | null {
     const xOverlap = getOverlap(xProject(rectangle1), xProject(rectangle2));
@@ -27,7 +24,7 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
     };
 }
 
-export function update(player: Player, enemies: Enemies, boss: Boss): void {
+export function update(player: Player, enemies: Enemies): void {
     for (let enemy of getActiveEnemies(enemies)) {
         for (let bullet of getActiveBullets(player.bullets)) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
@@ -40,26 +37,22 @@ export function update(player: Player, enemies: Enemies, boss: Boss): void {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
                 if (bulletHit(player) == 0) {
-                    changeScene(Scene.Shop, player, enemies, boss);
+                    changeScene(Scene.Shop, player, enemies);
                 }
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
-            changeScene(Scene.Shop, player, enemies, boss);
+            changeScene(Scene.Shop, player, enemies);
         }
     }
-    for (let bullet of getActiveBullets(boss.bullets)) {
+    for (let bullet of getActiveBullets(enemies.boss.bullets)) {
         const bulletPlayerCollision = getCollision(player, bullet);
         if (bulletPlayerCollision != null) {
             if (bulletHit(player) == 0) {
-                changeScene(Scene.Shop, player, enemies, boss);
+                changeScene(Scene.Shop, player, enemies);
             }
         }
-    }
-
-    if (mInput()) {
-        changeScene(Scene.Shop, player, enemies, boss);
     }
 }
 

@@ -1,7 +1,6 @@
 import { getElementById } from "./alias";
 import { Enemies } from "./enemies";
 import { Player } from "./player";
-import { Boss } from "./boss"
 import { changeScene, Scene } from "./scenes";
 
 export enum PowerUp {
@@ -15,7 +14,6 @@ let shield = 0;
 let multishot = 0;
 let player: Player | null = null;
 let enemies: Enemies | null = null;
-let boss: Boss | null = null;
 
 export function create(playerRef: Player, enemiesRef: Enemies): void {
     player = playerRef;
@@ -44,7 +42,7 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
 }
 
 export function play(): void {
-    changeScene(Scene.Game, player!, enemies!, boss!);
+    changeScene(Scene.Game, player!, enemies!);
 }
 
 /* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales
@@ -54,19 +52,9 @@ export function getPowerUpStatus(): number[] {
 }
 
 function syncUi(): void {
-    const currentSpeedElement = getElementById("current-speed");
-    const currentShieldElement = getElementById("current-shield");
-    const currentMultishotElement = getElementById("current-multishot");
-    if (
-        currentSpeedElement == null ||
-        currentShieldElement == null ||
-        currentMultishotElement == null
-    ) {
-        return;
-    }
-    currentSpeedElement.innerText = speed.toString();
-    currentShieldElement.innerText = shield.toString();
-    currentMultishotElement.innerText = multishot.toString();
+    getElementById("current-speed")!.innerText = speed.toString();
+    getElementById("current-shield")!.innerText = shield.toString();
+    getElementById("current-multishot")!.innerText = multishot.toString();
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;
