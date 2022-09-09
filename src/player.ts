@@ -10,7 +10,14 @@ import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { load, playBossMusic, playShopMusic, playEnemiesMusic, stopSong } from "./sound";
+import {
+    load,
+    playBossMusic,
+    playShopMusic,
+    playEnemiesMusic,
+    stopSong,
+    playPlayerHit,
+} from "./sound";
 import { Speed } from "./speed";
 import {
     create as createVector,
@@ -84,7 +91,7 @@ export function update(player: Player) {
         if (isPlaying) {
             stopSong();
         } else {
-            playGameMusic();
+            playBossMusic();
         }
         isPlaying = !isPlaying;
     }
@@ -116,6 +123,12 @@ export function reset(player: Player): void {
     } else {
         player.bulletsPattern = powerUps[PowerUp.Multishot];
     }
+}
+
+export function bulletHit(player: Player): number {
+    player.shieldCount -= 1;
+    playPlayerHit();
+    return player.shieldCount;
 }
 
 export function render(renderer: Renderer, player: Player) {
