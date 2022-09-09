@@ -64,7 +64,7 @@ export function update(bullet: Bullet): void {
     }
     if (bullet.x < 0 || bullet.x > Settings.width) free(bullet);
     if (bullet.h == Settings.bulletHeight) {
-        if (bullet.y < 0 || bullet.y > Settings.height) free(bullet);
+        if (bullet.y + bullet.h / 2 < 0 || bullet.y > Settings.height + bullet.h / 2) free(bullet);
     }
 }
 
