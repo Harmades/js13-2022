@@ -77,7 +77,9 @@ export function create(
         bullets: createBullets(Settings.enemyBulletsPoolSize,
             Settings.enemyBulletSpeedX,
             Settings.enemyBulletSpeedY,
-            Settings.enemySprayOpen),
+            Settings.enemySprayOpen,
+            Settings.bulletWidth,
+            Settings.bulletHeight),
         bulletsPattern: bulletsPattern
     };
 }
