@@ -48,8 +48,8 @@ export type Boss = Sprite &
 
 const spray: BossPattern = {
     waitTime: 2,
-    tx: Settings.width * 0.8 - Settings.bossWidth,
-    ty: Settings.height * 0.5 - Settings.bossHeight / 2,
+    tx: Settings.worldWidth * 0.8 - Settings.bossWidth,
+    ty: Settings.worldHeight * 0.5 - Settings.bossHeight / 2,
     dx: 5,
     dy: 15,
     shootPattern: [
@@ -68,8 +68,8 @@ const spray: BossPattern = {
 
 const straight: BossPattern = {
     waitTime: 3,
-    tx: Settings.width - Settings.bossWidth,
-    ty: Settings.height * 0.2,
+    tx: Settings.worldWidth - Settings.bossWidth,
+    ty: Settings.worldHeight * 0.2,
     dx: 0,
     dy: 60,
     shootPattern: [BulletsPattern.UpAndDown, BulletsPattern.StraightHole],
@@ -83,8 +83,8 @@ const straight: BossPattern = {
 
 const explosion: BossPattern = {
     waitTime: 0,
-    tx: Settings.width - Settings.bossWidth,
-    ty: Settings.height * 0.5 - Settings.bossHeight,
+    tx: Settings.worldWidth - Settings.bossWidth,
+    ty: Settings.worldHeight * 0.5 - Settings.bossHeight,
     dx: -50,
     dy: 0,
     shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
@@ -99,8 +99,8 @@ const explosion: BossPattern = {
 export function create(): Boss {
     const color = `#${randColor()}`;
     return {
-        x: Settings.width * 0.5 - Settings.bossWidth / 2,
-        y: Settings.height * 0.5 - Settings.bossHeight / 2,
+        x: Settings.worldWidth * 0.5 - Settings.bossWidth / 2,
+        y: Settings.worldHeight * 0.5 - Settings.bossHeight / 2,
         w: Settings.bossWidth,
         h: Settings.bossHeight,
         dx: 0,
@@ -165,8 +165,8 @@ export function update(boss: Boss): void {
         }
     } else {
         if (
-            boss.y > Settings.height * 0.9 - Settings.bossHeight ||
-            boss.y < Settings.height * 0.1
+            boss.y > Settings.worldHeight * 0.9 - Settings.bossHeight ||
+            boss.y < Settings.worldHeight * 0.1
         ) {
             boss.dy *= -1;
         }
@@ -237,8 +237,8 @@ export function render(renderer: Renderer, boss: Boss) {
 }
 
 export function reset(boss: Boss) {
-    boss.x = Settings.width * 0.5 - Settings.bossWidth / 2;
-    boss.y = Settings.height * 0.5 - Settings.bossHeight / 2;
+    boss.x = Settings.worldWidth * 0.5 - Settings.bossWidth / 2;
+    boss.y = Settings.worldHeight * 0.5 - Settings.bossHeight / 2;
     boss.dx = 0;
     boss.dy = 0;
     resetBullets(boss.bullets);

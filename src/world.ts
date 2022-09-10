@@ -1,6 +1,6 @@
+import * as Background from "./background";
 import * as Boss from "./boss";
 import * as Enemies from "./enemies";
-import * as Physics from "./physics";
 import * as Player from "./player";
 import { Renderer } from "./renderer";
 import * as UI from "./ui";
@@ -15,13 +15,16 @@ export enum Scene {
 export type World = {
     player: Player.Player;
     enemies: Enemies.Enemies;
+    background: Background.Background;
     scene: Scene;
 };
 
 export function create(): World {
     const player = Player.create();
     const enemies = Enemies.create(player);
+    const background = Background.create();
     const world = {
+        background,
         player,
         enemies,
         scene: Scene.Shop,
@@ -34,11 +37,12 @@ export function update(world: World): void {
     if (world.scene == Scene.Game) {
         Player.update(world.player);
         Enemies.update(world.enemies);
-        Physics.update(world);
+        // Physics.update(world);
     }
 }
 
 export function render(renderer: Renderer, world: World) {
+    Background.render(renderer, world.background);
     if (world.scene == Scene.Game) {
         Player.render(renderer, world.player);
         Enemies.render(renderer, world.enemies);

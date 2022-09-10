@@ -1,17 +1,19 @@
 export const Settings = {
     debug: false,
 
-    width: 960,
-    height: 640,
+    width: 400 * 3,
+    height: 192 * 3,
 
+    worldWidth: 400,
+    worldHeight: 192,
     tileSize: 16,
-    worldWidth: 30,
-    worldHeight: 12,
+    worldTileWidth: 25,
+    worldTileHeight: 12,
 
     playerSpeedX: 300,
     playerSpeedY: 300,
-    playerWidth: 50,
-    playerHeight: 50,
+    playerWidth: 16,
+    playerHeight: 16,
     playerBulletSpeedX: 200,
     playerBulletSpeedY: 100,
     playerBulletsPoolSize: 200,
@@ -19,8 +21,8 @@ export const Settings = {
     playerBulletWidth: 5,
     playerBulletHeight: 5,
 
-    enemyWidth: 50,
-    enemyHeight: 50,
+    enemyWidth: 16,
+    enemyHeight: 16,
     enemyBulletSpeedX: 150,
     enemyBulletSpeedY: 50,
     enemyBulletsPoolSize: 50,
@@ -28,8 +30,8 @@ export const Settings = {
     enemyBulletPoolSize: 1000,
     enemySprayOpen: 1,
 
-    bossWidth: 150,
-    bossHeight: 150,
+    bossWidth: 28,
+    bossHeight: 38,
     bossRxMin: 100,
     bossRxMax: 200,
     bossRyMin: 100,

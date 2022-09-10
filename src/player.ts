@@ -33,7 +33,7 @@ export function create(): Player {
     const player: Player = {
         x: Settings.playerWidth,
         dx: 0,
-        y: Settings.height / 2,
+        y: Settings.worldHeight / 2,
         dy: 0,
         w: Settings.playerWidth,
         h: Settings.playerHeight,
@@ -98,16 +98,16 @@ export function update(player: Player) {
     player.x += player.dx * Settings.delta;
     player.y += player.dy * Settings.delta;
     if (player.x <= 0) player.x = 0;
-    if (player.x >= Settings.width - Settings.playerWidth)
-        player.x = Settings.width - Settings.playerWidth;
+    if (player.x >= Settings.worldWidth - Settings.playerWidth)
+        player.x = Settings.worldWidth - Settings.playerWidth;
     if (player.y <= 0) player.y = 0;
-    if (player.y >= Settings.height - Settings.playerHeight)
-        player.y = Settings.height - Settings.playerHeight;
+    if (player.y >= Settings.worldHeight - Settings.playerHeight)
+        player.y = Settings.worldHeight - Settings.playerHeight;
 }
 
 export function reset(player: Player): void {
     player.x = Settings.playerWidth;
-    player.y = Settings.height / 2;
+    player.y = Settings.worldHeight / 2;
     player.dx = 0;
     player.dy = 0;
     let powerUps = getPowerUpStatus();

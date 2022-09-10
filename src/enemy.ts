@@ -57,7 +57,7 @@ export function create(
     sprite: AtlasSprite
 ): Enemy {
     return {
-        x: Settings.width,
+        x: Settings.worldWidth,
         y: sy,
         sy,
         dx: 0,
@@ -96,7 +96,7 @@ export function update(enemy: Enemy): void {
     if (enemy.dead) return;
     const frequency = enemy.frequency as number;
     const amplitude = enemy.amplitude as number;
-    const speedX = (Settings.width + Settings.enemyWidth) / enemy.time;
+    const speedX = (Settings.worldWidth + Settings.enemyWidth) / enemy.time;
     enemy.elapsedTime += Settings.delta;
     enemy.shootElapsedTime += Settings.delta;
     if (enemy.pattern == Pattern.Circular) {

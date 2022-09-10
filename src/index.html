@@ -5,18 +5,18 @@
         <title>js13k-2022</title>
         <script type="module" src="app.ts"></script>
         <style>
-            #gameCanvas {
+            .pixel-canvas {
                 position: absolute;
-                width: 960px;
-                height: 640px;
-                image-rendering: pixelated;
-                image-rendering: -moz-crisp-edges;
                 image-rendering: crisp-edges;
             }
 
+            #offscreen-canvas {
+                display: none;
+            }
+
             #game {
-                width: 960px;
-                height: 640px;
+                width: 1200px;
+                height: 576px;
                 border: 2px solid black;
             }
 
@@ -38,18 +38,18 @@
 
             #ui {
                 position: absolute;
-                width: 960px;
-                height: 640px;
+                width: 1200px;
+                height: 576px;
                 font-family: sans-serif;
             }
 
             #ui-shop {
-                width: 720px;
+                width: 800px;
                 height: 480px;
                 background-color: rgba(194, 194, 209);
                 border: 4px solid #272736;
                 border-radius: 4px;
-                margin: 80px 120px 80px 120px;
+                margin: 48px 200px 48px 200px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -110,13 +110,16 @@
                 font-size: 24px;
                 right: 16px;
                 bottom: 16px;
+                color: ghostwhite;
             }
         </style>
     </head>
 
     <body class="game-container">
         <div id="game">
-            <canvas id="gameCanvas"></canvas>
+            <canvas id="background-canvas" class="pixel-canvas"></canvas>
+            <canvas id="game-canvas" class="pixel-canvas"></canvas>
+            <canvas id="offscreen-canvas" class="pixel-canvas"></canvas>
             <div id="ui">
                 <div id="ui-shop">
                     <div class="shop-label">SHOP</div>
