@@ -17,7 +17,7 @@ export const Settings = {
     playerBulletSpeedX: 200,
     playerBulletSpeedY: 100,
     playerBulletsPoolSize: 200,
-    playerSprayOpen: 3,
+    playerSprayOpen: 1.2,
     playerBulletWidth: 5,
     playerBulletHeight: 5,
     playerInvincibleTime: 0.8,
