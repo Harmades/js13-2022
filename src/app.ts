@@ -1,19 +1,13 @@
 import { floor } from "./alias";
-import * as Enemies from "./enemies";
-import * as Physics from "./physics";
-import * as Player from "./player";
 import * as Renderer from "./renderer";
 import { Settings } from "./settings";
-import * as UI from "./ui";
+import * as World from "./world";
 
 let tickLength = Settings.engineTimeResolution;
 let lastTick = performance.now();
 let lastRender = lastTick;
-
-const player = Player.create();
-const enemies = Enemies.create();
 const renderer = Renderer.create();
-UI.create(player, enemies);
+const world = World.create();
 
 function loop(tFrame: number): void {
     window.requestAnimationFrame((t) => loop(t));
@@ -35,15 +29,12 @@ function loop(tFrame: number): void {
 }
 
 function update(): void {
-    Player.update(player);
-    Enemies.update(enemies);
-    Physics.update(player, enemies);
+    World.update(world);
 }
 
 function render(): void {
     Renderer.clear(renderer);
-    Player.render(renderer, player);
-    Enemies.render(renderer, enemies);
+    World.render(renderer, world);
 }
 
 loop(0);

@@ -1,10 +1,10 @@
+import { floor, min, PI, pow, sin } from "./alias";
+import { Bullets } from "./bullets";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
-import { Vector, create as createVector } from "./vector";
-import { min, pow, floor, sin, PI } from "./alias";
-import { Bullets } from "./bullets";
+import { create as createVector, Vector } from "./vector";
 
 export type Bullet = Rectangle &
     Speed & {
@@ -16,7 +16,11 @@ export type Bullet = Rectangle &
         shielded: boolean;
     };
 
-export function create(h: number = Settings.bulletHeight, w: number = Settings.bulletWidth, shielded: boolean = false): Bullet {
+export function create(
+    h: number = Settings.bulletHeight,
+    w: number = Settings.bulletWidth,
+    shielded: boolean = false
+): Bullet {
     return {
         x: 0,
         y: 0,
@@ -37,9 +41,10 @@ export function update(bullet: Bullet): void {
     if (!bullet.isActive) return;
     bullet.x += bullet.dx * Settings.delta;
     const old_h = bullet.h;
-    bullet.h = min(bullet.h + bullet.dh, Settings.bulletMaxHeight)
-    if (bullet.h == Settings.bulletMaxHeight) bullet.dy = -30 * sin(bullet.x / Settings.width * 6 * PI);
-    bullet.y += bullet.dy * Settings.delta - (bullet.h - old_h) * (bullet.dhDirection);
+    bullet.h = min(bullet.h + bullet.dh, Settings.bulletMaxHeight);
+    if (bullet.h == Settings.bulletMaxHeight)
+        bullet.dy = -30 * sin((bullet.x / Settings.width) * 6 * PI);
+    bullet.y += bullet.dy * Settings.delta - (bullet.h - old_h) * bullet.dhDirection;
     if (bullet.explodeTick != 0) {
         bullet.explodeTick -= 1;
         if (bullet.explodeTick == 0) {
@@ -54,10 +59,12 @@ export function update(bullet: Bullet): void {
                     free(bullet);
                     return;
                 }
-                fire(bullet.bullets,
+                fire(
+                    bullet.bullets,
                     new_bullet,
                     bullet,
-                    createVector(pow(-1, i) * speed, pow(-1, floor(i / 2)) * speed + bullet.dy));
+                    createVector(pow(-1, i) * speed, pow(-1, floor(i / 2)) * speed + bullet.dy)
+                );
             }
             free(bullet);
         }
@@ -88,8 +95,8 @@ export function free(bullet: Bullet): void {
     bullet.dy = 0;
     bullet.x = 0;
     bullet.y = 0;
-    bullet.h = bullet.bullets.bh;
-    bullet.w = bullet.bullets.bw;
+    bullet.h = bullet.bullets?.bh ?? 0;
+    bullet.w = bullet.bullets?.bw ?? 0;
     bullet.dh = 0;
-    bullet.shielded = bullet.bullets.shielded;
+    bullet.shielded = bullet.bullets?.shielded;
 }

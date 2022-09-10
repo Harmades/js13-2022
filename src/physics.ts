@@ -1,11 +1,11 @@
 import { sign } from "./alias";
 import { free } from "./bullet";
 import { getActiveBullets } from "./bullets";
-import { die as enemyDie, Enemies, getActiveEnemies } from "./enemies";
-import { bulletHit, Player } from "./player";
+import { die as enemyDie, getActiveEnemies } from "./enemies";
+import { bulletHit } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
-import { changeScene, Scene } from "./scenes";
 import { Vector } from "./vector";
+import { changeScene, Scene, World } from "./world";
 
 export type Collision = Rectangle;
 
@@ -24,7 +24,9 @@ export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Coll
     };
 }
 
-export function update(player: Player, enemies: Enemies): void {
+export function update(world: World): void {
+    const enemies = world.enemies;
+    const player = world.player;
     for (let enemy of getActiveEnemies(enemies)) {
         for (let bullet of getActiveBullets(player.bullets)) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
@@ -37,20 +39,20 @@ export function update(player: Player, enemies: Enemies): void {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
                 if (bulletHit(player) == 0) {
-                    changeScene(Scene.Shop, player, enemies);
+                    changeScene(Scene.Shop, world);
                 }
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
-            changeScene(Scene.Shop, player, enemies);
+            changeScene(Scene.Shop, world);
         }
     }
     for (let bullet of getActiveBullets(enemies.boss.bullets)) {
         const bulletPlayerCollision = getCollision(player, bullet);
         if (bulletPlayerCollision != null) {
             if (bulletHit(player) == 0) {
-                changeScene(Scene.Shop, player, enemies);
+                changeScene(Scene.Shop, world);
             }
         }
     }

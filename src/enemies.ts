@@ -3,6 +3,7 @@ import { Bullet } from "./bullet";
 import { getActiveBullets } from "./bullets";
 import { Enemy, render as renderEnemy, update as updateEnemy } from "./enemy";
 import { createReleasedKeyPress } from "./input";
+import { awardMoney, Player } from "./player";
 import { Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { create as createWave, WaveDifficulty } from "./wave";
@@ -11,6 +12,7 @@ export type Enemies = {
     entities: Enemy[];
     deadCount: number;
     boss: Boss;
+    player: Player;
 };
 
 let elapsedTime = 0;
@@ -18,11 +20,12 @@ let currentWave = 1;
 let bossWave = Settings.waveEasyCount + Settings.waveMediumCount + Settings.waveHardCount + 1;
 let mInput = createReleasedKeyPress("m");
 
-export function create(): Enemies {
+export function create(player: Player): Enemies {
     return {
         entities: createWave(WaveDifficulty.Easy).enemies,
         deadCount: 0,
         boss: createBoss(),
+        player,
     };
 }
 
@@ -71,6 +74,7 @@ export function nextWave(enemies: Enemies): void {
     enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
     elapsedTime = 0;
+    awardMoney(enemies.player, 1);
 }
 
 export function reset(enemies: Enemies): void {

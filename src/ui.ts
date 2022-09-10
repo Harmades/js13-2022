@@ -1,7 +1,6 @@
 import { getElementById } from "./alias";
-import { Enemies } from "./enemies";
-import { Player } from "./player";
-import { changeScene, Scene } from "./scenes";
+import { awardMoney } from "./player";
+import { changeScene, Scene, World } from "./world";
 
 export enum PowerUp {
     Speed,
@@ -12,20 +11,19 @@ export enum PowerUp {
 let speed = 0;
 let shield = 0;
 let multishot = 0;
-let player: Player | null = null;
-let enemies: Enemies | null = null;
+let world: World | null = null;
 
-export function create(playerRef: Player, enemiesRef: Enemies): void {
-    player = playerRef;
-    enemies = enemiesRef;
+export function create(worldRef: World): void {
+    world = worldRef;
 }
 
-export function toggleShop(): void {
-    const element = getElementById("ui") as HTMLElement;
-    element.style.display = element.style.display != "flex" ? "flex" : "none";
+export function toggleShop(display: boolean): void {
+    getElementById("ui-shop")!.style.display = display ? "flex" : "none";
 }
 
 export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
+    const player = world!.player;
+    if (!awardMoney(player, -amount)) return;
     if (powerUp == PowerUp.Speed) {
         speed += amount;
     }
@@ -35,14 +33,27 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
     if (powerUp == PowerUp.Multishot) {
         multishot += amount;
     }
-    if (speed < 0) speed = 0;
-    if (shield < 0) shield = 0;
-    if (multishot < 0) multishot = 0;
+    if (speed < 0) {
+        speed = 0;
+        awardMoney(player, amount);
+    }
+    if (shield < 0) {
+        shield = 0;
+        awardMoney(player, amount);
+    }
+    if (multishot < 0) {
+        multishot = 0;
+        awardMoney(player, amount);
+    }
     syncUi();
 }
 
+export function onMoneyChanged(money: number) {
+    getElementById("current-money")!.innerText = money.toString();
+}
+
 export function play(): void {
-    changeScene(Scene.Game, player!, enemies!);
+    changeScene(Scene.Game, world!);
 }
 
 /* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales

@@ -10,20 +10,10 @@ import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
 import { drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import {
-    load,
-    playBossMusic,
-    playShopMusic,
-    playEnemiesMusic,
-    stopSong,
-    playPlayerHit,
-} from "./sound";
+import { load, playBossMusic, playPlayerHit, stopSong } from "./sound";
 import { Speed } from "./speed";
-import {
-    create as createVector,
-    add as addVector
-} from "./vector";
-import { PowerUp, getPowerUpStatus } from "./ui"
+import { getPowerUpStatus, onMoneyChanged, PowerUp } from "./ui";
+import { add as addVector, create as createVector } from "./vector";
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -32,10 +22,11 @@ let isAudioInitialized = false;
 
 export type Player = Rectangle &
     Speed & {
-        bullets: Bullets
-        bulletsPattern: BulletsPattern,
-        shootSpeed: number,
-        shieldCount: number,
+        bullets: Bullets;
+        bulletsPattern: BulletsPattern;
+        shootSpeed: number;
+        shieldCount: number;
+        money: number;
     };
 
 export function create(): Player {
@@ -52,21 +43,26 @@ export function create(): Player {
             Settings.playerBulletSpeedY,
             Settings.playerSprayOpen,
             Settings.playerBulletWidth,
-            Settings.playerBulletHeight),
+            Settings.playerBulletHeight
+        ),
         bulletsPattern: BulletsPattern.Single,
         shootSpeed: 1,
         shieldCount: 0,
+        money: 10,
     };
+    onMoneyChanged(player.money);
     return player;
 }
 
 export function shoot(player: Player): void {
     let bullet = player.bullets.bullets.find((b) => !b.isActive);
     if (bullet == undefined) return;
-    fireBullets(player.bullets,
+    fireBullets(
+        player.bullets,
         player.shootSpeed * Settings.playerBulletSpeedX,
         addVector(player, createVector(Settings.playerWidth, Settings.playerHeight / 2)),
-        player.bulletsPattern);
+        player.bulletsPattern
+    );
     /*player.bulletsPattern += 1;
     player.bulletsPattern %= BulletsPattern.ConicEnd;*/
 }
@@ -129,6 +125,13 @@ export function bulletHit(player: Player): number {
     player.shieldCount -= 1;
     playPlayerHit();
     return player.shieldCount;
+}
+
+export function awardMoney(player: Player, money: number): boolean {
+    if (player.money + money < 0) return false;
+    player.money += money;
+    onMoneyChanged(player.money);
+    return true;
 }
 
 export function render(renderer: Renderer, player: Player) {
