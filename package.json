@@ -5,6 +5,7 @@
     "author": "Adrian Lissot",
     "license": "MIT",
     "scripts": {
+        "optimize-png": "advpng.exe -z -4 -i 100 ./assets/texture.png",
         "start": "tsc --noEmit && parcel src/index.html",
         "build": "tsc --noEmit && parcel build src/index.html --no-source-maps --public-url ./ && node zip.js"
     },
