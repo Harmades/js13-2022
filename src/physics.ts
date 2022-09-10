@@ -5,6 +5,7 @@ import { getActiveBullets } from "./bullets";
 import { die as enemyDie, getActiveEnemies } from "./enemies";
 import { bulletHit } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
+import { Sprite } from "./sprite";
 import { Vector } from "./vector";
 import { changeScene, Scene, World } from "./world";
 
@@ -12,7 +13,7 @@ export type Collision = Rectangle;
 
 type Overlap = Vector;
 
-export function getCollision(rectangle1: Rectangle, rectangle2: Rectangle): Collision | null {
+export function getCollision(rectangle1: Sprite, rectangle2: Sprite): Collision | null {
     const xOverlap = getOverlap(xProject(rectangle1), xProject(rectangle2));
     const yOverlap = getOverlap(yProject(rectangle1), yProject(rectangle2));
     // collides if there is an overlap on x axis and y axis
@@ -66,11 +67,7 @@ export function update(world: World): void {
     }
 }
 
-function getTranslationVector(
-    player: Rectangle,
-    rectangle: Rectangle,
-    collision: Collision
-): Vector {
+function getTranslationVector(player: Sprite, rectangle: Sprite, collision: Collision): Vector {
     const playerCenter = getCenter(player);
     const platformCenter = getCenter(rectangle);
     const xSign = sign(playerCenter.x - platformCenter.x);
@@ -82,11 +79,11 @@ function getTranslationVector(
     return translation;
 }
 
-function xProject(rectangle: Rectangle): Vector {
+function xProject(rectangle: Sprite): Vector {
     return { x: rectangle.x, y: rectangle.x + rectangle.w };
 }
 
-function yProject(rectangle: Rectangle): Vector {
+function yProject(rectangle: Sprite): Vector {
     return { x: rectangle.y, y: rectangle.y + rectangle.h };
 }
 

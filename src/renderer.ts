@@ -1,8 +1,8 @@
 import atlasJson from "../assets/texture.json";
 import * as atlasPng from "../assets/texture.png";
 import { createElement, getElementById, round } from "./alias";
-import { Rectangle } from "./rectangle";
 import { Settings } from "./settings";
+import { Sprite } from "./sprite";
 import { Vector } from "./vector";
 
 export type Renderer = {
@@ -10,7 +10,7 @@ export type Renderer = {
     image: HTMLImageElement;
 };
 
-export type Sprite = keyof typeof atlasJson.frames;
+export type AtlasSprite = keyof typeof atlasJson.frames;
 
 export function create(): Renderer {
     return {
@@ -38,15 +38,23 @@ export function createCanvas(
     return context;
 }
 
-export function drawImage({ canvas, image }: Renderer, { x, y }: Vector, key: Sprite): void {
+export function drawImage({ canvas, image }: Renderer, { x, y, sprite }: Sprite): void {
     if (!image.complete) return;
-    const frame = atlasJson.frames[key].frame;
+    const frame = atlasJson.frames[sprite].frame;
     canvas.drawImage(image, frame.x, frame.y, frame.w, frame.h, x, y, frame.w, frame.h);
 }
 
-export function drawRect({ canvas }: Renderer, { x, y, w, h }: Rectangle, color = "#FF0000") {
-    if (canvas) canvas.fillStyle = color;
+export function drawRect({ canvas }: Renderer, { x, y, w, h, color }: Sprite) {
+    if (canvas) canvas.fillStyle = color ?? "#FF0000";
     canvas.fillRect(round(x), round(y), w, h);
+}
+
+export function drawSprite(renderer: Renderer, sprite: Sprite) {
+    if (Settings.debug) {
+        drawRect(renderer, sprite);
+    } else {
+        drawImage(renderer, sprite);
+    }
 }
 
 export function translate({ canvas }: Renderer, { x, y }: Vector) {

@@ -1,22 +1,17 @@
+import { cos, max, min, PI } from "./alias";
+import { repeat } from "./array";
 import {
     Bullet,
     create as createBullet,
     fire as fireBullet,
+    free as freeBullet,
     render as renderBullet,
     update as updateBullet,
-    free as freeBullet,
 } from "./bullet";
-import { Settings } from "./settings";
-import { Speed } from "./speed";
-import {
-    create as createVector,
-    add as addVector,
-    Vector
-} from "./vector";
-import { repeat } from "./array";
-import { floor, min, max, abs, sign, cos, PI } from "./alias";
 import { randRange } from "./random";
-import { Renderer } from "./renderer"
+import { Renderer } from "./renderer";
+import { Settings } from "./settings";
+import { add as addVector, create as createVector, Vector } from "./vector";
 
 export type Bullets = {
     bullets: Bullet[];
@@ -27,7 +22,7 @@ export type Bullets = {
     shielded: boolean;
     bh: number;
     bw: number;
-}
+};
 
 export enum Pattern {
     Single,
@@ -50,9 +45,14 @@ export function create(
     sprayOpen: number,
     bulletHeight: number,
     bulletWidth: number,
-    shielded: boolean = false): Bullets {
+    shielded: boolean = false,
+    isPlayerBullet: boolean
+): Bullets {
     return {
-        bullets: repeat(() => createBullet(bulletHeight, bulletWidth, shielded), poolSize),
+        bullets: repeat(
+            () => createBullet(bulletHeight, bulletWidth, shielded, isPlayerBullet),
+            poolSize
+        ),
         baseSpeedX,
         baseSpeedY,
         lastRandY: 0,
@@ -63,24 +63,36 @@ export function create(
     };
 }
 
-function computeRandY(bullets: Bullets, rand: number,): number {
+function computeRandY(bullets: Bullets, rand: number): number {
     let randY = randRange(-rand, rand);
     let speedY = bullets.lastRandY + randY;
-    speedY = max(min(Settings.bulletsMaxdY, speedY), -Settings.bulletsMaxdY)
+    speedY = max(min(Settings.bulletsMaxdY, speedY), -Settings.bulletsMaxdY);
     bullets.lastRandY = speedY;
     return speedY;
 }
 
-export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pattern: Pattern, rand: number = 0) {
+export function fire(
+    bullets: Bullets,
+    speedX: number,
+    shootPosition: Vector,
+    pattern: Pattern,
+    rand: number = 0
+) {
     let speedY = computeRandY(bullets, rand);
     if (pattern < Pattern.ConicEnd) {
         for (let i: number = 0; i <= pattern; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(bullets,
+            fireBullet(
+                bullets,
                 bullet,
                 shootPosition,
-                createVector(speedX, bullets.baseSpeedY * cos(PI * ((i + 1) / (pattern + 2))) * bullets.sprayOpen + speedY));
+                createVector(
+                    speedX,
+                    bullets.baseSpeedY * cos(PI * ((i + 1) / (pattern + 2))) * bullets.sprayOpen +
+                        speedY
+                )
+            );
             speedY = computeRandY(bullets, rand);
         }
     }
@@ -88,28 +100,29 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         let bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
         bullet.dh = 0.1;
-        fireBullet(bullets,
-            bullet,
-            shootPosition,
-            createVector(speedX, speedY));
+        fireBullet(bullets, bullet, shootPosition, createVector(speedX, speedY));
     }
     if (pattern == Pattern.StraightHole) {
         let bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
         bullet.dh = 0.4;
         bullet.dhDirection = 0;
-        fireBullet(bullets,
+        fireBullet(
+            bullets,
             bullet,
             shootPosition,
-            createVector(speedX, speedY + bullet.dh * 150 + 10));
+            createVector(speedX, speedY + bullet.dh * 150 + 10)
+        );
         bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
         bullet.dh = 0.4;
         bullet.dhDirection = 1;
-        fireBullet(bullets,
+        fireBullet(
+            bullets,
             bullet,
             shootPosition,
-            createVector(speedX, speedY - (bullet.dh * 150 + 10)));
+            createVector(speedX, speedY - (bullet.dh * 150 + 10))
+        );
     }
 
     if (pattern == Pattern.Explosion) {
@@ -117,36 +130,55 @@ export function fire(bullets: Bullets, speedX: number, shootPosition: Vector, pa
         if (bullet == undefined) return;
         bullet.w = Settings.bossBigBulletWidth;
         bullet.h = Settings.bossBigBulletHeight;
-        bullet.bullets = bullets
+        bullet.bullets = bullets;
         bullet.explodeTick = Settings.bossBigBulletExplosionTick;
-        fireBullet(bullets,
+        fireBullet(
+            bullets,
             bullet,
-            addVector(shootPosition, createVector(Settings.bossBigBulletWidth, - (Settings.bossBigBulletHeight / 2))),
-            createVector(speedX, speedY));
+            addVector(
+                shootPosition,
+                createVector(Settings.bossBigBulletWidth, -(Settings.bossBigBulletHeight / 2))
+            ),
+            createVector(speedX, speedY)
+        );
     }
     /* Assuming this comes from the boss */
     if (pattern == Pattern.UpAndDown) {
         for (let i: number = 0; i <= 10; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(bullets,
+            fireBullet(
+                bullets,
                 bullet,
-                addVector(shootPosition, createVector(Settings.bossWidth / 2, Settings.bossHeight / 2)),
-                createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, bullets.baseSpeedY));
+                addVector(
+                    shootPosition,
+                    createVector(Settings.bossWidth / 2, Settings.bossHeight / 2)
+                ),
+                createVector(
+                    speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY,
+                    bullets.baseSpeedY
+                )
+            );
             speedY = computeRandY(bullets, rand);
         }
         for (let i: number = 0; i <= 10; i++) {
             let bullet = bullets.bullets.find((b) => !b.isActive);
             if (bullet == undefined) return;
-            fireBullet(bullets,
+            fireBullet(
+                bullets,
                 bullet,
-                addVector(shootPosition, createVector(Settings.bossWidth / 2, -Settings.bossHeight / 2)),
-                createVector(speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY, -bullets.baseSpeedY));
+                addVector(
+                    shootPosition,
+                    createVector(Settings.bossWidth / 2, -Settings.bossHeight / 2)
+                ),
+                createVector(
+                    speedX * cos(PI * ((i + 1) / (pattern + 2))) * 0.5 + speedY,
+                    -bullets.baseSpeedY
+                )
+            );
             speedY = computeRandY(bullets, rand);
         }
-
     }
-
 }
 
 export function resetRand(bullets: Bullets) {
@@ -174,4 +206,3 @@ export function reset(bullets: Bullets): void {
         freeBullet(bullet);
     }
 }
-

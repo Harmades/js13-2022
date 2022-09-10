@@ -9,10 +9,10 @@ import {
 } from "./bullets";
 import { Direction } from "./direction";
 import { rand } from "./random";
-import { Rectangle } from "./rectangle";
-import { drawImage, drawRect, Renderer, Sprite } from "./renderer";
+import { AtlasSprite, drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
+import { Sprite } from "./sprite";
 import { add as addVector, create as createVector } from "./vector";
 
 export enum Pattern {
@@ -22,7 +22,7 @@ export enum Pattern {
     Rectangular,
 }
 
-export type Enemy = Rectangle &
+export type Enemy = Sprite &
     Speed & {
         dead: boolean;
         elapsedTime: number;
@@ -41,7 +41,7 @@ export type Enemy = Rectangle &
         ry: number;
         bullets: Bullets;
         bulletsPattern: BulletsPattern;
-        sprite: Sprite;
+        sprite: AtlasSprite;
     };
 
 export function create(
@@ -54,7 +54,7 @@ export function create(
     rx: number,
     ry: number,
     bulletsPattern: BulletsPattern = BulletsPattern.Single,
-    sprite: Sprite
+    sprite: AtlasSprite
 ): Enemy {
     return {
         x: Settings.width,
@@ -82,7 +82,9 @@ export function create(
             Settings.enemyBulletSpeedY,
             Settings.enemySprayOpen,
             Settings.bulletWidth,
-            Settings.bulletHeight
+            Settings.bulletHeight,
+            undefined,
+            false
         ),
         bulletsPattern: bulletsPattern,
         sprite,
@@ -167,9 +169,5 @@ export function render(renderer: Renderer, enemy: Enemy) {
     renderBullets(renderer, enemy.bullets);
 
     if (enemy.dead) return;
-    if (Settings.debug) {
-        drawRect(renderer, enemy, enemy.color);
-    } else {
-        drawImage(renderer, enemy, enemy.sprite);
-    }
+    drawSprite(renderer, enemy);
 }

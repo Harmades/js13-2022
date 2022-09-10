@@ -1,12 +1,12 @@
 import { floor, min, PI, pow, sin } from "./alias";
 import { Bullets } from "./bullets";
-import { Rectangle } from "./rectangle";
-import { drawRect, Renderer } from "./renderer";
+import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
+import { Sprite } from "./sprite";
 import { create as createVector, Vector } from "./vector";
 
-export type Bullet = Rectangle &
+export type Bullet = Sprite &
     Speed & {
         isActive: boolean;
         bullets: any;
@@ -19,7 +19,8 @@ export type Bullet = Rectangle &
 export function create(
     h: number = Settings.bulletHeight,
     w: number = Settings.bulletWidth,
-    shielded: boolean = false
+    shielded: boolean = false,
+    isPlayerBullet: boolean
 ): Bullet {
     return {
         x: 0,
@@ -34,6 +35,7 @@ export function create(
         explodeTick: 0,
         bullets: undefined,
         shielded: shielded,
+        sprite: isPlayerBullet ? "assets/friendly_bullet.png" : "assets/enemie_bullet.png",
     };
 }
 
@@ -77,7 +79,7 @@ export function update(bullet: Bullet): void {
 
 export function render(renderer: Renderer, bullet: Bullet): void {
     if (!bullet.isActive) return;
-    drawRect(renderer, bullet);
+    drawSprite(renderer, bullet);
 }
 
 export function fire(bullets: Bullets, bullet: Bullet, dest: Vector, speed: Vector) {

@@ -7,11 +7,11 @@ import {
     update as updateBullets,
 } from "./bullets";
 import { createReleasedKeyPress, input } from "./input";
-import { Rectangle } from "./rectangle";
-import { drawImage, drawRect, Renderer } from "./renderer";
+import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, playBossMusic, playPlayerHit, stopSong } from "./sound";
 import { Speed } from "./speed";
+import { Sprite } from "./sprite";
 import { getPowerUpStatus, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
 
@@ -20,7 +20,7 @@ const shiftInput = createReleasedKeyPress("shift");
 let isPlaying = false;
 let isAudioInitialized = false;
 
-export type Player = Rectangle &
+export type Player = Sprite &
     Speed & {
         bullets: Bullets;
         bulletsPattern: BulletsPattern;
@@ -30,7 +30,7 @@ export type Player = Rectangle &
     };
 
 export function create(): Player {
-    const player = {
+    const player: Player = {
         x: Settings.playerWidth,
         dx: 0,
         y: Settings.height / 2,
@@ -43,12 +43,15 @@ export function create(): Player {
             Settings.playerBulletSpeedY,
             Settings.playerSprayOpen,
             Settings.playerBulletWidth,
-            Settings.playerBulletHeight
+            Settings.playerBulletHeight,
+            undefined,
+            true
         ),
         bulletsPattern: BulletsPattern.Single,
         shootSpeed: 1,
         shieldCount: 0,
         money: 10,
+        sprite: "assets/cerbere.png",
     };
     onMoneyChanged(player.money);
     return player;
@@ -135,11 +138,7 @@ export function awardMoney(player: Player, money: number): boolean {
 }
 
 export function render(renderer: Renderer, player: Player) {
-    if (Settings.debug) {
-        drawRect(renderer, player);
-    } else {
-        drawImage(renderer, player, "assets/cerbere.png");
-    }
+    drawSprite(renderer, player);
     for (let bullet of player.bullets.bullets) {
         if (bullet.isActive) {
             Bullet.render(renderer, bullet);

@@ -10,10 +10,10 @@ import {
     update as updateBullets,
 } from "./bullets";
 import { randColor } from "./random";
-import { Rectangle } from "./rectangle";
-import { drawRect, Renderer } from "./renderer";
+import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
+import { Sprite } from "./sprite";
 import { add as addVector, create as createVector } from "./vector";
 
 export type BossPattern = {
@@ -31,7 +31,7 @@ export type BossPattern = {
     resetPosOnRepeat: boolean;
 };
 
-export type Boss = Rectangle &
+export type Boss = Sprite &
     Speed & {
         color: string;
         bullets: Bullets;
@@ -112,7 +112,9 @@ export function create(): Boss {
             Settings.bossBulletSpeedY,
             Settings.bossSprayOpen,
             Settings.bulletWidth,
-            Settings.bulletHeight
+            Settings.bulletHeight,
+            undefined,
+            false
         ),
         elapsedTime: 0,
         currentPattern: straight,
@@ -123,6 +125,7 @@ export function create(): Boss {
         patternIndex: 0,
         repeatCount: 0,
         life: Settings.bossLife,
+        sprite: "assets/boss.png",
     };
 }
 
@@ -230,7 +233,7 @@ export function bossHit(boss: Boss): void {
 
 export function render(renderer: Renderer, boss: Boss) {
     renderBullets(renderer, boss.bullets);
-    drawRect(renderer, boss, boss.color);
+    drawSprite(renderer, boss);
 }
 
 export function reset(boss: Boss) {

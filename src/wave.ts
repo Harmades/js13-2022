@@ -1,7 +1,7 @@
 import { Pattern as BulletsPattern } from "./bullets";
 import { create as createEnemy, Enemy, Pattern } from "./enemy";
 import { rand, randColor, randRange, randRangeInt } from "./random";
-import { Renderer, Sprite } from "./renderer";
+import { AtlasSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 
 export enum WaveDifficulty {
@@ -15,7 +15,7 @@ export type Wave = {
     enemies: Enemy[];
 };
 
-let sprites: Sprite[] = [
+let sprites: AtlasSprite[] = [
     "assets/floating_eye.png",
     "assets/imp.png",
     "assets/skeleton.png",
