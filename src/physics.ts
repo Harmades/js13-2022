@@ -1,4 +1,5 @@
 import { sign } from "./alias";
+import { bossHit } from "./boss";
 import { free } from "./bullet";
 import { getActiveBullets } from "./bullets";
 import { die as enemyDie, getActiveEnemies } from "./enemies";
@@ -54,6 +55,13 @@ export function update(world: World): void {
             if (bulletHit(player) == 0) {
                 changeScene(Scene.Shop, world);
             }
+        }
+    }
+    for (let bullet of getActiveBullets(player.bullets)) {
+        const bulletEnemyCollision = getCollision(enemies.boss, bullet);
+        if (bulletEnemyCollision != null) {
+            free(bullet);
+            bossHit(enemies.boss);
         }
     }
 }
