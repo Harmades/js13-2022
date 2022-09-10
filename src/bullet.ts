@@ -9,7 +9,7 @@ import { create as createVector, Vector } from "./vector";
 export type Bullet = Sprite &
     Speed & {
         isActive: boolean;
-        bullets: any;
+        bullets?: Bullets;
         dh: number;
         dhDirection: number;
         explodeTick: number;
@@ -33,7 +33,6 @@ export function create(
         dh: 0,
         dhDirection: 0,
         explodeTick: 0,
-        bullets: undefined,
         shielded: shielded,
         sprite: isPlayerBullet ? "assets/friendly_bullet.png" : "assets/enemie_bullet.png",
     };
@@ -98,8 +97,11 @@ export function free(bullet: Bullet): void {
     bullet.dy = 0;
     bullet.x = 0;
     bullet.y = 0;
-    bullet.h = bullet.bullets?.bh ?? 0;
-    bullet.w = bullet.bullets?.bw ?? 0;
+    if (bullet.bullets != undefined) {
+        bullet.h = bullet.bullets.bh;
+        bullet.w = bullet.bullets.bw;
+        bullet.shielded = bullet.bullets.shielded;
+    }
     bullet.dh = 0;
-    bullet.shielded = bullet.bullets?.shielded;
+
 }

@@ -20,6 +20,8 @@ export const Settings = {
     playerSprayOpen: 3,
     playerBulletWidth: 5,
     playerBulletHeight: 5,
+    playerInvincibleTime: 0.8,
+    playerBlinkPeriod: 0.1,
 
     enemyWidth: 16,
     enemyHeight: 16,

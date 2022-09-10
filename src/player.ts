@@ -14,6 +14,7 @@ import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { getPowerUpStatus, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
+import { floor } from "./alias"
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -27,6 +28,7 @@ export type Player = Sprite &
         shootSpeed: number;
         shieldCount: number;
         money: number;
+        invincibleTime: number;
     };
 
 export function create(): Player {
@@ -52,6 +54,8 @@ export function create(): Player {
         shieldCount: 0,
         money: 10,
         sprite: "assets/cerbere.png",
+        invincibleTime: 0,
+
     };
     onMoneyChanged(player.money);
     return player;
@@ -74,6 +78,11 @@ export function update(player: Player) {
     let dx = 0,
         dy = 0;
     updateBullets(player.bullets);
+    if (player.invincibleTime > 0) {
+        player.invincibleTime -= Settings.delta;
+    } else {
+        player.invincibleTime = 0;
+    }
     if (input.left) dx += -Settings.playerSpeedX;
     if (input.right) dx += Settings.playerSpeedX;
     if (input.up) dy += -Settings.playerSpeedY;
@@ -113,7 +122,6 @@ export function reset(player: Player): void {
     let powerUps = getPowerUpStatus();
     player.shootSpeed = powerUps[PowerUp.Speed] + 1; /* TODO Handle Laser shot */
     player.shieldCount = powerUps[PowerUp.Shield] + 1;
-    player.shieldCount = 5;
     if (player.shieldCount == Settings.powerUpMaxCount) {
         player.bullets.shielded = true;
     }
@@ -125,8 +133,11 @@ export function reset(player: Player): void {
 }
 
 export function bulletHit(player: Player): number {
-    player.shieldCount -= 1;
-    playPlayerHit();
+    if (player.invincibleTime == 0) {
+        player.shieldCount -= 1;
+        playPlayerHit();
+        player.invincibleTime = Settings.playerInvincibleTime;
+    }
     return player.shieldCount;
 }
 
@@ -138,7 +149,9 @@ export function awardMoney(player: Player, money: number): boolean {
 }
 
 export function render(renderer: Renderer, player: Player) {
-    drawSprite(renderer, player);
+    if (floor(player.invincibleTime / Settings.playerBlinkPeriod) % 2 == 0) {
+        drawSprite(renderer, player);
+    }
     for (let bullet of player.bullets.bullets) {
         if (bullet.isActive) {
             Bullet.render(renderer, bullet);

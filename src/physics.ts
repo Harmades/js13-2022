@@ -8,6 +8,7 @@ import { getCenter, Rectangle } from "./rectangle";
 import { Sprite } from "./sprite";
 import { Vector } from "./vector";
 import { changeScene, Scene, World } from "./world";
+import { Settings } from "./settings"
 
 export type Collision = Rectangle;
 
@@ -35,6 +36,7 @@ export function update(world: World): void {
             if (bulletEnemyCollision != null) {
                 free(bullet);
                 enemyDie(enemy, enemies);
+                break;
             }
         }
         for (let bullet of getActiveBullets(enemy.bullets)) {
@@ -43,6 +45,7 @@ export function update(world: World): void {
                 if (bulletHit(player) == 0) {
                     changeScene(Scene.Shop, world);
                 }
+                break;
             }
         }
         const playerEnemyCollision = getCollision(player, enemy);
