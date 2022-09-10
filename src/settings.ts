@@ -4,6 +4,10 @@ export const Settings = {
     width: 960,
     height: 640,
 
+    tileSize: 16,
+    worldWidth: 30,
+    worldHeight: 12,
+
     playerSpeedX: 300,
     playerSpeedY: 300,
     playerWidth: 50,

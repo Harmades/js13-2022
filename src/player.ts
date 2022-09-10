@@ -8,7 +8,7 @@ import {
 } from "./bullets";
 import { createReleasedKeyPress, input } from "./input";
 import { Rectangle } from "./rectangle";
-import { drawRect, Renderer } from "./renderer";
+import { drawImage, drawRect, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, playBossMusic, playPlayerHit, stopSong } from "./sound";
 import { Speed } from "./speed";
@@ -135,7 +135,11 @@ export function awardMoney(player: Player, money: number): boolean {
 }
 
 export function render(renderer: Renderer, player: Player) {
-    drawRect(renderer, player);
+    if (Settings.debug) {
+        drawRect(renderer, player);
+    } else {
+        drawImage(renderer, player, "assets/cerbere.png");
+    }
     for (let bullet of player.bullets.bullets) {
         if (bullet.isActive) {
             Bullet.render(renderer, bullet);

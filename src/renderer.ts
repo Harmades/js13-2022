@@ -1,3 +1,5 @@
+import atlasJson from "../assets/texture.json";
+import * as atlasPng from "../assets/texture.png";
 import { createElement, getElementById, round } from "./alias";
 import { Rectangle } from "./rectangle";
 import { Settings } from "./settings";
@@ -5,11 +7,15 @@ import { Vector } from "./vector";
 
 export type Renderer = {
     canvas: CanvasRenderingContext2D;
+    image: HTMLImageElement;
 };
 
-export function create() {
+export type Sprite = keyof typeof atlasJson.frames;
+
+export function create(): Renderer {
     return {
         canvas: createCanvas(Settings.width, Settings.height, "gameCanvas"),
+        image: loadImage(atlasPng),
     };
 }
 
@@ -32,8 +38,10 @@ export function createCanvas(
     return context;
 }
 
-export function drawImage({ canvas }: Renderer, image: HTMLImageElement, { x, y }: Vector): void {
-    canvas.drawImage(image, x, y);
+export function drawImage({ canvas, image }: Renderer, { x, y }: Vector, key: Sprite): void {
+    if (!image.complete) return;
+    const frame = atlasJson.frames[key].frame;
+    canvas.drawImage(image, frame.x, frame.y, frame.w, frame.h, x, y, frame.w, frame.h);
 }
 
 export function drawRect({ canvas }: Renderer, { x, y, w, h }: Rectangle, color = "#FF0000") {
