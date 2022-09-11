@@ -10,6 +10,8 @@ export function create(): Background {
         w: 0,
         h: 0,
         sprite: "assets/basic_cobble.png",
+        ox: 0,
+        oy: 0,
     };
 }
 

@@ -13,5 +13,9 @@ export function randRangeInt(min: number, max: number): number {
 }
 
 export function randColor(): string {
-    return Math.floor(Math.random() * 16777215).toString(16);
+    const r = randRangeInt(0, 255);
+    const g = randRangeInt(0, 255);
+    const b = randRangeInt(0, 255);
+    const a = 0.5;
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
 }

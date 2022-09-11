@@ -88,6 +88,8 @@ export function create(
         ),
         bulletsPattern: bulletsPattern,
         sprite,
+        ox: Settings.enemyOx,
+        oy: Settings.enemyOy,
     };
 }
 

@@ -47,7 +47,7 @@ export function create(difficulty: WaveDifficulty): Wave {
 }
 
 export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
-    const color = `#${randColor()}`;
+    const color = randColor();
     if (difficulty == WaveDifficulty.Easy) {
         const pattern = rand(Pattern.Straight, Pattern.Triangular);
         const amplitude = randRange(Settings.waveEasyAmplitudeMin, Settings.waveEasyAmplitudeMax);

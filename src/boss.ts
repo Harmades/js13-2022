@@ -97,7 +97,7 @@ const explosion: BossPattern = {
 };
 
 export function create(): Boss {
-    const color = `#${randColor()}`;
+    const color = randColor();
     return {
         x: Settings.worldWidth * 0.5 - Settings.bossWidth / 2,
         y: Settings.worldHeight * 0.5 - Settings.bossHeight / 2,
@@ -126,6 +126,8 @@ export function create(): Boss {
         repeatCount: 0,
         life: Settings.bossLife,
         sprite: "assets/boss.png",
+        ox: Settings.bossOx,
+        oy: Settings.bossOy,
     };
 }
 

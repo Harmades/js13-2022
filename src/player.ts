@@ -1,3 +1,4 @@
+import { floor } from "./alias";
 import * as Bullet from "./bullet";
 import {
     Bullets,
@@ -14,7 +15,6 @@ import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { getPowerUpStatus, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
-import { floor } from "./alias"
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -55,7 +55,8 @@ export function create(): Player {
         money: 10,
         sprite: "assets/cerbere.png",
         invincibleTime: 0,
-
+        ox: Settings.playerOx,
+        oy: Settings.playerOy,
     };
     onMoneyChanged(player.money);
     return player;

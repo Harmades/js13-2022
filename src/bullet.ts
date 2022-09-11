@@ -35,6 +35,8 @@ export function create(
         explodeTick: 0,
         shielded: shielded,
         sprite: isPlayerBullet ? "assets/friendly_bullet.png" : "assets/enemie_bullet.png",
+        ox: Settings.bulletOx,
+        oy: Settings.bulletOy,
     };
 }
 
@@ -103,5 +105,4 @@ export function free(bullet: Bullet): void {
         bullet.shielded = bullet.bullets.shielded;
     }
     bullet.dh = 0;
-
 }

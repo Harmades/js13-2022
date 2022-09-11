@@ -45,7 +45,7 @@ export function getCanvas(id: string, width: number, height: number): CanvasRend
     return context;
 }
 
-export function drawImage({ gameCanvas, image }: Renderer, { x, y, sprite }: Sprite): void {
+export function drawImage({ gameCanvas, image }: Renderer, { x, y, ox, oy, sprite }: Sprite): void {
     if (!image.complete) return;
     const frame = atlasJson.frames[sprite].frame;
     gameCanvas.drawImage(
@@ -54,23 +54,22 @@ export function drawImage({ gameCanvas, image }: Renderer, { x, y, sprite }: Spr
         frame.y,
         frame.w,
         frame.h,
-        x * ratioX,
-        y * ratioY,
+        (x - ox) * ratioX,
+        (y - oy) * ratioY,
         frame.w * ratioX,
         frame.h * ratioY
     );
 }
 
 export function drawRect({ gameCanvas }: Renderer, { x, y, w, h, color }: Sprite) {
-    if (gameCanvas) gameCanvas.fillStyle = color ?? "#FF0000";
+    if (gameCanvas) gameCanvas.fillStyle = color ?? "rgba(255, 165, 0, 0.5)";
     gameCanvas.fillRect(x * ratioX, y * ratioY, w * ratioX, h * ratioY);
 }
 
 export function drawSprite(renderer: Renderer, sprite: Sprite) {
+    drawImage(renderer, sprite);
     if (Settings.debug) {
         drawRect(renderer, sprite);
-    } else {
-        drawImage(renderer, sprite);
     }
 }
 
