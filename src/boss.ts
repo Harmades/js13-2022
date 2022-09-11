@@ -1,4 +1,4 @@
-import { ceil, floor } from "./alias";
+import { abs } from "./alias";
 import {
     Bullets,
     create as createBullets,
@@ -220,10 +220,7 @@ export function update(boss: Boss): void {
         return;
     }
 
-    if (
-        (floor(boss.x) == boss.currentPattern.tx || ceil(boss.x) == boss.currentPattern.tx) &&
-        (floor(boss.y) == boss.currentPattern.ty || ceil(boss.y) == boss.currentPattern.ty)
-    ) {
+    if (abs(boss.currentPattern.tx - boss.x) < 1 && abs(boss.currentPattern.ty - boss.y) < 1) {
         boss.targetReached = true;
         boss.dx = boss.currentPattern.dx;
         boss.dy = boss.currentPattern.dy;
