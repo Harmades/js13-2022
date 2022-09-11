@@ -178,6 +178,7 @@ export function update(boss: Boss): void {
     boss.y += boss.dy * Settings.delta;
 
     if (boss.targetReached) {
+        boss.sprite = "assets/boss2.png";
         if (boss.shootCount < boss.currentPattern.shootCount[boss.patternIndex]) {
             if (
                 boss.shootElapsedTime >=
@@ -196,6 +197,7 @@ export function update(boss: Boss): void {
                 }
             }
         } else {
+            boss.sprite = "assets/boss.png";
             boss.shootCount = 0;
             resetRandBullets(boss.bullets);
             if (boss.patternIndex + 1 == boss.currentPattern.shootFrequency.length) {
