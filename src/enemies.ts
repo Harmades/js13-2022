@@ -72,7 +72,9 @@ export function nextWave(enemies: Enemies): void {
     enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
     awardMoney(enemies.player, 1);
-    onProgressChanged((currentWave / 9) * 50);
+    onProgressChanged(
+        (currentWave / 9) * 50 + ((Settings.bossLife - enemies.boss.life) / Settings.bossLife) * 50
+    );
 }
 
 export function reset(enemies: Enemies): void {
