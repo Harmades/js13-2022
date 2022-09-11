@@ -49,7 +49,7 @@
                 background-color: rgba(194, 194, 209);
                 border: 4px solid #272736;
                 border-radius: 4px;
-                margin: 48px 200px 48px 200px;
+                margin: 16px 200px 48px 200px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -112,6 +112,20 @@
                 bottom: 16px;
                 color: ghostwhite;
             }
+
+            #ui-progression {
+                border: 2px solid rgba(248, 248, 255, 0.5);
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 1000px;
+                height: 32px;
+                margin: 16px 100px 0px 100px;
+            }
+
+            #current-progress {
+                width: 0%;
+                height: 100%;
+                background-color: rgba(255, 0, 0, 0.5);
+            }
         </style>
     </head>
 
@@ -122,6 +136,9 @@
             <canvas id="foreground-canvas" class="pixel-canvas"></canvas>
             <canvas id="offscreen-canvas" class="pixel-canvas"></canvas>
             <div id="ui">
+                <div id="ui-progression">
+                    <div id="current-progress"></div>
+                </div>
                 <div id="ui-shop">
                     <div class="shop-label">SHOP</div>
                     <div id="shop">

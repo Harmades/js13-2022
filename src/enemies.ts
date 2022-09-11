@@ -6,6 +6,7 @@ import { createReleasedKeyPress } from "./input";
 import { awardMoney, Player } from "./player";
 import { Renderer } from "./renderer";
 import { Settings } from "./settings";
+import { onProgressChanged } from "./ui";
 import { create as createWave, WaveDifficulty } from "./wave";
 
 export type Enemies = {
@@ -71,6 +72,7 @@ export function nextWave(enemies: Enemies): void {
     enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
     awardMoney(enemies.player, 1);
+    onProgressChanged((currentWave / 9) * 50);
 }
 
 export function reset(enemies: Enemies): void {

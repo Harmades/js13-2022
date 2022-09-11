@@ -12,6 +12,7 @@ let speed = 0;
 let shield = 0;
 let multishot = 0;
 let world: World | null = null;
+let progress = 0;
 
 export function create(worldRef: World): void {
     world = worldRef;
@@ -52,6 +53,11 @@ export function onMoneyChanged(money: number) {
     getElementById("current-money")!.innerText = money.toString();
 }
 
+export function onProgressChanged(value: number) {
+    progress = value;
+    syncUi();
+}
+
 export function play(): void {
     changeScene(Scene.Game, world!);
 }
@@ -66,6 +72,7 @@ function syncUi(): void {
     getElementById("current-speed")!.innerText = speed.toString();
     getElementById("current-shield")!.innerText = shield.toString();
     getElementById("current-multishot")!.innerText = multishot.toString();
+    getElementById("current-progress")!.style.width = `${progress}%`;
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;
