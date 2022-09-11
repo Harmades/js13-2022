@@ -1,6 +1,6 @@
 import { floor, min, PI, pow, sin } from "./alias";
 import { Bullets } from "./bullets";
-import { drawSprite, Renderer } from "./renderer";
+import { AtlasSprite, drawImageRepeated, drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
@@ -82,6 +82,15 @@ export function update(bullet: Bullet): void {
 export function render(renderer: Renderer, bullet: Bullet): void {
     if (!bullet.isActive) return;
     drawSprite(renderer, bullet);
+    if (bullet.bullets && bullet.explodeTick == 0) {
+        if (bullet.bullets.bh != bullet.h) {
+            const verticalSprite: AtlasSprite =
+                bullet.sprite == "assets/friendly_bullet.png"
+                    ? "assets/friendly_vertical_laser.png"
+                    : "assets/vertical_laser.png";
+            drawImageRepeated(renderer, verticalSprite, bullet, false);
+        }
+    }
 }
 
 export function fire(bullets: Bullets, bullet: Bullet, dest: Vector, speed: Vector) {
