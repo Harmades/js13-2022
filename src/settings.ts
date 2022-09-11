@@ -10,8 +10,8 @@ export const Settings = {
     worldTileWidth: 25,
     worldTileHeight: 12,
 
-    playerSpeedX: 300,
-    playerSpeedY: 300,
+    playerSpeedX: 100,
+    playerSpeedY: 100,
     playerWidth: 15,
     playerHeight: 14,
     playerOx: 3,
@@ -24,6 +24,7 @@ export const Settings = {
     playerBulletHeight: 3,
     playerInvincibleTime: 0.8,
     playerBlinkPeriod: 0.1,
+    playerAnimationTime: 0.2,
 
     enemyWidth: 13,
     enemyHeight: 16,

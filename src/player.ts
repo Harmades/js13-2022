@@ -8,7 +8,7 @@ import {
     update as updateBullets,
 } from "./bullets";
 import { createReleasedKeyPress, input } from "./input";
-import { drawSprite, Renderer } from "./renderer";
+import { AtlasSprite, drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { load, playBossMusic, playPlayerHit, stopSong } from "./sound";
 import { Speed } from "./speed";
@@ -29,7 +29,10 @@ export type Player = Sprite &
         shieldCount: number;
         money: number;
         invincibleTime: number;
+        animationTime: number;
     };
+
+let sprites: AtlasSprite[] = ["assets/cerbere.png", "assets/cerbere2.png"];
 
 export function create(): Player {
     const player: Player = {
@@ -53,10 +56,11 @@ export function create(): Player {
         shootSpeed: 1,
         shieldCount: 0,
         money: 10,
-        sprite: "assets/cerbere.png",
+        sprite: sprites[0],
         invincibleTime: 0,
         ox: Settings.playerOx,
         oy: Settings.playerOy,
+        animationTime: 0,
     };
     onMoneyChanged(player.money);
     return player;
@@ -113,6 +117,17 @@ export function update(player: Player) {
     if (player.y <= 0) player.y = 0;
     if (player.y >= Settings.worldHeight - Settings.playerHeight)
         player.y = Settings.worldHeight - Settings.playerHeight;
+
+    if (player.dx != 0 || player.dy != 0) {
+        player.animationTime += Settings.delta;
+        if (player.animationTime > Settings.playerAnimationTime) {
+            player.animationTime = 0;
+            player.sprite = player.sprite == sprites[0] ? sprites[1] : sprites[0];
+        }
+    } else {
+        player.sprite = sprites[0];
+        player.animationTime = 0;
+    }
 }
 
 export function reset(player: Player): void {
