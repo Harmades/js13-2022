@@ -13,7 +13,7 @@ import { Settings } from "./settings";
 import { load, playBossMusic, playPlayerHit, stopSong } from "./sound";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
-import { getPowerUpStatus, onMoneyChanged, PowerUp } from "./ui";
+import { getPowerUpStatus, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
 
 const spaceInput = createReleasedKeyPress("space");
@@ -141,6 +141,8 @@ export function reset(player: Player): void {
     } else {
         player.bulletsPattern = powerUps[PowerUp.Multishot];
     }
+
+    onCurrentShieldChanged(player.shieldCount);
 }
 
 export function bulletHit(player: Player): number {
@@ -149,6 +151,7 @@ export function bulletHit(player: Player): number {
         playPlayerHit();
         player.invincibleTime = Settings.playerInvincibleTime;
     }
+    onCurrentShieldChanged(player.shieldCount);
     return player.shieldCount;
 }
 
@@ -167,5 +170,14 @@ export function render(renderer: Renderer, player: Player) {
         if (bullet.isActive) {
             Bullet.render(renderer, bullet);
         }
+    }
+
+    if (player.shieldCount != 0) {
+        drawSprite(renderer, {
+            ...player,
+            sprite: "assets/shield.png",
+            x: player.x - 4,
+            y: player.y - 4,
+        });
     }
 }

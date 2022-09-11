@@ -105,12 +105,20 @@
                 margin: 24px;
             }
 
-            #money {
+            #money,
+            #shield {
                 position: absolute;
                 font-size: 24px;
-                right: 16px;
                 bottom: 16px;
                 color: ghostwhite;
+            }
+
+            #money {
+                right: 16px;
+            }
+
+            #shield {
+                left: 16px;
             }
 
             #ui-progression {
@@ -163,6 +171,10 @@
                     </div>
                     <div class="button" onclick="play()">PLAY</div>
                 </div>
+                <span id="shield">
+                    Shield:
+                    <span id="current-shield">0</span>
+                </span>
                 <span id="money">
                     Money:
                     <span id="current-money">0</span>
