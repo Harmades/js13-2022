@@ -14,6 +14,7 @@ import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
+import { gg } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
 
 export type BossPattern = {
@@ -230,6 +231,9 @@ export function update(boss: Boss): void {
 
 export function bossHit(boss: Boss): void {
     boss.life--;
+    if (boss.life == 0) {
+        gg();
+    }
 }
 
 export function render(renderer: Renderer, boss: Boss) {

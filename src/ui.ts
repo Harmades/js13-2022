@@ -84,6 +84,17 @@ export function play(): void {
     firstRun = false;
 }
 
+export function gg(): void {
+    changeScene(Scene.End, world!);
+}
+
+export function displayEnd(): void {
+    toggleShop(true);
+    getElementById("shop-label")!.innerText = "Thank you for playing!";
+    getElementById("shop")!.style.display = "none";
+    getElementById("play")!.style.display = "none";
+}
+
 /* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales
  * On pourra changer ça*/
 export function getPowerUpStatus(): number[] {
@@ -106,7 +117,7 @@ function syncUi(): void {
     getElementById("multishot-minus")!.style.color = multishot == 0 ? "gray" : "black";
     getElementById("current-progress")!.style.width = `${progress}%`;
     getElementById("shop")!.style.display = firstRun ? "none" : "flex";
-    getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
+    // getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;

@@ -6,12 +6,12 @@ import * as Physics from "./physics";
 import * as Player from "./player";
 import { Renderer, setCurrentCanvas } from "./renderer";
 import * as UI from "./ui";
-import { toggleShop } from "./ui";
+import { displayEnd, toggleShop } from "./ui";
 
 export enum Scene {
     Shop,
     Game,
-    Quest,
+    End,
 }
 
 export type World = {
@@ -67,5 +67,8 @@ export function changeScene(scene: Scene, world: World) {
     }
     if (scene == Scene.Game) {
         toggleShop(false);
+    }
+    if (scene == Scene.End) {
+        displayEnd();
     }
 }
