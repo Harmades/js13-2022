@@ -15,7 +15,6 @@ export type Enemies = {
     player: Player;
 };
 
-let elapsedTime = 0;
 let currentWave = 1;
 let bossWave = Settings.waveEasyCount + Settings.waveMediumCount + Settings.waveHardCount + 1;
 let mInput = createReleasedKeyPress("m");
@@ -30,10 +29,8 @@ export function create(player: Player): Enemies {
 }
 
 export function update(enemies: Enemies): void {
-    elapsedTime += Settings.delta;
-    if (elapsedTime >= Settings.waveEasyTimeMax || enemies.deadCount == enemies.entities.length) {
+    if (enemies.entities.every((e) => e.x < -e.w) || enemies.deadCount == enemies.entities.length) {
         nextWave(enemies);
-        elapsedTime = 0;
     }
     if (currentWave < bossWave) {
         for (let enemy of enemies.entities) {
@@ -73,7 +70,6 @@ export function nextWave(enemies: Enemies): void {
     }
     enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
-    elapsedTime = 0;
     awardMoney(enemies.player, 1);
 }
 

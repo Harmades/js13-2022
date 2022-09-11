@@ -112,7 +112,13 @@ export function update(enemy: Enemy): void {
         }
         if (enemy.direction == Direction.Left) {
             if (enemy.distance >= enemy.rx) {
-                enemy.direction = rand(Direction.Up, Direction.Down);
+                if (enemy.y + enemy.ry > Settings.worldHeight - 1.5 * Settings.tileSize) {
+                    enemy.direction = Direction.Up;
+                } else if (enemy.y - enemy.ry < 0.5 * Settings.tileSize) {
+                    enemy.direction = Direction.Down;
+                } else {
+                    enemy.direction = rand(Direction.Up, Direction.Down);
+                }
                 enemy.distance = 0;
             }
             enemy.dx = -speedX;
