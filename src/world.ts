@@ -2,6 +2,7 @@ import * as Background from "./background";
 import * as Border from "./border";
 import * as Boss from "./boss";
 import * as Enemies from "./enemies";
+import * as Physics from "./physics";
 import * as Player from "./player";
 import { Renderer, setCurrentCanvas } from "./renderer";
 import * as UI from "./ui";
@@ -40,7 +41,7 @@ export function update(world: World): void {
         Border.update();
         Player.update(world.player);
         Enemies.update(world.enemies);
-        // Physics.update(world);
+        Physics.update(world);
     }
 }
 

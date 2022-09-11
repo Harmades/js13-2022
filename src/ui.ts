@@ -14,9 +14,11 @@ let currentShield = 0;
 let multishot = 0;
 let world: World | null = null;
 let progress = 0;
+let firstRun = true;
 
 export function create(worldRef: World): void {
     world = worldRef;
+    syncUi();
 }
 
 export function toggleShop(display: boolean): void {
@@ -66,6 +68,7 @@ export function onCurrentShieldChanged(value: number): void {
 
 export function play(): void {
     changeScene(Scene.Game, world!);
+    firstRun = false;
 }
 
 /* Vu que t'avais pas fait de type PowerUp avec des proprietes, je retourne direct les variables locales
@@ -78,8 +81,10 @@ function syncUi(): void {
     getElementById("current-speed")!.innerText = speed.toString();
     getElementById("current-shield")!.innerText = shield.toString();
     getElementById("current-multishot")!.innerText = multishot.toString();
-    getElementById("current-shield")!.innerText = currentShield.toString();
+    getElementById("current-player-shield")!.innerText = currentShield.toString();
     getElementById("current-progress")!.style.width = `${progress}%`;
+    getElementById("shop")!.style.display = firstRun ? "none" : "flex";
+    getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;

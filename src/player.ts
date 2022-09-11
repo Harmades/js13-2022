@@ -132,7 +132,7 @@ export function reset(player: Player): void {
     player.dy = 0;
     let powerUps = getPowerUpStatus();
     player.shootSpeed = powerUps[PowerUp.Speed]; /* TODO Handle Laser shot */
-    player.shieldCount = powerUps[PowerUp.Shield] + 1;
+    player.shieldCount = powerUps[PowerUp.Shield];
     if (player.shieldCount == Settings.powerUpMaxCount) {
         player.bullets.shielded = true;
     }
@@ -148,6 +148,7 @@ export function reset(player: Player): void {
 export function bulletHit(player: Player): number {
     if (player.invincibleTime == 0) {
         player.shieldCount -= 1;
+        if (player.shieldCount < 0) player.shieldCount = 0;
         playPlayerHit();
         player.invincibleTime = Settings.playerInvincibleTime;
     }
