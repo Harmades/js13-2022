@@ -71,7 +71,7 @@ export function shoot(player: Player): void {
     if (bullet == undefined) return;
     fireBullets(
         player.bullets,
-        player.shootSpeed * Settings.playerBulletSpeedX,
+        (player.shootSpeed * 0.5 + 1) * Settings.playerBulletSpeedX,
         addVector(player, createVector(Settings.playerWidth, Settings.playerHeight / 2)),
         player.bulletsPattern
     );
@@ -131,7 +131,7 @@ export function reset(player: Player): void {
     player.dx = 0;
     player.dy = 0;
     let powerUps = getPowerUpStatus();
-    player.shootSpeed = powerUps[PowerUp.Speed] + 1; /* TODO Handle Laser shot */
+    player.shootSpeed = powerUps[PowerUp.Speed]; /* TODO Handle Laser shot */
     player.shieldCount = powerUps[PowerUp.Shield] + 1;
     if (player.shieldCount == Settings.powerUpMaxCount) {
         player.bullets.shielded = true;
