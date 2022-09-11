@@ -1,6 +1,6 @@
 import atlasJson from "../assets/texture.json";
 import * as atlasPng from "../assets/texture.png";
-import { getElementById } from "./alias";
+import { getElementById, round } from "./alias";
 import { Rectangle } from "./rectangle";
 import { Settings } from "./settings";
 import { Sprite } from "./sprite";
@@ -60,8 +60,8 @@ export function drawImage({ gameCanvas, image }: Renderer, { x, y, ox, oy, sprit
         frame.y,
         frame.w,
         frame.h,
-        (x - ox) * ratioX,
-        (y - oy) * ratioY,
+        round((x - ox) * ratioX),
+        round((y - oy) * ratioY),
         frame.w * ratioX,
         frame.h * ratioY
     );
