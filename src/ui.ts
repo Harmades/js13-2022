@@ -1,5 +1,6 @@
 import { getElementById } from "./alias";
 import { awardMoney } from "./player";
+import { Settings } from "./settings";
 import { changeScene, Scene, World } from "./world";
 
 export enum PowerUp {
@@ -41,12 +42,24 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
         speed = 0;
         awardMoney(player, amount);
     }
+    if (speed > Settings.powerUpMaxCount) {
+        speed = Settings.powerUpMaxCount;
+        awardMoney(player, amount);
+    }
     if (shield < 0) {
         shield = 0;
         awardMoney(player, amount);
     }
+    if (shield > Settings.powerUpMaxCount) {
+        shield = Settings.powerUpMaxCount;
+        awardMoney(player, amount);
+    }
     if (multishot < 0) {
         multishot = 0;
+        awardMoney(player, amount);
+    }
+    if (multishot > Settings.powerUpMaxCount) {
+        multishot = Settings.powerUpMaxCount;
         awardMoney(player, amount);
     }
     syncUi();
@@ -82,6 +95,15 @@ function syncUi(): void {
     getElementById("current-shield")!.innerText = shield.toString();
     getElementById("current-multishot")!.innerText = multishot.toString();
     getElementById("current-player-shield")!.innerText = currentShield.toString();
+    getElementById("speed-plus")!.style.color =
+        speed == Settings.powerUpMaxCount ? "gray" : "black";
+    getElementById("shield-plus")!.style.color =
+        shield == Settings.powerUpMaxCount ? "gray" : "black";
+    getElementById("multishot-plus")!.style.color =
+        multishot == Settings.powerUpMaxCount ? "gray" : "black";
+    getElementById("speed-minus")!.style.color = speed == 0 ? "gray" : "black";
+    getElementById("shield-minus")!.style.color = shield == 0 ? "gray" : "black";
+    getElementById("multishot-minus")!.style.color = multishot == 0 ? "gray" : "black";
     getElementById("current-progress")!.style.width = `${progress}%`;
     getElementById("shop")!.style.display = firstRun ? "none" : "flex";
     getElementById("shop-label")!.style.display = firstRun ? "none" : "block";

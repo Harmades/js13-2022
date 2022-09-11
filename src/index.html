@@ -152,20 +152,40 @@
                     <div id="shop">
                         <div class="shop-item">
                             <div class="item-label">Speed</div>
-                            <div class="button" onclick="onPowerUpChanged(0, -1)">-</div>
-                            <div class="button" onclick="onPowerUpChanged(0, 1)">+</div>
+                            <div id="speed-minus" class="button" onclick="onPowerUpChanged(0, -1)">
+                                -
+                            </div>
+                            <div id="speed-plus" class="button" onclick="onPowerUpChanged(0, 1)">
+                                +
+                            </div>
                             <div id="current-speed" class="button">0</div>
                         </div>
                         <div class="shop-item">
                             <div class="item-label">Shield</div>
-                            <div class="button" onclick="onPowerUpChanged(1, -1)">-</div>
-                            <div class="button" onclick="onPowerUpChanged(1, 1)">+</div>
+                            <div id="shield-minus" class="button" onclick="onPowerUpChanged(1, -1)">
+                                -
+                            </div>
+                            <div id="shield-plus" class="button" onclick="onPowerUpChanged(1, 1)">
+                                +
+                            </div>
                             <div id="current-shield" class="button">0</div>
                         </div>
                         <div class="shop-item">
                             <div class="item-label">Multishot</div>
-                            <div class="button" onclick="onPowerUpChanged(2, -1)">-</div>
-                            <div class="button" onclick="onPowerUpChanged(2, 1)">+</div>
+                            <div
+                                id="multishot-minus"
+                                class="button"
+                                onclick="onPowerUpChanged(2, -1)"
+                            >
+                                -
+                            </div>
+                            <div
+                                id="multishot-plus"
+                                class="button"
+                                onclick="onPowerUpChanged(2, 1)"
+                            >
+                                +
+                            </div>
                             <div id="current-multishot" class="button">0</div>
                         </div>
                     </div>
