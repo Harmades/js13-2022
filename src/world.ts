@@ -1,4 +1,5 @@
 import * as Background from "./background";
+import * as Border from "./border";
 import * as Boss from "./boss";
 import * as Enemies from "./enemies";
 import * as Player from "./player";
@@ -47,6 +48,7 @@ export function render(renderer: Renderer, world: World) {
         Player.render(renderer, world.player);
         Enemies.render(renderer, world.enemies);
     }
+    Border.render(renderer);
 }
 
 export function changeScene(scene: Scene, world: World) {

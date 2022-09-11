@@ -1,6 +1,7 @@
 import atlasJson from "../assets/texture.json";
 import * as atlasPng from "../assets/texture.png";
 import { getElementById } from "./alias";
+import { Rectangle } from "./rectangle";
 import { Settings } from "./settings";
 import { Sprite } from "./sprite";
 
@@ -74,11 +75,21 @@ export function drawSprite(renderer: Renderer, sprite: Sprite) {
 }
 
 export function drawImageRepeated(
-    { backgroundCanvas, offscreenCanvas, image }: Renderer,
-    { sprite }: Sprite
+    { offscreenCanvas, image }: Renderer,
+    destinationCanvas: CanvasRenderingContext2D,
+    sprite: AtlasSprite,
+    { x, y, w, h }: Rectangle,
+    flipH: boolean
 ): void {
     if (!image.complete) return;
     const frame = atlasJson.frames[sprite].frame;
+    clearCanvas(offscreenCanvas);
+    offscreenCanvas.save();
+    let height = offscreenCanvas.canvas.height;
+    if (flipH) {
+        offscreenCanvas.scale(1, -1);
+        height = frame.h - height;
+    }
     offscreenCanvas.drawImage(
         image,
         frame.x,
@@ -88,14 +99,15 @@ export function drawImageRepeated(
         0,
         0,
         offscreenCanvas.canvas.width,
-        offscreenCanvas.canvas.height
+        height
     );
-    const pattern = backgroundCanvas.createPattern(
+    offscreenCanvas.restore();
+    const pattern = destinationCanvas.createPattern(
         offscreenCanvas.canvas,
         "repeat"
     ) as CanvasPattern;
-    backgroundCanvas.fillStyle = pattern;
-    backgroundCanvas.fillRect(0, 0, Settings.width, Settings.height);
+    destinationCanvas.fillStyle = pattern;
+    destinationCanvas.fillRect(x * ratioX, y * ratioY, w * ratioX, h * ratioY);
 }
 
 export function clear({ gameCanvas, backgroundCanvas, offscreenCanvas }: Renderer): void {

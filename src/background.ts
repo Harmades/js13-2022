@@ -1,4 +1,5 @@
 import { drawImageRepeated, Renderer } from "./renderer";
+import { Settings } from "./settings";
 import { Sprite } from "./sprite";
 
 export type Background = Sprite;
@@ -18,5 +19,16 @@ export function create(): Background {
 export function update(): void {}
 
 export function render(renderer: Renderer, background: Background): void {
-    drawImageRepeated(renderer, background);
+    drawImageRepeated(
+        renderer,
+        renderer.backgroundCanvas,
+        background.sprite,
+        {
+            x: 0,
+            y: 0,
+            w: Settings.worldWidth,
+            h: Settings.worldHeight,
+        },
+        false
+    );
 }
