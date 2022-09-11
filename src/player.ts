@@ -118,15 +118,10 @@ export function update(player: Player) {
     if (player.y >= Settings.worldHeight - Settings.playerHeight)
         player.y = Settings.worldHeight - Settings.playerHeight;
 
-    if (player.dx != 0 || player.dy != 0) {
-        player.animationTime += Settings.delta;
-        if (player.animationTime > Settings.playerAnimationTime) {
-            player.animationTime = 0;
-            player.sprite = player.sprite == sprites[0] ? sprites[1] : sprites[0];
-        }
-    } else {
-        player.sprite = sprites[0];
+    player.animationTime += Settings.delta;
+    if (player.animationTime > Settings.playerAnimationTime) {
         player.animationTime = 0;
+        player.sprite = player.sprite == sprites[0] ? sprites[1] : sprites[0];
     }
 }
 

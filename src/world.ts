@@ -3,7 +3,7 @@ import * as Border from "./border";
 import * as Boss from "./boss";
 import * as Enemies from "./enemies";
 import * as Player from "./player";
-import { Renderer } from "./renderer";
+import { Renderer, setCurrentCanvas } from "./renderer";
 import * as UI from "./ui";
 import { toggleShop } from "./ui";
 
@@ -36,6 +36,8 @@ export function create(): World {
 
 export function update(world: World): void {
     if (world.scene == Scene.Game) {
+        Background.update();
+        Border.update();
         Player.update(world.player);
         Enemies.update(world.enemies);
         // Physics.update(world);
@@ -43,11 +45,14 @@ export function update(world: World): void {
 }
 
 export function render(renderer: Renderer, world: World) {
+    setCurrentCanvas(renderer, renderer.backgroundCanvas);
     Background.render(renderer, world.background);
     if (world.scene == Scene.Game) {
+        setCurrentCanvas(renderer, renderer.gameCanvas);
         Player.render(renderer, world.player);
         Enemies.render(renderer, world.enemies);
     }
+    setCurrentCanvas(renderer, renderer.foregroundCanvas);
     Border.render(renderer);
 }
 

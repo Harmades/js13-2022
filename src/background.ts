@@ -4,6 +4,8 @@ import { Sprite } from "./sprite";
 
 export type Background = Sprite;
 
+let x = 0;
+
 export function create(): Background {
     return {
         x: 0,
@@ -16,17 +18,21 @@ export function create(): Background {
     };
 }
 
-export function update(): void {}
+export function update(): void {
+    x -= Settings.backgroundSpeed * Settings.delta;
+    if (x <= -3 * Settings.worldWidth) {
+        x = 0;
+    }
+}
 
 export function render(renderer: Renderer, background: Background): void {
     drawImageRepeated(
         renderer,
-        renderer.backgroundCanvas,
         background.sprite,
         {
-            x: 0,
+            x,
             y: 0,
-            w: Settings.worldWidth,
+            w: 4 * Settings.worldWidth,
             h: Settings.worldHeight,
         },
         false

@@ -1,5 +1,5 @@
 export const Settings = {
-    debug: true,
+    debug: false,
 
     width: 400 * 3,
     height: 192 * 3,
@@ -108,6 +108,14 @@ export const Settings = {
     waveHardSyMax: 640 - 50,
 
     powerUpMaxCount: 5,
+
+    backgroundSpeed: 100,
+    borderSpeed: 50,
+
+    borderPeakRandMin: 1,
+    borderPeakRandMax: 3,
+    borderFlatRandMin: 8,
+    borderFlatRandMax: 24,
 
     engineTimeResolution: 1,
 

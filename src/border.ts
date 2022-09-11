@@ -1,29 +1,34 @@
 import { drawImageRepeated, Renderer } from "./renderer";
 import { Settings } from "./settings";
 
-export function update(): void {}
+let x = 0;
+
+export function update(): void {
+    x -= Settings.borderSpeed * Settings.delta;
+    if (x <= -3 * Settings.worldWidth) {
+        x = 0;
+    }
+}
 
 export function render(renderer: Renderer): void {
     drawImageRepeated(
         renderer,
-        renderer.gameCanvas,
         "assets/border1.png",
         {
-            x: 0,
+            x,
             y: Settings.worldHeight - Settings.tileSize,
-            w: Settings.worldWidth,
+            w: 4 * Settings.worldWidth,
             h: Settings.tileSize,
         },
         false
     );
     drawImageRepeated(
         renderer,
-        renderer.gameCanvas,
         "assets/border1.png",
         {
-            x: 0,
+            x,
             y: 0,
-            w: Settings.worldWidth,
+            w: 4 * Settings.worldWidth,
             h: Settings.tileSize,
         },
         true

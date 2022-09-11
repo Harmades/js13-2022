@@ -8,7 +8,9 @@ import { Sprite } from "./sprite";
 export type Renderer = {
     gameCanvas: CanvasRenderingContext2D;
     backgroundCanvas: CanvasRenderingContext2D;
+    foregroundCanvas: CanvasRenderingContext2D;
     offscreenCanvas: CanvasRenderingContext2D;
+    currentCanvas: CanvasRenderingContext2D;
     image: HTMLImageElement;
 };
 
@@ -18,15 +20,18 @@ let ratioY = Settings.height / Settings.worldHeight;
 export type AtlasSprite = keyof typeof atlasJson.frames;
 
 export function create(): Renderer {
+    const gameCanvas = getCanvas("game-canvas", Settings.width, Settings.height);
     return {
         image: loadImage(atlasPng),
-        gameCanvas: getCanvas("game-canvas", Settings.width, Settings.height),
+        gameCanvas,
         backgroundCanvas: getCanvas("background-canvas", Settings.width, Settings.height),
+        foregroundCanvas: getCanvas("foreground-canvas", Settings.width, Settings.height),
         offscreenCanvas: getCanvas(
             "offscreen-canvas",
             Settings.tileSize * ratioX,
             Settings.tileSize * ratioY
         ),
+        currentCanvas: gameCanvas,
     };
 }
 
@@ -62,9 +67,9 @@ export function drawImage({ gameCanvas, image }: Renderer, { x, y, ox, oy, sprit
     );
 }
 
-export function drawRect({ gameCanvas }: Renderer, { x, y, w, h, color }: Sprite) {
-    if (gameCanvas) gameCanvas.fillStyle = color ?? "rgba(255, 165, 0, 0.5)";
-    gameCanvas.fillRect(x * ratioX, y * ratioY, w * ratioX, h * ratioY);
+export function drawRect({ currentCanvas }: Renderer, { x, y, w, h, color }: Sprite) {
+    if (currentCanvas) currentCanvas.fillStyle = color ?? "rgba(255, 165, 0, 0.5)";
+    currentCanvas.fillRect(x * ratioX, y * ratioY, w * ratioX, h * ratioY);
 }
 
 export function drawSprite(renderer: Renderer, sprite: Sprite) {
@@ -75,8 +80,7 @@ export function drawSprite(renderer: Renderer, sprite: Sprite) {
 }
 
 export function drawImageRepeated(
-    { offscreenCanvas, image }: Renderer,
-    destinationCanvas: CanvasRenderingContext2D,
+    { offscreenCanvas, currentCanvas, image }: Renderer,
     sprite: AtlasSprite,
     { x, y, w, h }: Rectangle,
     flipH: boolean
@@ -102,17 +106,27 @@ export function drawImageRepeated(
         height
     );
     offscreenCanvas.restore();
-    const pattern = destinationCanvas.createPattern(
-        offscreenCanvas.canvas,
-        "repeat"
-    ) as CanvasPattern;
-    destinationCanvas.fillStyle = pattern;
-    destinationCanvas.fillRect(x * ratioX, y * ratioY, w * ratioX, h * ratioY);
+    const pattern = currentCanvas.createPattern(offscreenCanvas.canvas, "repeat") as CanvasPattern;
+    currentCanvas.fillStyle = pattern;
+    currentCanvas.save();
+    currentCanvas.translate(x * ratioX, y * ratioY);
+    currentCanvas.fillRect(0, 0, w * ratioX, h * ratioY);
+    currentCanvas.restore();
 }
 
-export function clear({ gameCanvas, backgroundCanvas, offscreenCanvas }: Renderer): void {
+export function setCurrentCanvas(renderer: Renderer, canvas: CanvasRenderingContext2D): void {
+    renderer.currentCanvas = canvas;
+}
+
+export function clear({
+    gameCanvas,
+    backgroundCanvas,
+    offscreenCanvas,
+    foregroundCanvas,
+}: Renderer): void {
     clearCanvas(gameCanvas);
     clearCanvas(backgroundCanvas);
+    clearCanvas(foregroundCanvas);
     clearCanvas(offscreenCanvas);
 }
 
