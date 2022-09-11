@@ -3,15 +3,99 @@
     "version": "0.6.7"
   },
   "savePath": "C:\\Users\\adrianlissot\\source\\repos\\js13k-2022\\assets",
-  "images": [],
-  "folders": [
-    "C:/Users/adrianlissot/source/repos/js13k-2022/assets"
+  "images": [
+    {
+      "name": "basic_cobble.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/basic_cobble.png",
+      "folder": ""
+    },
+    {
+      "name": "basic_cobble2.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/basic_cobble2.png",
+      "folder": ""
+    },
+    {
+      "name": "border1.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/border1.png",
+      "folder": ""
+    },
+    {
+      "name": "border2.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/border2.png",
+      "folder": ""
+    },
+    {
+      "name": "boss.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/boss.png",
+      "folder": ""
+    },
+    {
+      "name": "boss2.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/boss2.png",
+      "folder": ""
+    },
+    {
+      "name": "cerbere.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/cerbere.png",
+      "folder": ""
+    },
+    {
+      "name": "cerbere2.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/cerbere2.png",
+      "folder": ""
+    },
+    {
+      "name": "enemie_bullet.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/enemie_bullet.png",
+      "folder": ""
+    },
+    {
+      "name": "floating_eye.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/floating_eye.png",
+      "folder": ""
+    },
+    {
+      "name": "friendly_bullet.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/friendly_bullet.png",
+      "folder": ""
+    },
+    {
+      "name": "friendly_vertical_laser.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/friendly_vertical_laser.png",
+      "folder": ""
+    },
+    {
+      "name": "imp.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/imp.png",
+      "folder": ""
+    },
+    {
+      "name": "shield.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/shield.png",
+      "folder": ""
+    },
+    {
+      "name": "skeleton.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/skeleton.png",
+      "folder": ""
+    },
+    {
+      "name": "vertical_laser.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/vertical_laser.png",
+      "folder": ""
+    },
+    {
+      "name": "zombie.png",
+      "path": "C:/Users/adrianlissot/source/repos/js13k-2022/assets/zombie.png",
+      "folder": ""
+    }
   ],
+  "folders": [],
   "packOptions": {
     "textureName": "texture",
     "textureFormat": "png",
-    "removeFileExtension": false,
-    "prependFolderName": true,
+    "removeFileExtension": true,
+    "prependFolderName": false,
     "base64Export": false,
     "tinify": false,
     "tinifyKey": "",

@@ -13,7 +13,7 @@ export function update(): void {
 export function render(renderer: Renderer): void {
     drawImageRepeated(
         renderer,
-        "assets/border1.png",
+        "border1",
         {
             x,
             y: Settings.worldHeight - Settings.tileSize,
@@ -24,7 +24,7 @@ export function render(renderer: Renderer): void {
     );
     drawImageRepeated(
         renderer,
-        "assets/border1.png",
+        "border1",
         {
             x,
             y: 0,

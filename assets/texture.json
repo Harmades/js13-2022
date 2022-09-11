@@ -1,6 +1,6 @@
 {
   "frames": {
-    "assets/boss.png": {
+    "boss": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -24,7 +24,7 @@
         "y": 0.5
       }
     },
-    "assets/boss2.png": {
+    "boss2": {
       "frame": {
         "x": 28,
         "y": 0,
@@ -48,7 +48,7 @@
         "y": 0.5
       }
     },
-    "assets/shield.png": {
+    "shield": {
       "frame": {
         "x": 0,
         "y": 38,
@@ -72,7 +72,7 @@
         "y": 0.5
       }
     },
-    "assets/cerbere.png": {
+    "cerbere": {
       "frame": {
         "x": 28,
         "y": 38,
@@ -96,7 +96,7 @@
         "y": 0.5
       }
     },
-    "assets/cerbere2.png": {
+    "cerbere2": {
       "frame": {
         "x": 57,
         "y": 0,
@@ -120,11 +120,11 @@
         "y": 0.5
       }
     },
-    "assets/friendly_vertical_laser.png": {
+    "basic_cobble": {
       "frame": {
-        "x": 48,
-        "y": 38,
-        "w": 7,
+        "x": 57,
+        "y": 18,
+        "w": 16,
         "h": 16
       },
       "rotated": false,
@@ -132,11 +132,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 7,
+        "w": 16,
         "h": 16
       },
       "sourceSize": {
-        "w": 7,
+        "w": 16,
         "h": 16
       },
       "pivot": {
@@ -144,7 +144,7 @@
         "y": 0.5
       }
     },
-    "assets/border2.png": {
+    "border2": {
       "frame": {
         "x": 28,
         "y": 55,
@@ -168,58 +168,82 @@
         "y": 0.5
       }
     },
-    "assets/basic_cobble.png": {
+    "zombie": {
       "frame": {
         "x": 57,
-        "y": 18,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/vertical_laser.png": {
-      "frame": {
-        "x": 55,
-        "y": 38,
-        "w": 7,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 7,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 7,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/skeleton.png": {
-      "frame": {
-        "x": 62,
         "y": 34,
+        "w": 11,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 11,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 11,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "basic_cobble2": {
+      "frame": {
+        "x": 48,
+        "y": 50,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "vertical_laser": {
+      "frame": {
+        "x": 64,
+        "y": 50,
+        "w": 7,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 7,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 7,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "skeleton": {
+      "frame": {
+        "x": 0,
+        "y": 66,
         "w": 13,
         "h": 16
       },
@@ -240,274 +264,130 @@
         "y": 0.5
       }
     },
-    "assets/border1.png": {
+    "friendly_vertical_laser": {
       "frame": {
-        "x": 0,
-        "y": 66,
-        "w": 16,
-        "h": 14
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 2,
-        "w": 16,
-        "h": 14
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/basic_cobble2.png": {
-      "frame": {
-        "x": 44,
-        "y": 55,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/imp.png": {
-      "frame": {
-        "x": 62,
-        "y": 50,
-        "w": 10,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 10,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 10,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/zombie.png": {
-      "frame": {
-        "x": 73,
-        "y": 18,
-        "w": 11,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 11,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 11,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/power_up_shot.png": {
-      "frame": {
-        "x": 16,
-        "y": 66,
-        "w": 14,
-        "h": 12
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 2,
-        "y": 3,
-        "w": 14,
-        "h": 12
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/floating_eye.png": {
-      "frame": {
-        "x": 30,
-        "y": 66,
-        "w": 14,
-        "h": 13
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 14,
-        "h": 13
-      },
-      "sourceSize": {
-        "w": 14,
-        "h": 13
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/power_up_multi_shot.png": {
-      "frame": {
-        "x": 60,
-        "y": 66,
-        "w": 9,
-        "h": 13
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 4,
-        "y": 1,
-        "w": 9,
-        "h": 13
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/power_up_shield.png": {
-      "frame": {
-        "x": 77,
-        "y": 0,
-        "w": 10,
-        "h": 12
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 3,
-        "y": 2,
-        "w": 10,
-        "h": 12
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/friendly_vertical_laser_top.png": {
-      "frame": {
-        "x": 77,
-        "y": 12,
-        "w": 7,
-        "h": 5
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 7,
-        "h": 5
-      },
-      "sourceSize": {
-        "w": 7,
-        "h": 5
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/vertical_laser_top.png": {
-      "frame": {
-        "x": 44,
-        "y": 71,
-        "w": 7,
-        "h": 5
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 7,
-        "h": 5
-      },
-      "sourceSize": {
-        "w": 7,
-        "h": 5
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/friendly_bullet.png": {
-      "frame": {
-        "x": 51,
-        "y": 71,
-        "w": 5,
-        "h": 5
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 5,
-        "h": 5
-      },
-      "sourceSize": {
-        "w": 5,
-        "h": 5
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "assets/enemie_bullet.png": {
-      "frame": {
-        "x": 75,
+        "x": 68,
         "y": 34,
+        "w": 7,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 7,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 7,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp": {
+      "frame": {
+        "x": 13,
+        "y": 66,
+        "w": 10,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 10,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 10,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "border1": {
+      "frame": {
+        "x": 23,
+        "y": 66,
+        "w": 16,
+        "h": 14
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 16,
+        "h": 14
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "floating_eye": {
+      "frame": {
+        "x": 39,
+        "y": 66,
+        "w": 14,
+        "h": 13
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 14,
+        "h": 13
+      },
+      "sourceSize": {
+        "w": 14,
+        "h": 13
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "friendly_bullet": {
+      "frame": {
+        "x": 71,
+        "y": 50,
+        "w": 5,
+        "h": 5
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 5,
+        "h": 5
+      },
+      "sourceSize": {
+        "w": 5,
+        "h": 5
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "enemie_bullet": {
+      "frame": {
+        "x": 71,
+        "y": 55,
         "w": 5,
         "h": 5
       },
@@ -535,8 +415,8 @@
     "image": "texture.png",
     "format": "RGBA8888",
     "size": {
-      "w": 87,
-      "h": 80
+      "w": 77,
+      "h": 82
     },
     "scale": 1
   }

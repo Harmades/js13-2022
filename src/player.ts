@@ -32,7 +32,7 @@ export type Player = Sprite &
         animationTime: number;
     };
 
-let sprites: AtlasSprite[] = ["assets/cerbere.png", "assets/cerbere2.png"];
+let sprites: AtlasSprite[] = ["cerbere", "cerbere2"];
 
 export function create(): Player {
     const player: Player = {
@@ -176,7 +176,7 @@ export function render(renderer: Renderer, player: Player) {
     if (player.shieldCount != 0) {
         drawSprite(renderer, {
             ...player,
-            sprite: "assets/shield.png",
+            sprite: "shield",
             x: player.x - 4,
             y: player.y - 4,
         });

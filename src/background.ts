@@ -12,7 +12,7 @@ export function create(): Background {
         y: 0,
         w: 0,
         h: 0,
-        sprite: "assets/basic_cobble.png",
+        sprite: "basic_cobble",
         ox: 0,
         oy: 0,
     };

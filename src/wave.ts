@@ -15,12 +15,7 @@ export type Wave = {
     enemies: Enemy[];
 };
 
-let sprites: AtlasSprite[] = [
-    "assets/floating_eye.png",
-    "assets/imp.png",
-    "assets/skeleton.png",
-    "assets/zombie.png",
-];
+let sprites: AtlasSprite[] = ["floating_eye", "imp", "skeleton", "zombie"];
 
 export function create(difficulty: WaveDifficulty): Wave {
     const enemies: Enemy[] = [];

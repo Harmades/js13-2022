@@ -34,7 +34,7 @@ export function create(
         dhDirection: 0,
         explodeTick: 0,
         shielded: shielded,
-        sprite: isPlayerBullet ? "assets/friendly_bullet.png" : "assets/enemie_bullet.png",
+        sprite: isPlayerBullet ? "friendly_bullet" : "enemie_bullet",
         ox: Settings.bulletOx,
         oy: Settings.bulletOy,
     };
@@ -85,9 +85,7 @@ export function render(renderer: Renderer, bullet: Bullet): void {
     if (bullet.bullets && bullet.explodeTick == 0) {
         if (bullet.bullets.bh != bullet.h) {
             const verticalSprite: AtlasSprite =
-                bullet.sprite == "assets/friendly_bullet.png"
-                    ? "assets/friendly_vertical_laser.png"
-                    : "assets/vertical_laser.png";
+                bullet.sprite == "friendly_bullet" ? "friendly_vertical_laser" : "vertical_laser";
             drawImageRepeated(renderer, verticalSprite, bullet, false);
         }
     }
