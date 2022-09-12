@@ -15,6 +15,7 @@ export type Enemies = {
     deadCount: number;
     boss: Boss;
     player: Player;
+    waveTempo: number;
 };
 
 let currentWave = 1;
@@ -27,12 +28,19 @@ export function create(player: Player): Enemies {
         deadCount: 0,
         boss: createBoss(),
         player,
+        waveTempo: 0,
     };
 }
 
 export function update(enemies: Enemies): void {
-    if (enemies.entities.every((e) => (e.x < -e.w || e.dead))) {
-        nextWave(enemies);
+    if (enemies.waveTempo > 0) {
+        enemies.waveTempo -= Settings.delta;
+        if (enemies.waveTempo <= 0) {
+            enemies.waveTempo = 0;
+            nextWave(enemies);
+        }
+    } else if (enemies.entities.every((e) => ((e.x < -e.w || e.dead) && e.bullets.bullets.every((b) => !b.isActive)))) {
+        enemies.waveTempo = Settings.waveTempo;
     }
     if (currentWave < bossWave) {
         for (let enemy of enemies.entities) {
@@ -42,8 +50,10 @@ export function update(enemies: Enemies): void {
         updateBoss(enemies.boss);
     }
 
-    if (mInput()) {
-        nextWave(enemies);
+    if (Settings.debug) {
+        if (mInput()) {
+            nextWave(enemies);
+        }
     }
 }
 
