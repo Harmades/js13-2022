@@ -106,6 +106,8 @@ export function update(player: Player) {
 
     player.x += player.dx * Settings.delta;
     player.y += player.dy * Settings.delta;
+    if (input.x) player.x = input.x;
+    if (input.y) player.y = input.y;
     if (player.x <= 0) player.x = 0;
     if (player.x >= Settings.worldWidth - Settings.playerWidth)
         player.x = Settings.worldWidth - Settings.playerWidth;
