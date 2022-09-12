@@ -2,14 +2,12 @@ import { sign } from "./alias";
 import { bossHit } from "./boss";
 import { free } from "./bullet";
 import { getActiveBullets } from "./bullets";
-import { die as enemyDie, getActiveEnemies } from "./enemies";
-import { bulletHit } from "./player";
+import { die as enemyDie } from "./enemies";
+import { awardMoney, bulletHit } from "./player";
 import { getCenter, Rectangle } from "./rectangle";
 import { Sprite } from "./sprite";
 import { Vector } from "./vector";
 import { changeScene, Scene, World } from "./world";
-import { Settings } from "./settings"
-import { awardMoney } from "./player"
 
 export type Collision = Rectangle;
 
@@ -33,14 +31,16 @@ export function update(world: World): void {
     const player = world.player;
     const boss = enemies.boss;
     if (player.end) return;
-    for (let enemy of getActiveEnemies(enemies)) {
-        for (let bullet of getActiveBullets(player.bullets)) {
-            const bulletEnemyCollision = getCollision(enemy, bullet);
-            if (bulletEnemyCollision != null) {
-                free(bullet);
-                enemyDie(enemy, enemies);
-                awardMoney(player, 1)
-                break;
+    for (let enemy of enemies.entities) {
+        if (!enemy.dead) {
+            for (let bullet of getActiveBullets(player.bullets)) {
+                const bulletEnemyCollision = getCollision(enemy, bullet);
+                if (bulletEnemyCollision != null) {
+                    free(bullet);
+                    enemyDie(enemy, enemies);
+                    awardMoney(player, 1);
+                    break;
+                }
             }
         }
         for (let bullet of getActiveBullets(enemy.bullets)) {
@@ -52,10 +52,12 @@ export function update(world: World): void {
                 break;
             }
         }
-        const playerEnemyCollision = getCollision(player, enemy);
-        if (playerEnemyCollision != null) {
-            if (bulletHit(player) < 0) {
-                changeScene(Scene.Shop, world);
+        if (!enemy.dead) {
+            const playerEnemyCollision = getCollision(player, enemy);
+            if (playerEnemyCollision != null) {
+                if (bulletHit(player) < 0) {
+                    changeScene(Scene.Shop, world);
+                }
             }
         }
     }

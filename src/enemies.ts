@@ -81,7 +81,7 @@ export function nextWave(enemies: Enemies): void {
     enemies.deadCount = 0;
     awardMoney(enemies.player, 1);
 
-    onProgressChanged((currentWave / 9) * 50);
+    onProgressChanged(((currentWave - 2) / 8) * 50);
     if (currentWave == bossWave) {
         playBossMusic();
     }
