@@ -81,13 +81,11 @@ export function getPowerUpStatus(): number[] {
 function gray_or_black(powerUp: PowerUp): string {
     const player = world!.player;
     const powerUpCount = powerUpList[powerUp];
-    if (
-        powerUpCount == Settings.powerUpMaxCount ||
-        !awardMoney(player, Settings.powerUpCost[powerUpCount], true)
-    ) {
-        return "gray";
+    if (powerUpCount == Settings.powerUpMaxCount ||
+        !awardMoney(player, -Settings.powerUpCost[powerUpCount + 1], true)) {
+        return "gray"
     }
-    return "black;";
+    return "black"
 }
 
 function syncUi(): void {
