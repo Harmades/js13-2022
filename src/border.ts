@@ -24,7 +24,7 @@ export function render(renderer: Renderer): void {
     );
     drawImageRepeated(
         renderer,
-        "border1",
+        "border2",
         {
             x,
             y: 0,
