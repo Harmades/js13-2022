@@ -1,4 +1,5 @@
 import { getElementById } from "./alias";
+import { Settings } from "./settings";
 
 export const input = {
     up: false,
@@ -40,14 +41,12 @@ function onTouchMove(x: number, y: number): void {
 
 const canvas = getElementById("game-canvas") as HTMLCanvasElement;
 
-// ontouchmove = (evt) => {
-//     evt.preventDefault();
-//     onTouchMove(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
-// };
-// onmousemove = (evt) => {
-//     evt.preventDefault();
-//     onTouchMove(evt.pageX - canvas.offsetLeft, evt.pageY - canvas.offsetTop);
-// };
+ontouchmove = (evt) => {
+    onTouchMove(
+        evt.changedTouches[0].pageX - canvas.offsetLeft,
+        evt.changedTouches[0].pageY - canvas.offsetTop - Settings.playerHeight
+    );
+};
 
 export function update(): void {}
 
