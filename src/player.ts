@@ -15,6 +15,7 @@ import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { getPowerUpStatus, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
+import { gg } from "./ui";
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -32,6 +33,7 @@ export type Player = Sprite &
         animationTime: number;
         shootF: number;
         shootTime: number;
+        end: boolean;
     };
 
 let sprites: AtlasSprite[] = ["cerbere", "cerbere2"];
@@ -57,7 +59,7 @@ export function create(): Player {
         bulletsPattern: BulletsPattern.Single,
         shootSpeed: 1,
         shieldCount: 0,
-        money: 0,
+        money: 1500,
         sprite: sprites[0],
         invincibleTime: 0,
         ox: Settings.playerOx,
@@ -65,6 +67,7 @@ export function create(): Player {
         animationTime: 0,
         shootF: Settings.playerShootF,
         shootTime: 0,
+        end: false,
     };
     onMoneyChanged(player.money);
     return player;
@@ -84,6 +87,21 @@ export function shoot(player: Player): void {
 }
 
 export function update(player: Player) {
+    updateBullets(player.bullets);
+    if (player.end) {
+        if (player.x < Settings.worldWidth * 1.1) {
+            player.x += (Settings.playerSpeedX / 2) * Settings.delta;
+        } else {
+            gg();
+        }
+
+        if (player.y > Settings.height / 2 - Settings.playerHeight / 2) {
+            player.y += (Settings.playerSpeedY / 2) * Settings.delta;
+        } else if (player.y < Settings.height / 2 - Settings.playerHeight / 2) {
+            player.dy += -(Settings.playerSpeedY / 2) * Settings.delta;
+        }
+        return;
+    }
     player.shootTime += Settings.delta;
     if (player.shootTime >= 1 / player.shootF) {
         shoot(player);

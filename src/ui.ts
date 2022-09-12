@@ -65,6 +65,11 @@ export function play(): void {
     firstRun = false;
 }
 
+export function end(): void {
+    world!.player.end = true;
+    world!.player.invincibleTime = 0;
+}
+
 export function gg(): void {
     changeScene(Scene.End, world!);
 }

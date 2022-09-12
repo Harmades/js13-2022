@@ -1,4 +1,4 @@
-import { abs } from "./alias";
+import { abs, floor } from "./alias";
 import {
     Bullets,
     create as createBullets,
@@ -14,7 +14,7 @@ import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
-import { gg, onProgressChanged } from "./ui";
+import { gg, onProgressChanged, end } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
 
 export type BossPattern = {
@@ -45,6 +45,7 @@ export type Boss = Sprite &
         repeatCount: number;
         newPatternTime: number;
         life: number;
+        end: boolean;
     };
 
 const spray: BossPattern = {
@@ -144,13 +145,19 @@ export function create(): Boss {
         sprite: "boss",
         ox: Settings.bossOx,
         oy: Settings.bossOy,
+        end: false,
     };
 }
 
 export function update(boss: Boss): void {
-    updateBullets(boss.bullets);
     boss.elapsedTime += Settings.delta;
+    updateBullets(boss.bullets);
+    if (boss.end) {
+        boss.shootElapsedTime -= Settings.delta;
+        return;
+    }
     boss.shootElapsedTime += Settings.delta;
+
     const speed = Settings.bossSpeed;
 
     if (boss.newPatternTime != 0) {
@@ -247,14 +254,20 @@ export function update(boss: Boss): void {
 export function bossHit(boss: Boss): void {
     boss.life--;
     if (boss.life == 0) {
-        gg();
+        end();
+        boss.end = true;
+        boss.shootElapsedTime = 2;
+    } else {
+        onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
     }
-    onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
 }
 
 export function render(renderer: Renderer, boss: Boss) {
+    if ((!boss.end || floor(boss.elapsedTime / Settings.playerBlinkPeriod) % 2 == 0) &&
+        (boss.end && boss.shootElapsedTime >= 0)) {
+        drawSprite(renderer, boss);
+    }
     renderBullets(renderer, boss.bullets);
-    drawSprite(renderer, boss);
 }
 
 export function reset(boss: Boss) {
