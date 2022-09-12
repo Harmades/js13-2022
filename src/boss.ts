@@ -68,6 +68,21 @@ const spray: BossPattern = {
     resetPosOnRepeat: true,
 };
 
+const arrival: BossPattern = {
+    waitTime: 1,
+    tx: Settings.worldWidth * 0.5,
+    ty: Settings.worldHeight * 0.5 - Settings.bossHeight / 2,
+    dx: 25,
+    dy: 0,
+    shootPattern: [BulletsPattern.UpAndDown],
+    shootCount: [3],
+    shootFrequency: [1],
+    shootSpeed: [200],
+    repeat: 1,
+    shootRandom: [0],
+    resetPosOnRepeat: false,
+};
+
 const straight: BossPattern = {
     waitTime: 3,
     tx: Settings.worldWidth - Settings.bossWidth,
@@ -143,7 +158,7 @@ export function update(boss: Boss): void {
         if (boss.elapsedTime >= boss.newPatternTime) {
             boss.newPatternTime = 0;
             /* TODO : Make it random */
-            if (boss.currentPattern == spray) {
+            if (boss.currentPattern == spray || boss.currentPattern == arrival) {
                 boss.currentPattern = straight;
             } else if (boss.currentPattern == straight) {
                 boss.currentPattern = explosion;
@@ -244,17 +259,18 @@ export function render(renderer: Renderer, boss: Boss) {
 }
 
 export function reset(boss: Boss) {
-    boss.x = Settings.worldWidth * 0.5 - Settings.bossWidth / 2;
+    boss.x = Settings.worldWidth + Settings.bossWidth;
     boss.y = Settings.worldHeight * 0.5 - Settings.bossHeight / 2;
     boss.dx = 0;
     boss.dy = 0;
     resetBullets(boss.bullets);
     boss.elapsedTime = 0;
-    boss.currentPattern = straight;
+    boss.currentPattern = arrival;
     boss.shootElapsedTime = 0;
     boss.newPatternTime = 0;
     boss.shootCount = 0;
     boss.targetReached = false;
     boss.patternIndex = 0;
     boss.repeatCount = 0;
+    boss.life = Settings.bossLife;
 }
