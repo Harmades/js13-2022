@@ -44,10 +44,10 @@ ontouchmove = (evt) => {
     evt.preventDefault();
     onTouchMove(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
 };
-onmousemove = (evt) => {
-    evt.preventDefault();
-    onTouchMove(evt.pageX - canvas.offsetLeft, evt.pageY - canvas.offsetTop);
-};
+// onmousemove = (evt) => {
+//     evt.preventDefault();
+//     onTouchMove(evt.pageX - canvas.offsetLeft, evt.pageY - canvas.offsetTop);
+// };
 
 export function update(): void {}
 
