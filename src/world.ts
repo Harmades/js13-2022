@@ -7,6 +7,7 @@ import * as Player from "./player";
 import { Renderer, setCurrentCanvas } from "./renderer";
 import * as UI from "./ui";
 import { displayEnd, toggleShop } from "./ui";
+import { load as loadSound, playEnemiesMusic, playShopMusic } from "./sound"
 
 export enum Scene {
     Shop,
@@ -32,6 +33,7 @@ export function create(): World {
         scene: Scene.Shop,
     };
     UI.create(world);
+    loadSound();
     return world;
 }
 
@@ -64,9 +66,11 @@ export function changeScene(scene: Scene, world: World) {
     world.scene = scene;
     if (scene == Scene.Shop) {
         toggleShop(true);
+        playShopMusic();
     }
     if (scene == Scene.Game) {
         toggleShop(false);
+        playEnemiesMusic();
     }
     if (scene == Scene.End) {
         displayEnd();
