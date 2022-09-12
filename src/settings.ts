@@ -26,7 +26,7 @@ export const Settings = {
     playerInvincibleTime: 0.8,
     playerBlinkPeriod: 0.1,
     playerAnimationTime: 0.2,
-    playeShoootF: 1,
+    playerShootF: 1,
 
     enemyWidth: 13,
     enemyHeight: 16,
