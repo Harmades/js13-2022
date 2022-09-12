@@ -1,5 +1,5 @@
 export const Settings = {
-    debug: true,
+    debug: false,
     collision: true,
 
     width: 400 * 3,
