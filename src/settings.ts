@@ -1,5 +1,5 @@
 export const Settings = {
-    debug: false,
+    debug: true,
     collision: true,
 
     width: 400 * 3,
@@ -13,10 +13,10 @@ export const Settings = {
 
     playerSpeedX: 100,
     playerSpeedY: 100,
-    playerWidth: 15,
-    playerHeight: 14,
-    playerOx: 3,
-    playerOy: 3,
+    playerWidth: 16,
+    playerHeight: 15,
+    playerOx: 2,
+    playerOy: 2,
     playerBulletSpeedX: 200,
     playerBulletSpeedY: 100,
     playerBulletsPoolSize: 200,

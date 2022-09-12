@@ -59,6 +59,8 @@ export function onCurrentShieldChanged(value: number): void {
 }
 
 export function play(): void {
+    // document.documentElement.requestFullscreen();
+    // window.screen.orientation.lock("landscape");
     changeScene(Scene.Game, world!);
     firstRun = false;
 }
@@ -81,11 +83,13 @@ export function getPowerUpStatus(): number[] {
 function gray_or_black(powerUp: PowerUp): string {
     const player = world!.player;
     const powerUpCount = powerUpList[powerUp];
-    if (powerUpCount == Settings.powerUpMaxCount ||
-        !awardMoney(player, -Settings.powerUpCost[powerUpCount + 1], true)) {
-        return "gray"
+    if (
+        powerUpCount == Settings.powerUpMaxCount ||
+        !awardMoney(player, -Settings.powerUpCost[powerUpCount + 1], true)
+    ) {
+        return "gray";
     }
-    return "black"
+    return "black";
 }
 
 function syncUi(): void {
