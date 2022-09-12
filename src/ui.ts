@@ -18,6 +18,7 @@ let firstRun = true;
 export function create(worldRef: World): void {
     world = worldRef;
     syncUi();
+    toggleShop(true);
 }
 
 export function toggleShop(display: boolean): void {
