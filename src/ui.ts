@@ -13,7 +13,7 @@ let powerUpList = [0, 0, 0];
 let currentShield = 0;
 let world: World | null = null;
 let progress = 0;
-let firstRun = false;
+let firstRun = true;
 
 export function create(worldRef: World): void {
     world = worldRef;
