@@ -1,6 +1,3 @@
-import { getElementById } from "./alias";
-import { Settings } from "./settings";
-
 export const input = {
     up: false,
     down: false,
@@ -9,8 +6,6 @@ export const input = {
     space: false,
     shift: false,
     m: false,
-    x: null as number | null,
-    y: null as number | null,
 };
 
 export type Input = typeof input;
@@ -33,20 +28,6 @@ function setKey(keyCode: number, value: boolean) {
     // m
     if (keyCode == 77) input.m = value;
 }
-
-function onTouchMove(x: number, y: number): void {
-    input.x = x / 3;
-    input.y = y / 3;
-}
-
-const canvas = getElementById("game-canvas") as HTMLCanvasElement;
-
-ontouchmove = (evt) => {
-    onTouchMove(
-        evt.changedTouches[0].pageX - canvas.offsetLeft,
-        evt.changedTouches[0].pageY - canvas.offsetTop - Settings.playerHeight
-    );
-};
 
 export function update(): void {}
 

@@ -59,10 +59,6 @@ export function onCurrentShieldChanged(value: number): void {
 }
 
 export function play(): void {
-    if ("ontouchstart" in document.documentElement) {
-        document.documentElement.requestFullscreen();
-        window.screen.orientation.lock("landscape").catch(() => {});
-    }
     changeScene(Scene.Game, world!);
     firstRun = false;
 }

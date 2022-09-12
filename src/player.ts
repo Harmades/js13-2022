@@ -13,9 +13,8 @@ import { Settings } from "./settings";
 import { playPlayerHit, playShopMusic, playWouaf } from "./sound";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
-import { getPowerUpStatus, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";
+import { getPowerUpStatus, gg, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
-import { gg } from "./ui";
 
 const spaceInput = createReleasedKeyPress("space");
 const shiftInput = createReleasedKeyPress("shift");
@@ -133,8 +132,6 @@ export function update(player: Player) {
 
     player.x += player.dx * Settings.delta;
     player.y += player.dy * Settings.delta;
-    if (input.x) player.x = input.x;
-    if (input.y) player.y = input.y;
     if (player.x <= 0) player.x = 0;
     if (player.x >= Settings.worldWidth - Settings.playerWidth)
         player.x = Settings.worldWidth - Settings.playerWidth;
