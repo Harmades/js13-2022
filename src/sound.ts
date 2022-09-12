@@ -52,32 +52,41 @@ export function load(): void {
 	enemiesSong = zzfxM(...aStrollTroughElyseum);
 }
 
+
+export function stopSong(): void {
+	if(audioNode != undefined) audioNode.stop();
+}
+
 export function playBossMusic(): void {
+	stopSong();
     zzfxX?.resume();
     audioNode = zzfxP(...bossSongs[randRangeInt(0,1)]);
     audioNode.loop = true;
 }
 
 export function playEnemiesMusic(): void {
+	stopSong();
     zzfxX?.resume();
     audioNode = zzfxP(...enemiesSong);
     audioNode.loop = true;
 }
 
 export function playShopMusic(): void {
+	stopSong();
     zzfxX?.resume();
     audioNode = zzfxP(...shopSong);
     audioNode.loop = true;
 }
 
-export function stopSong(): void {
-    audioNode.stop();
+export function playPlayerHit(): void {
+	zzfx(...[.4,0,941,,.06,.4,4,.74,-222,,,,,.8,,1]);
 }
 
-export function playPlayerHit(): void {
-	//zzfx(...[0.5,,810,.04,.25,.2,3,.3,.5,.3,,,.2,.3,2.7,.3,,.6,.07,.4]);
+export function playEnemyShoot(): void {
+	//zzfx(...[0.1,,155,.02,.03,.07,4,1.2,-0.7,,,,,,,,,.88]);
 }
 
 export function playPlayerDie(): void {
-	//zzfx(...[0.3,0,146.8324,.3,,.9,,,-12,.3,,,.4,4.1,1,.5,,.4,.99,.1]);
+	zzfx(...[0.3,0,146.8324,.3,,.9,,,-12,.3,,,.4,4.1,1,.5,,.4,.99,.1]);
 }
+
