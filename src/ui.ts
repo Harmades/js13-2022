@@ -14,6 +14,7 @@ let currentShield = 0;
 let world: World | null = null;
 let progress = 0;
 let firstRun = true;
+let isEnd = false;
 
 export function create(worldRef: World): void {
     world = worldRef;
@@ -64,6 +65,7 @@ export function play(): void {
 }
 
 export function end(): void {
+    isEnd = true;
     world!.player.end = true;
     world!.player.invincibleTime = 0;
 }
@@ -120,6 +122,7 @@ function syncUi(): void {
         Settings.powerUpCost[powerUpList[PowerUp.Multishot] + 1]
     );
     getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
+    getElementById("Names")!.style.display = !isEnd ? "none" : "block";
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;
