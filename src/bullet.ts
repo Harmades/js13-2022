@@ -46,7 +46,7 @@ export function update(bullet: Bullet): void {
     const old_h = bullet.h;
     bullet.h = min(bullet.h + bullet.dh, Settings.bulletMaxHeight);
     if (bullet.h == Settings.bulletMaxHeight)
-        bullet.dy = -30 * sin((bullet.x / Settings.worldWidth) * 6 * PI);
+        bullet.dy = -15 * sin((bullet.x / Settings.worldWidth) * 6 * PI);
     bullet.y += bullet.dy * Settings.delta - (bullet.h - old_h) * bullet.dhDirection;
     if (bullet.explodeTick != 0) {
         bullet.explodeTick -= 1;
@@ -72,7 +72,9 @@ export function update(bullet: Bullet): void {
             free(bullet);
         }
     }
-    if (bullet.x < 0 || bullet.x > Settings.worldWidth) free(bullet);
+    if (bullet.x < 0 || bullet.x > Settings.width) {
+        free(bullet);
+    }
     if (bullet.h == Settings.bulletHeight) {
         if (bullet.y + bullet.h / 2 < 0 || bullet.y > Settings.worldHeight + bullet.h / 2)
             free(bullet);

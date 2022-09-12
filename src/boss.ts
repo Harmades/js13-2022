@@ -16,6 +16,7 @@ import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { gg } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
+import { onProgressChanged } from "./ui"
 
 export type BossPattern = {
     waitTime: number;
@@ -61,8 +62,8 @@ const spray: BossPattern = {
     ],
     shootCount: [4, 3, 5, 5],
     shootFrequency: [4, 3, 2, 5],
-    shootSpeed: [200, 120, 250, 50],
-    shootRandom: [150, 300, 300, 150],
+    shootSpeed: [50, 60, 75, 50],
+    shootRandom: [25, 50, 75, 50],
     repeat: 3,
     resetPosOnRepeat: true,
 };
@@ -76,9 +77,9 @@ const straight: BossPattern = {
     shootPattern: [BulletsPattern.UpAndDown, BulletsPattern.StraightHole],
     shootCount: [5, 40],
     shootFrequency: [5, 3],
-    shootSpeed: [200, 100],
+    shootSpeed: [200, 75],
     repeat: 1,
-    shootRandom: [0, 20],
+    shootRandom: [0, 5],
     resetPosOnRepeat: true,
 };
 
@@ -90,10 +91,10 @@ const explosion: BossPattern = {
     dy: 0,
     shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
     shootCount: [10, 5],
-    shootFrequency: [3, 5],
-    shootSpeed: [500, 600],
+    shootFrequency: [3, 3],
+    shootSpeed: [150, 175],
     repeat: 2,
-    shootRandom: [600, 100],
+    shootRandom: [100, 50],
     resetPosOnRepeat: true,
 };
 
@@ -234,6 +235,7 @@ export function bossHit(boss: Boss): void {
     if (boss.life == 0) {
         gg();
     }
+    onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50)
 }
 
 export function render(renderer: Renderer, boss: Boss) {

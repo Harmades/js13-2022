@@ -31,7 +31,7 @@ export function create(player: Player): Enemies {
 }
 
 export function update(enemies: Enemies): void {
-    if (enemies.entities.every((e) => e.x < -e.w) || enemies.deadCount == enemies.entities.length) {
+    if (enemies.entities.every((e) => (e.x < -e.w || e.dead))) {
         nextWave(enemies);
     }
     if (currentWave < bossWave) {

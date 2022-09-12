@@ -109,23 +109,23 @@ export function fire(
     if (pattern == Pattern.StraightHole) {
         let bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
-        bullet.dh = 0.4;
+        bullet.dh = 0.2;
         bullet.dhDirection = 0;
         fireBullet(
             bullets,
             bullet,
             shootPosition,
-            createVector(speedX, speedY + bullet.dh * 150 + 10)
+            createVector(speedX, speedY + bullet.dh * 50 + 10)
         );
         bullet = bullets.bullets.find((b) => !b.isActive);
         if (bullet == undefined) return;
-        bullet.dh = 0.4;
+        bullet.dh = 0.2;
         bullet.dhDirection = 1;
         fireBullet(
             bullets,
             bullet,
             shootPosition,
-            createVector(speedX, speedY - (bullet.dh * 150 + 10))
+            createVector(speedX, speedY - (bullet.dh * 50 + 10))
         );
     }
 
