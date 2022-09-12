@@ -7,6 +7,7 @@ import * as Player from "./player";
 import { Renderer, setCurrentCanvas } from "./renderer";
 import * as UI from "./ui";
 import { displayEnd, toggleShop } from "./ui";
+import { Settings } from "./settings"
 import { load as loadSound, playEnemiesMusic, playShopMusic } from "./sound"
 
 export enum Scene {
