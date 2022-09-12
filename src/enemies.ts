@@ -2,13 +2,12 @@ import { Boss, create as createBoss, render as renderBoss, update as updateBoss 
 import { Bullet } from "./bullet";
 import { getActiveBullets } from "./bullets";
 import { Enemy, render as renderEnemy, update as updateEnemy } from "./enemy";
-import { createReleasedKeyPress } from "./input";
 import { awardMoney, Player } from "./player";
 import { Renderer } from "./renderer";
 import { Settings } from "./settings";
+import { playBossMusic } from "./sound";
 import { onProgressChanged } from "./ui";
 import { create as createWave, WaveDifficulty } from "./wave";
-import { playBossMusic } from "./sound"
 
 export type Enemies = {
     entities: Enemy[];
@@ -20,7 +19,6 @@ export type Enemies = {
 
 let currentWave = 1;
 let bossWave = Settings.waveEasyCount + Settings.waveMediumCount + Settings.waveHardCount + 1;
-let mInput = createReleasedKeyPress("m");
 
 export function create(player: Player): Enemies {
     return {
@@ -39,7 +37,11 @@ export function update(enemies: Enemies): void {
             enemies.waveTempo = 0;
             nextWave(enemies);
         }
-    } else if (enemies.entities.every((e) => ((e.x < -e.w || e.dead) && e.bullets.bullets.every((b) => !b.isActive)))) {
+    } else if (
+        enemies.entities.every(
+            (e) => (e.x < -e.w || e.dead) && e.bullets.bullets.every((b) => !b.isActive)
+        )
+    ) {
         enemies.waveTempo = Settings.waveTempo;
     }
     if (currentWave < bossWave) {
@@ -48,12 +50,6 @@ export function update(enemies: Enemies): void {
         }
     } else {
         updateBoss(enemies.boss);
-    }
-
-    if (Settings.debug) {
-        if (mInput()) {
-            nextWave(enemies);
-        }
     }
 }
 
@@ -72,6 +68,7 @@ export function getActiveEnemies(enemies: Enemies): Enemy[] {
 }
 
 export function nextWave(enemies: Enemies): void {
+    if (currentWave == 10) return;
     currentWave++;
     let difficulty: WaveDifficulty = WaveDifficulty.Easy;
     if (currentWave > 3 && currentWave <= 6) {
@@ -83,9 +80,8 @@ export function nextWave(enemies: Enemies): void {
     enemies.entities = createWave(difficulty).enemies;
     enemies.deadCount = 0;
     awardMoney(enemies.player, 1);
-    onProgressChanged(
-        (currentWave / 9) * 50 + ((Settings.bossLife - enemies.boss.life) / Settings.bossLife) * 50
-    );
+
+    onProgressChanged((currentWave / 9) * 50);
     if (currentWave == bossWave) {
         playBossMusic();
     }

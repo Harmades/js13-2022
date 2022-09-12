@@ -14,9 +14,8 @@ import { drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
-import { gg } from "./ui";
+import { gg, onProgressChanged } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
-import { onProgressChanged } from "./ui"
 
 export type BossPattern = {
     waitTime: number;
@@ -250,7 +249,7 @@ export function bossHit(boss: Boss): void {
     if (boss.life == 0) {
         gg();
     }
-    onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50)
+    onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
 }
 
 export function render(renderer: Renderer, boss: Boss) {
