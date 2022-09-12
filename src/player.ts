@@ -88,6 +88,12 @@ export function shoot(player: Player): void {
 
 export function update(player: Player) {
     updateBullets(player.bullets);
+    player.animationTime += Settings.delta;
+    if (player.animationTime > Settings.playerAnimationTime) {
+        player.animationTime = 0;
+        player.sprite = player.sprite == sprites[0] ? sprites[1] : sprites[0];
+    }
+
     if (player.end) {
         if (player.x < Settings.worldWidth * 1.1) {
             player.x += (Settings.playerSpeedX / 2) * Settings.delta;
@@ -96,10 +102,10 @@ export function update(player: Player) {
             gg();
         }
 
-        if (player.y > Settings.height / 2 - Settings.playerHeight / 2) {
+        if (player.y > Settings.worldHeight / 2 - Settings.playerHeight / 2) {
+            player.y += -(Settings.playerSpeedY / 2) * Settings.delta;
+        } else {
             player.y += (Settings.playerSpeedY / 2) * Settings.delta;
-        } else if (player.y < Settings.height / 2 - Settings.playerHeight / 2) {
-            player.dy += -(Settings.playerSpeedY / 2) * Settings.delta;
         }
         return;
     }
@@ -134,11 +140,6 @@ export function update(player: Player) {
     if (player.y >= Settings.worldHeight - Settings.playerHeight)
         player.y = Settings.worldHeight - Settings.playerHeight;
 
-    player.animationTime += Settings.delta;
-    if (player.animationTime > Settings.playerAnimationTime) {
-        player.animationTime = 0;
-        player.sprite = player.sprite == sprites[0] ? sprites[1] : sprites[0];
-    }
 }
 
 export function reset(player: Player): void {
