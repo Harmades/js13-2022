@@ -9,6 +9,7 @@ import { Sprite } from "./sprite";
 import { Vector } from "./vector";
 import { changeScene, Scene, World } from "./world";
 import { Settings } from "./settings"
+import { awardMoney } from "./player"
 
 export type Collision = Rectangle;
 
@@ -30,19 +31,22 @@ export function getCollision(rectangle1: Sprite, rectangle2: Sprite): Collision 
 export function update(world: World): void {
     const enemies = world.enemies;
     const player = world.player;
+    const boss = enemies.boss;
+
     for (let enemy of getActiveEnemies(enemies)) {
         for (let bullet of getActiveBullets(player.bullets)) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
             if (bulletEnemyCollision != null) {
                 free(bullet);
                 enemyDie(enemy, enemies);
+                awardMoney(player, 1)
                 break;
             }
         }
         for (let bullet of getActiveBullets(enemy.bullets)) {
             const bulletPlayerCollision = getCollision(player, bullet);
             if (bulletPlayerCollision != null) {
-                if (bulletHit(player) == 0) {
+                if (bulletHit(player) < 0) {
                     changeScene(Scene.Shop, world);
                 }
                 break;
@@ -50,22 +54,32 @@ export function update(world: World): void {
         }
         const playerEnemyCollision = getCollision(player, enemy);
         if (playerEnemyCollision != null) {
-            changeScene(Scene.Shop, world);
-        }
-    }
-    for (let bullet of getActiveBullets(enemies.boss.bullets)) {
-        const bulletPlayerCollision = getCollision(player, bullet);
-        if (bulletPlayerCollision != null) {
-            if (bulletHit(player) == 0) {
+            if (bulletHit(player) < 0) {
                 changeScene(Scene.Shop, world);
             }
         }
     }
-    for (let bullet of getActiveBullets(player.bullets)) {
-        const bulletEnemyCollision = getCollision(enemies.boss, bullet);
-        if (bulletEnemyCollision != null) {
-            free(bullet);
-            bossHit(enemies.boss);
+    if (boss.elapsedTime != 0) {
+        for (let bullet of getActiveBullets(enemies.boss.bullets)) {
+            const bulletPlayerCollision = getCollision(player, bullet);
+            if (bulletPlayerCollision != null) {
+                if (bulletHit(player) < 0) {
+                    changeScene(Scene.Shop, world);
+                }
+            }
+        }
+        for (let bullet of getActiveBullets(player.bullets)) {
+            const bulletEnemyCollision = getCollision(enemies.boss, bullet);
+            if (bulletEnemyCollision != null) {
+                free(bullet);
+                bossHit(enemies.boss);
+            }
+        }
+        const playerBossCollision = getCollision(player, boss);
+        if (playerBossCollision != null) {
+            if (bulletHit(player) < 0) {
+                changeScene(Scene.Shop, world);
+            }
         }
     }
 }
