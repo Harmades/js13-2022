@@ -86,6 +86,11 @@ export function playEnemyShoot(): void {
 	//zzfx(...[0.1,,155,.02,.03,.07,4,1.2,-0.7,,,,,,,,,.88]);
 }
 
+export function playWouaf(): void {
+	zzfx(...[,,150,.05,,.05,,1.3,,,,,,3]);
+	zzfx(...[,.2,46,.02,.05,.02,2,,17,,-250,.05,.01,,5]);
+}
+
 export function playPlayerDie(): void {
 	zzfx(...[0.3,0,146.8324,.3,,.9,,,-12,.3,,,.4,4.1,1,.5,,.4,.99,.1]);
 }

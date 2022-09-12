@@ -10,7 +10,7 @@ import {
 import { createReleasedKeyPress, input } from "./input";
 import { AtlasSprite, drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { playPlayerHit, playShopMusic } from "./sound";
+import { playPlayerHit, playShopMusic, playWouaf } from "./sound";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { getPowerUpStatus, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";
@@ -98,8 +98,10 @@ export function update(player: Player) {
         if (player.x < Settings.worldWidth * 1.1) {
             player.x += (Settings.playerSpeedX / 2) * Settings.delta;
         } else {
+            playWouaf();
             playShopMusic();
             gg();
+            playWouaf();
         }
 
         if (player.y > Settings.worldHeight / 2 - Settings.playerHeight / 2) {
