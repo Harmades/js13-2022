@@ -36,7 +36,7 @@ export function update(world: World): void {
             for (let bullet of getActiveBullets(player.bullets)) {
                 const bulletEnemyCollision = getCollision(enemy, bullet);
                 if (bulletEnemyCollision != null) {
-                    if (bullet.dh == player.bullets.bh) free(bullet);
+                    if (bullet.h == player.bullets.bh) free(bullet);
                     enemyDie(enemy, enemies);
                     awardMoney(player, 1);
                     break;
