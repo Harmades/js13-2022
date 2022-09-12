@@ -16,6 +16,7 @@ import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { gg, onProgressChanged, end } from "./ui";
 import { add as addVector, create as createVector } from "./vector";
+import { playWouaf } from "./sound"
 
 export type BossPattern = {
     waitTime: number;
@@ -258,6 +259,7 @@ export function bossHit(boss: Boss): void {
         boss.end = true;
         boss.shootElapsedTime = 2;
         onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
+        playWouaf();
     } else {
         onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
     }

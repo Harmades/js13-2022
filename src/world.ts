@@ -75,5 +75,6 @@ export function changeScene(scene: Scene, world: World) {
     }
     if (scene == Scene.End) {
         displayEnd();
+        playShopMusic();
     }
 }
