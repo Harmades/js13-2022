@@ -59,7 +59,7 @@ export function create(): Player {
         bulletsPattern: BulletsPattern.Single,
         shootSpeed: 1,
         shieldCount: 0,
-        money: 1500,
+        money: 0,
         sprite: sprites[0],
         invincibleTime: 0,
         ox: Settings.playerOx,
