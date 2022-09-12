@@ -30,6 +30,8 @@ export type Player = Sprite &
         money: number;
         invincibleTime: number;
         animationTime: number;
+        shootF: number;
+        shootTime: number;
     };
 
 let sprites: AtlasSprite[] = ["cerbere", "cerbere2"];
@@ -61,6 +63,8 @@ export function create(): Player {
         ox: Settings.playerOx,
         oy: Settings.playerOy,
         animationTime: 0,
+        shootF: Settings.playerShootF,
+        shootTime: 0,
     };
     onMoneyChanged(player.money);
     return player;
@@ -80,6 +84,11 @@ export function shoot(player: Player): void {
 }
 
 export function update(player: Player) {
+    player.shootTime += Settings.delta;
+    if (player.shootTime >= 1 / player.shootF) {
+        shoot(player);
+        player.shootTime = 0;
+    }
     let dx = 0,
         dy = 0;
     updateBullets(player.bullets);
@@ -92,7 +101,6 @@ export function update(player: Player) {
     if (input.right) dx += Settings.playerSpeedX;
     if (input.up) dy += -Settings.playerSpeedY;
     if (input.down) dy += Settings.playerSpeedY;
-    if (spaceInput()) shoot(player);
     player.dx = dx;
     player.dy = dy;
 

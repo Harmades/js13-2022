@@ -1,5 +1,5 @@
 export const Settings = {
-    debug: false,
+    debug: true,
 
     width: 400 * 3,
     height: 192 * 3,
@@ -25,15 +25,16 @@ export const Settings = {
     playerInvincibleTime: 0.8,
     playerBlinkPeriod: 0.1,
     playerAnimationTime: 0.2,
+    playeShoootF: 1,
 
     enemyWidth: 13,
     enemyHeight: 16,
     enemyOx: 0,
     enemyOy: 0,
-    enemyBulletSpeedX: 150,
+    enemyBulletSpeedX: 50,
     enemyBulletSpeedY: 50,
     enemyBulletsPoolSize: 50,
-    enemyShootFrequency: 1,
+    enemyShootFrequency: 1.3,
     enemyBulletPoolSize: 1000,
     enemySprayOpen: 1,
 
@@ -41,8 +42,8 @@ export const Settings = {
     bossHeight: 33,
     bossOx: 6,
     bossOy: 3,
-    bossSpeed: 300,
-    bossBulletSpeedX: 100,
+    bossSpeed: 75,
+    bossBulletSpeedX: 75,
     bossBulletSpeedY: 100,
     bossBulletsPoolSize: 200,
     bossBigBulletWidth: 25,
