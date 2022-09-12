@@ -40,10 +40,10 @@ function onTouchMove(x: number, y: number): void {
 
 const canvas = getElementById("game-canvas") as HTMLCanvasElement;
 
-ontouchmove = (evt) => {
-    evt.preventDefault();
-    onTouchMove(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
-};
+// ontouchmove = (evt) => {
+//     evt.preventDefault();
+//     onTouchMove(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY);
+// };
 // onmousemove = (evt) => {
 //     evt.preventDefault();
 //     onTouchMove(evt.pageX - canvas.offsetLeft, evt.pageY - canvas.offsetTop);
