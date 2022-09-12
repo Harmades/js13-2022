@@ -8,6 +8,7 @@ import { Renderer } from "./renderer";
 import { Settings } from "./settings";
 import { onProgressChanged } from "./ui";
 import { create as createWave, WaveDifficulty } from "./wave";
+import { playBossMusic } from "./sound"
 
 export type Enemies = {
     entities: Enemy[];
@@ -75,6 +76,9 @@ export function nextWave(enemies: Enemies): void {
     onProgressChanged(
         (currentWave / 9) * 50 + ((Settings.bossLife - enemies.boss.life) / Settings.bossLife) * 50
     );
+    if (currentWave == bossWave) {
+        playBossMusic();
+    }
 }
 
 export function reset(enemies: Enemies): void {

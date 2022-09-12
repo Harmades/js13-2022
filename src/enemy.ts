@@ -14,6 +14,7 @@ import { Settings } from "./settings";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { add as addVector, create as createVector } from "./vector";
+import { playEnemyShoot } from "./sound"
 
 export enum Pattern {
     Straight,
@@ -164,6 +165,7 @@ export function update(enemy: Enemy): void {
 
     if (enemy.shootElapsedTime >= 1 / Settings.enemyShootFrequency) {
         enemy.shootElapsedTime = 0;
+        playEnemyShoot();
         fireBullets(
             enemy.bullets,
             -speedX - Settings.enemyBulletSpeedX,
