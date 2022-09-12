@@ -26,13 +26,13 @@ export function create(difficulty: WaveDifficulty): Wave {
         }
     }
     if (difficulty == WaveDifficulty.Medium) {
-        const size = randRangeInt(5, 10);
+        const size = randRangeInt(7, 12);
         for (let i = 0; i < size; i++) {
             enemies.push(createRandEnemy(difficulty));
         }
     }
     if (difficulty == WaveDifficulty.Hard) {
-        const size = randRangeInt(9, 17);
+        const size = randRangeInt(12, 17);
         for (let i = 0; i < size; i++) {
             enemies.push(createRandEnemy(difficulty));
         }
@@ -122,6 +122,6 @@ export function createRandEnemy(difficulty: WaveDifficulty): Enemy {
     throw new Error();
 }
 
-export function update(): void {}
+export function update(): void { }
 
-export function render(renderer: Renderer) {}
+export function render(renderer: Renderer) { }

@@ -52,7 +52,7 @@ export const Settings = {
     bossBigBulletExplosionTick: 200,
     bossPatternFrequency: 5,
     bossSprayOpen: 2,
-    bossLife: 100,
+    bossLife: 300,
 
     bulletWidth: 3,
     bulletHeight: 3,
@@ -106,7 +106,7 @@ export const Settings = {
     waveHardSyMax: 192 - 32,
 
     powerUpMaxCount: 5,
-    powerUpCost: [0, 10, 15, 25, 50, 100, "👑"],
+    powerUpCost: [0, 10, 25, 50, 100, 500, "👑"],
 
     backgroundSpeed: 100,
     borderSpeed: 50,

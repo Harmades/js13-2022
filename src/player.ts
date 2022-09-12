@@ -57,7 +57,7 @@ export function create(): Player {
         bulletsPattern: BulletsPattern.Single,
         shootSpeed: 1,
         shieldCount: 0,
-        money: 300,
+        money: 0,
         sprite: sprites[0],
         invincibleTime: 0,
         ox: Settings.playerOx,
@@ -153,7 +153,7 @@ export function bulletHit(player: Player): number {
     return player.shieldCount;
 }
 
-export function awardMoney(player: Player, money: number, onlyCheck: boolean = false): boolean {
+export function awardMoney(player: Player, money: any, onlyCheck: boolean = false): boolean {
     if (player.money + money < 0) {
         return false;
     } else if (onlyCheck) {

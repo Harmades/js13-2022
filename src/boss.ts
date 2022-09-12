@@ -75,7 +75,7 @@ const straight: BossPattern = {
     dx: 0,
     dy: 60,
     shootPattern: [BulletsPattern.UpAndDown, BulletsPattern.StraightHole],
-    shootCount: [5, 40],
+    shootCount: [5, 30],
     shootFrequency: [5, 3],
     shootSpeed: [200, 75],
     repeat: 1,
@@ -90,11 +90,11 @@ const explosion: BossPattern = {
     dx: -50,
     dy: 0,
     shootPattern: [BulletsPattern.Explosion, BulletsPattern.Double],
-    shootCount: [10, 5],
+    shootCount: [5, 5],
     shootFrequency: [3, 3],
     shootSpeed: [150, 175],
     repeat: 2,
-    shootRandom: [100, 50],
+    shootRandom: [15, 50],
     resetPosOnRepeat: true,
 };
 
