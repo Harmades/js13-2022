@@ -104,19 +104,6 @@ export function update(player: Player) {
     player.dx = dx;
     player.dy = dy;
 
-    if (!isAudioInitialized) {
-        load();
-        isAudioInitialized = true;
-    }
-    if (isAudioInitialized && shiftInput()) {
-        if (isPlaying) {
-            stopSong();
-        } else {
-            playBossMusic();
-        }
-        isPlaying = !isPlaying;
-    }
-
     player.x += player.dx * Settings.delta;
     player.y += player.dy * Settings.delta;
     if (player.x <= 0) player.x = 0;
