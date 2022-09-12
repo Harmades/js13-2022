@@ -10,7 +10,7 @@ import {
 import { createReleasedKeyPress, input } from "./input";
 import { AtlasSprite, drawSprite, Renderer } from "./renderer";
 import { Settings } from "./settings";
-import { playPlayerHit } from "./sound";
+import { playPlayerHit, playShopMusic } from "./sound";
 import { Speed } from "./speed";
 import { Sprite } from "./sprite";
 import { getPowerUpStatus, onCurrentShieldChanged, onMoneyChanged, PowerUp } from "./ui";

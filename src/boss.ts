@@ -257,14 +257,14 @@ export function bossHit(boss: Boss): void {
         end();
         boss.end = true;
         boss.shootElapsedTime = 2;
+        onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
     } else {
         onProgressChanged(50 + ((Settings.bossLife - boss.life) / Settings.bossLife) * 50);
     }
 }
 
 export function render(renderer: Renderer, boss: Boss) {
-    if ((!boss.end || floor(boss.elapsedTime / Settings.playerBlinkPeriod) % 2 == 0) &&
-        (boss.end && boss.shootElapsedTime >= 0)) {
+    if (!boss.end || (floor(boss.elapsedTime / Settings.playerBlinkPeriod) % 2 == 0) && boss.shootElapsedTime >= 0) {
         drawSprite(renderer, boss);
     }
     renderBullets(renderer, boss.bullets);

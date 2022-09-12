@@ -32,7 +32,7 @@ export function update(world: World): void {
     const enemies = world.enemies;
     const player = world.player;
     const boss = enemies.boss;
-
+    if (player.end) return;
     for (let enemy of getActiveEnemies(enemies)) {
         for (let bullet of getActiveBullets(player.bullets)) {
             const bulletEnemyCollision = getCollision(enemy, bullet);
