@@ -92,6 +92,7 @@ export function update(player: Player) {
         if (player.x < Settings.worldWidth * 1.1) {
             player.x += (Settings.playerSpeedX / 2) * Settings.delta;
         } else {
+            playShopMusic();
             gg();
         }
 
