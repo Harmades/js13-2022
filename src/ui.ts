@@ -80,11 +80,13 @@ export function getPowerUpStatus(): number[] {
 function gray_or_black(powerUp: PowerUp): string {
     const player = world!.player;
     const powerUpCount = powerUpList[powerUp];
-    if (powerUpCount == Settings.powerUpMaxCount ||
-        !awardMoney(player, Settings.powerUpCost[powerUpCount], true)) {
+    if (
+        powerUpCount == Settings.powerUpMaxCount ||
+        !awardMoney(player, Settings.powerUpCost[powerUpCount], true)
+    ) {
         return "gray";
     }
-    return "black;"
+    return "black;";
 }
 
 function syncUi(): void {
@@ -92,18 +94,26 @@ function syncUi(): void {
     getElementById("current-shield")!.innerText = powerUpList[PowerUp.Shield].toString();
     getElementById("current-multishot")!.innerText = powerUpList[PowerUp.Multishot].toString();
     getElementById("current-player-shield")!.innerText = currentShield.toString();
-    getElementById("speed-plus")!.style.color = gray_or_black(PowerUp.Speed)
-    getElementById("shield-plus")!.style.color = gray_or_black(PowerUp.Shield)
-    getElementById("multishot-plus")!.style.color = gray_or_black(PowerUp.Multishot)
+    getElementById("speed-plus")!.style.color = gray_or_black(PowerUp.Speed);
+    getElementById("shield-plus")!.style.color = gray_or_black(PowerUp.Shield);
+    getElementById("multishot-plus")!.style.color = gray_or_black(PowerUp.Multishot);
     getElementById("speed-minus")!.style.color = powerUpList[PowerUp.Speed] == 0 ? "gray" : "black";
-    getElementById("shield-minus")!.style.color = powerUpList[PowerUp.Shield] == 0 ? "gray" : "black";
-    getElementById("multishot-minus")!.style.color = powerUpList[PowerUp.Multishot] == 0 ? "gray" : "black";
+    getElementById("shield-minus")!.style.color =
+        powerUpList[PowerUp.Shield] == 0 ? "gray" : "black";
+    getElementById("multishot-minus")!.style.color =
+        powerUpList[PowerUp.Multishot] == 0 ? "gray" : "black";
     getElementById("current-progress")!.style.width = `${progress}%`;
     getElementById("shop")!.style.display = firstRun ? "none" : "flex";
-    getElementById("speed-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Speed] + 1])
-    getElementById("shield-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Shield] + 1])
-    getElementById("multishot-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Multishot] + 1])
-    // getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
+    getElementById("speed-cost")!.innerText = String(
+        Settings.powerUpCost[powerUpList[PowerUp.Speed] + 1]
+    );
+    getElementById("shield-cost")!.innerText = String(
+        Settings.powerUpCost[powerUpList[PowerUp.Shield] + 1]
+    );
+    getElementById("multishot-cost")!.innerText = String(
+        Settings.powerUpCost[powerUpList[PowerUp.Multishot] + 1]
+    );
+    getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
 }
 
 (window as any).onPowerUpChanged = onPowerUpChanged;

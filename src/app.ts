@@ -6,8 +6,8 @@ import * as World from "./world";
 let tickLength = Settings.engineTimeResolution;
 let lastTick = performance.now();
 let lastRender = lastTick;
-const renderer = Renderer.create();
 const world = World.create();
+const renderer = Renderer.create();
 
 function loop(tFrame: number): void {
     window.requestAnimationFrame((t) => loop(t));
