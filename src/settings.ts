@@ -106,6 +106,7 @@ export const Settings = {
     waveHardSyMax: 192 - 32,
 
     powerUpMaxCount: 5,
+    powerUpCost: [0, 10, 15, 25, 50, 100, "👑"],
 
     backgroundSpeed: 100,
     borderSpeed: 50,
