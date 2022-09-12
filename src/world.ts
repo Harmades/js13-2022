@@ -41,7 +41,7 @@ export function update(world: World): void {
         Border.update();
         Player.update(world.player);
         Enemies.update(world.enemies);
-        Physics.update(world);
+        if (Settings.collision) Physics.update(world);
     }
 }
 
