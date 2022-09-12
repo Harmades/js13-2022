@@ -28,7 +28,7 @@ export function onPowerUpChanged(powerUp: PowerUp, amount: number) {
     const player = world!.player;
     let costIndex = powerUpList[powerUp];
     if (amount > 0) costIndex += 1;
-    let cost = Settings.powerUpCost[costIndex];
+    let cost: any = Settings.powerUpCost[costIndex];
 
     if (!awardMoney(player, -amount * cost, true)) return;
     powerUpList[powerUp] += amount;
@@ -100,9 +100,9 @@ function syncUi(): void {
     getElementById("multishot-minus")!.style.color = powerUpList[PowerUp.Multishot] == 0 ? "gray" : "black";
     getElementById("current-progress")!.style.width = `${progress}%`;
     getElementById("shop")!.style.display = firstRun ? "none" : "flex";
-    getElementById("speed-cost")!.innerText = Settings.powerUpCost[powerUpList[PowerUp.Speed] + 1]
-    getElementById("shield-cost")!.innerText = Settings.powerUpCost[powerUpList[PowerUp.Shield] + 1]
-    getElementById("multishot-cost")!.innerText = Settings.powerUpCost[powerUpList[PowerUp.Multishot] + 1]
+    getElementById("speed-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Speed] + 1])
+    getElementById("shield-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Shield] + 1])
+    getElementById("multishot-cost")!.innerText = String(Settings.powerUpCost[powerUpList[PowerUp.Multishot] + 1])
     // getElementById("shop-label")!.style.display = firstRun ? "none" : "block";
 }
 
